@@ -143,3 +143,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Expand `ComponentLibrary.tsx` to include Hero Sections, Feature Grids, Pricing Tables, and Testimonial blocks.
 - [x] **Task 9.2: Component Library UI Enhancements**
   - Improve the visual presentation of the component library sidebar (e.g., better categorization, hover states).
+
+---
+
+## Phase 10: Theme & Styling Enhancements
+*Status: Pending*
+
+- [ ] **Task 10.1: Color Palette Generator**
+  - Add a feature in `ThemeEditor.tsx` to automatically generate complementary color palettes based on a single primary color input.
+- [ ] **Task 10.2: Typography Presets**
+  - Add font pairing presets (e.g., Inter + Merriweather, Roboto + Open Sans) to the Theme Editor for quick brand styling.
