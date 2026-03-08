@@ -117,7 +117,29 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure all prior phases are committed and push to trigger the final deployment loop.
 
 ## Phase 7: Post-Deployment 
-*Status: Blocked*
+*Status: Blocked/Skipped*
 
 - [ ] **Task 7.1: Resolve Git Credentials**
   - Git push is currently failing due to an invalid GitHub token. Cannot trigger final deployment loop until credentials are fixed.
+
+---
+
+## Phase 8: Advanced NoCode Editor Features
+*Status: Complete*
+
+- [x] **Task 8.1: Component Sidebar Integration**
+  - Integrate `ComponentLibrary.tsx` into `ForgeView.tsx` so users have a palette of UI elements available on the Stage.
+- [x] **Task 8.2: Live DOM Tree Explorer**
+  - Integrate `DOMTreeExplorer.tsx` into the Stage sidebar to show the actual structure of the generated application.
+- [x] **Task 8.3: Property Inspector**
+  - Integrate `PropertyInspector.tsx` so users can click elements on the Stage and edit their Tailwind classes, text content, and properties.
+
+---
+
+## Phase 9: Component Library Expansion
+*Status: Complete*
+
+- [x] **Task 9.1: Rich UI Components Data**
+  - Expand `ComponentLibrary.tsx` to include Hero Sections, Feature Grids, Pricing Tables, and Testimonial blocks.
+- [x] **Task 9.2: Component Library UI Enhancements**
+  - Improve the visual presentation of the component library sidebar (e.g., better categorization, hover states).
