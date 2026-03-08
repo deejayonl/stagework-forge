@@ -198,7 +198,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Fix missing `currentVersionIndex` in `Workspace.tsx`.
 
 ## Phase 17: Host Intervention Required
-*Status: Active*
+*Status: Blocked*
 
 - [ ] **Task 17.1: Await Git Credential Resolution**
-  - The development loop is currently stalled. Awaiting host to resolve the invalid GitHub Personal Access Token (PAT) so the agent can push changes to `origin main` and trigger the deployment pipeline.
+  - The development loop is currently stalled. Awaiting host to resolve the invalid GitHub Personal Access Token (PAT) so the agent can push changes to `origin main` and trigger the deployment pipeline. Checked on 2026-03-08.
