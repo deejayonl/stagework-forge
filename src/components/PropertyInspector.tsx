@@ -1701,6 +1701,90 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               </div>
             )}
 
+            {(tagName.toLowerCase() === 'input' || tagName.toLowerCase() === 'textarea' || tagName.toLowerCase() === 'select') && (
+              <div className="space-y-2 mt-2">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 font-bold">Name</label>
+                    <input
+                      type="text"
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="field_name"
+                      value={selectedElement.name || ''}
+                      onChange={(e) => onUpdateAttribute?.('name', e.target.value)}
+                    />
+                  </div>
+                  {tagName.toLowerCase() === 'input' && (
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-hall-500 font-bold">Type</label>
+                      <select
+                        className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink"
+                        value={selectedElement.type || 'text'}
+                        onChange={(e) => onUpdateAttribute?.('type', e.target.value)}
+                      >
+                        <option value="text">Text</option>
+                        <option value="email">Email</option>
+                        <option value="password">Password</option>
+                        <option value="number">Number</option>
+                        <option value="tel">Tel</option>
+                        <option value="url">URL</option>
+                        <option value="date">Date</option>
+                        <option value="time">Time</option>
+                        <option value="checkbox">Checkbox</option>
+                        <option value="radio">Radio</option>
+                        <option value="file">File</option>
+                        <option value="range">Range</option>
+                        <option value="color">Color</option>
+                        <option value="submit">Submit</option>
+                      </select>
+                    </div>
+                  )}
+                </div>
+
+                {(tagName.toLowerCase() === 'input' || tagName.toLowerCase() === 'textarea') && (
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 font-bold">Placeholder</label>
+                    <input
+                      type="text"
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="Enter value..."
+                      value={selectedElement.placeholder || ''}
+                      onChange={(e) => onUpdateAttribute?.('placeholder', e.target.value)}
+                    />
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                    <input type="checkbox" checked={selectedElement.required} onChange={(e) => onUpdateAttribute?.('required', e.target.checked ? 'true' : '')} /> Required
+                  </label>
+                  <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                    <input type="checkbox" checked={selectedElement.disabled} onChange={(e) => onUpdateAttribute?.('disabled', e.target.checked ? 'true' : '')} /> Disabled
+                  </label>
+                  <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                    <input type="checkbox" checked={selectedElement.readOnly} onChange={(e) => onUpdateAttribute?.('readonly', e.target.checked ? 'true' : '')} /> Read Only
+                  </label>
+                </div>
+
+                {tagName.toLowerCase() === 'input' && (selectedElement.type === 'number' || selectedElement.type === 'range') && (
+                  <div className="grid grid-cols-3 gap-2 border-t border-hall-200 dark:border-hall-800 pt-2 mt-2">
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-hall-500">Min</label>
+                      <input type="number" className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink" value={selectedElement.min || ''} onChange={(e) => onUpdateAttribute?.('min', e.target.value)} />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-hall-500">Max</label>
+                      <input type="number" className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink" value={selectedElement.max || ''} onChange={(e) => onUpdateAttribute?.('max', e.target.value)} />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-hall-500">Step</label>
+                      <input type="number" className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink" value={selectedElement.step || ''} onChange={(e) => onUpdateAttribute?.('step', e.target.value)} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {['input', 'textarea', 'select'].includes(tagName.toLowerCase()) && (
               <>
                 <div className="space-y-2">

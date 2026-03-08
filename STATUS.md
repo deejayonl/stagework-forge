@@ -680,3 +680,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a dropdown for `align-content` (useful for wrapped flex containers and grids) to control multi-line alignment.
 - [x] **Task 56.3: Auto-Fit / Auto-Fill Grid Toggles**
   - Add helper UI buttons to quickly inject `repeat(auto-fit, minmax(..., 1fr))` into the `grid-template-columns` input for responsive grids.
+
+## Phase 57: Advanced Forms & Input Handling
+*Status: Complete*
+
+- [x] **Task 57.1: Input Types - [ ] **Task 57.1: Input Types & Placeholders** Placeholders**
+  - Add specific controls for `<input>` and `<textarea>` elements to manage `type` (text, email, password, number, etc.) and `placeholder` attributes.
+- [x] **Task 57.2: Form Validation Controls**
+  - Add toggles for `required`, `disabled`, and `readonly` attributes on form inputs.
+- [x] **Task 57.3: Min, Max, and Step Attributes**
+  - Add inputs for `min`, `max`, and `step` specifically when the input type is set to `number` or `range`.
