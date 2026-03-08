@@ -139,8 +139,8 @@ export default function ScriptView() {
       {/* Background ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[40vh] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      {/* Main Header / Typography */}
-      <div className="w-full max-w-5xl mx-auto px-6 pt-12 pb-4 flex-shrink-0">
+      {/* Main Header / Typography - Hides when typing starts to create an immersive notepad */}
+      <div className={`w-full max-w-5xl mx-auto px-6 flex-shrink-0 transition-all duration-500 ease-in-out ${scriptText.trim().length > 0 ? 'opacity-0 h-0 overflow-hidden pt-0 pb-0' : 'opacity-100 pt-12 pb-4'}`}>
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-hall-100 via-hall-300 to-hall-500 leading-tight">
           Great inputs make for even greater outputs.
         </h1>
@@ -150,7 +150,7 @@ export default function ScriptView() {
       </div>
 
       {/* Infinite Notepad Area */}
-      <div className="flex-1 w-full max-w-5xl mx-auto px-6 pb-32 relative flex flex-col">
+      <div className={`flex-1 w-full max-w-5xl mx-auto px-6 pb-32 relative flex flex-col transition-all duration-500 ${scriptText.trim().length > 0 ? 'pt-12' : ''}`}>
         {error && (
           <div className="absolute top-0 left-6 right-6 p-3 mb-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 text-sm text-center animate-in fade-in slide-in-from-top-2 z-20">
             {error}
