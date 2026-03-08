@@ -465,16 +465,37 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Force the `StageView` input container and bottom navigation to respect the iOS Safe Area (`pb-safe`) and `env(safe-area-inset-bottom)` so the "Ask Forge" input is not clipped by the iOS swipe indicator.
 - [x] **Task 44.5.2: Top Header & Iframe Resizing**
   - Ensure the top header and the Preview iframe flex dynamically (`min-h-0`, `flex-1`) so they do not push the bottom navigation off-screen on mobile devices.
-- [ ] **Task 44.5.3: Script Tab Typography bounds**
+- [x] **Task 44.5.3: Script Tab Typography bounds**
   - Ensure the "All great outputs" slogan uses `text-3xl sm:text-5xl` to prevent layout breaking on narrow screens.
 
 ## Phase 45: Advanced Layout Controls (Flexbox/Grid GUI)
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 45.1: Flexbox Visual Editor**
+- [x] **Task 45.1: Flexbox Visual Editor**
   - Add a "Layout" section in `PropertyInspector.tsx`.
   - Add visual toggle buttons for `flex-row`, `flex-col`, `justify-start`, `justify-center`, `justify-between`, `items-start`, `items-center`, etc.
-- [ ] **Task 45.2: Grid Visual Editor**
+- [x] **Task 45.2: Grid Visual Editor**
   - Add visual controls for `grid-cols-1` to `grid-cols-12` and `gap` sizing.
-- [ ] **Task 45.3: Tailwind Class Sync**
+- [x] **Task 45.3: Tailwind Class Sync**
   - Ensure toggling these visual layout buttons correctly adds/removes the corresponding Tailwind utility classes from the selected element.
+
+## Phase 46: Advanced Spacing Controls (Tailwind Margin/Padding GUI)
+*Status: Pending*
+
+- [ ] **Task 46.1: Margin Visual Editor**
+  - Add visual controls to select margin directions (all, top, right, bottom, left).
+  - Add a slider or input for Tailwind margin values (0 to 32, auto).
+- [ ] **Task 46.2: Padding Visual Editor**
+  - Add visual controls to select padding directions (all, top, right, bottom, left).
+  - Add a slider or input for Tailwind padding values (0 to 32).
+- [ ] **Task 46.3: Tailwind Class Sync**
+  - Ensure updating spacing correctly adds/removes Tailwind utility classes (e.g., `mt-4`, `p-8`) instead of inline styles.
+
+## Phase 47: Advanced Typography Controls (Tailwind GUI)
+*Status: Pending*
+
+- [ ] **Task 47.1: Text Size & Weight**
+  - Add dropdowns for Tailwind text sizes (`text-xs` to `text-9xl`) and font weights (`font-thin` to `font-black`).
+- [ ] **Task 47.2: Text Alignment & Color**
+  - Add visual toggles for text alignment (`text-left`, `text-center`, `text-right`, `text-justify`).
+  - Add a color picker or palette selector that maps to Tailwind text colors (e.g., `text-blue-500`).
