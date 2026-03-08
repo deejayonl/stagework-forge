@@ -159,6 +159,17 @@ export const injectEditorScript = (htmlContent: string): string => {
           }, true);
         });
 
+        document.addEventListener('keydown', (e) => {
+          // Forward keydown events to the parent window for global shortcuts
+          window.parent.postMessage({
+            type: 'FORGE_KEYDOWN',
+            key: e.key,
+            ctrlKey: e.ctrlKey,
+            metaKey: e.metaKey,
+            shiftKey: e.shiftKey
+          }, '*');
+        }, true);
+
         document.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();

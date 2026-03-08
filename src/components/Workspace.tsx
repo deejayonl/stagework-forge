@@ -247,6 +247,26 @@ useEffect(() => {
         if (!isInspectorOpen) setIsInspectorOpen(true);
       } else if (e.data.type === 'FORGE_DOM_TREE') {
         setDomTree(e.data.tree);
+      } else if (e.data.type === 'FORGE_KEYDOWN') {
+        // Handle forwarded keyboard shortcuts from iframe
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const cmdOrCtrl = isMac ? e.data.metaKey : e.data.ctrlKey;
+        
+        if (cmdOrCtrl && e.data.key.toLowerCase() === 'z') {
+          if (e.data.shiftKey) {
+            handleRedo();
+          } else {
+            handleUndo();
+          }
+        } else if (cmdOrCtrl && e.data.key.toLowerCase() === 'y') {
+          handleRedo();
+        } else if (cmdOrCtrl && e.data.key.toLowerCase() === 'c') {
+          if (selectedElement) handleCopyHtml();
+        } else if (cmdOrCtrl && e.data.key.toLowerCase() === 'v') {
+          if (selectedElement) handlePasteHtml();
+        } else if (e.data.key === 'Delete' || e.data.key === 'Backspace') {
+          if (selectedElement) handleDeleteElement();
+        }
       } else if (e.data.type === 'FORGE_TEXT_EDITED') {
          setSelectedElement((prev: any) => {
             if (prev && prev.id === e.data.id) {
@@ -483,6 +503,11 @@ useEffect(() => {
         if (selectedElement) {
           e.preventDefault();
           handlePasteHtml();
+        }
+      } else if (e.key === 'Delete' || e.key === 'Backspace') {
+        if (selectedElement) {
+          e.preventDefault();
+          handleDeleteElement();
         }
       }
     };
@@ -1013,6 +1038,41 @@ useEffect(() => {
           </div>
         )}
 
+        <div className="flex items-center gap-1 md:gap-2">
+          {/* Undo/Redo Controls */}
+          <div className="flex items-center mr-2 border-r border-hall-200 dark:border-hall-800 pr-2">
+            <button
+              onClick={handleUndo}
+              disabled={undoStack.length === 0}
+              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+                undoStack.length === 0
+                  ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
+                  : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
+              }`}
+              aria-label="Undo"
+            >
+              <Undo2 className="w-4 h-4" />
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                Undo (Cmd/Ctrl+Z)
+              </div>
+            </button>
+            <button
+              onClick={handleRedo}
+              disabled={redoStack.length === 0}
+              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+                redoStack.length === 0
+                  ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
+                  : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
+              }`}
+              aria-label="Redo"
+            >
+              <Redo2 className="w-4 h-4" />
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                Redo (Cmd/Ctrl+Y)
+              </div>
+            </button>
+          </div>
+
           <div className="relative">
             <button
               onClick={() => setIsQROpen(!isQROpen)}
@@ -1041,7 +1101,6 @@ useEffect(() => {
               </div>
             )}
           </div>
-        <div className="flex items-center gap-1 md:gap-2">
            
            <button
              onClick={() => setIsPagesOpen(!isPagesOpen)}

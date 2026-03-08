@@ -261,3 +261,26 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure heavy elements like Monaco Editor are lazily loaded. (Removed unused `@monaco-editor/react` dependency instead as it was no longer used).
 - [x] **Task 25.2: CSS Purging and Optimization**
   - Verify Tailwind CSS is properly minified and purging unused styles in production build.
+## Phase 26: Core Editor Experience (Undo/Redo & Shortcuts)
+*Status: Complete*
+
+- [x] **Task 26.1: Implement Undo/Redo History Stack**
+  - Create a history state management system (e.g., using a custom hook or Zustand) to track changes to the `workspaces` and `elements` state.
+  - Implement `undo` and `redo` functions that restore previous states.
+- [x] **Task 26.2: Add Keyboard Shortcuts**
+  - Bind `Ctrl+Z` / `Cmd+Z` to Undo.
+  - Bind `Ctrl+Shift+Z` / `Cmd+Shift+Z` to Redo.
+  - Bind `Delete` / `Backspace` to remove the currently selected element.
+- [x] **Task 26.3: Add Undo/Redo UI Controls**
+  - Add visible Undo and Redo buttons to the Global Header or Stage Toolbar for accessibility.
+
+## Phase 27: Drag & Drop Element Reordering
+*Status: In Progress*
+
+- [ ] **Task 27.1: Implement Drag Handles in DOM Explorer**
+  - Add draggable attributes and visual handles to the nodes inside `DOMTreeExplorer.tsx`.
+- [ ] **Task 27.2: Handle Drop Events & Reorder Logic**
+  - Listen for drop events and calculate the new position of the element.
+  - Update the `localFiles` or `workspaces` state to reflect the new DOM structure.
+- [ ] **Task 27.3: Visual Drop Indicators**
+  - Show a blue line or highlight indicating where the element will be placed when dropped.
