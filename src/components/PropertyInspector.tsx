@@ -505,6 +505,21 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       onChange={(e) => handleStyleChange('gridTemplateColumns', e.target.value)}
                       className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
                       placeholder="e.g. 1fr 1fr or repeat(3, 1fr)"
+
+                    <div className="flex gap-1 mt-1">
+                      <button 
+                        onClick={() => handleStyleChange('gridTemplateColumns', 'repeat(auto-fit, minmax(200px, 1fr))')}
+                        className="flex-1 text-[8px] bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 p-1 rounded hover:bg-hall-200 dark:hover:bg-hall-800"
+                      >
+                        Auto-Fit
+                      </button>
+                      <button 
+                        onClick={() => handleStyleChange('gridTemplateColumns', 'repeat(auto-fill, minmax(200px, 1fr))')}
+                        className="flex-1 text-[8px] bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 p-1 rounded hover:bg-hall-200 dark:hover:bg-hall-800"
+                      >
+                        Auto-Fill
+                      </button>
+                    </div>
                     />
                   </div>
                   <div className="space-y-1">
@@ -559,6 +574,46 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                   <option value="baseline">baseline</option>
                 </select>
               </div>
+
+              {styles.display === 'flex' && (
+                <div className="col-span-2 grid grid-cols-2 gap-2 mt-1">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 flex justify-between">
+                      <span>Flex Wrap</span>
+                      <span className="text-hall-900 dark:text-ink font-mono text-[9px]">{styles.flexWrap || 'nowrap'}</span>
+                    </label>
+                    <select 
+                      value={styles.flexWrap || 'nowrap'} 
+                      onChange={(e) => handleStyleChange('flexWrap', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    >
+                      <option value="nowrap">nowrap</option>
+                      <option value="wrap">wrap</option>
+                      <option value="wrap-reverse">wrap-reverse</option>
+                    </select>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 flex justify-between">
+                      <span>Align Content</span>
+                      <span className="text-hall-900 dark:text-ink font-mono text-[9px] truncate max-w-[60px]">{styles.alignContent || 'normal'}</span>
+                    </label>
+                    <select 
+                      value={styles.alignContent || 'normal'} 
+                      onChange={(e) => handleStyleChange('alignContent', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    >
+                      <option value="normal">normal</option>
+                      <option value="flex-start">flex-start</option>
+                      <option value="center">center</option>
+                      <option value="flex-end">flex-end</option>
+                      <option value="space-between">space-between</option>
+                      <option value="space-around">space-around</option>
+                      <option value="stretch">stretch</option>
+                    </select>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-1">
                 <label className="text-[10px] text-hall-500 flex justify-between">

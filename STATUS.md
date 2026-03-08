@@ -670,3 +670,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a dedicated `<textarea>` in the Property Inspector to directly edit the `innerHTML` or raw source of the selected Custom Code node.
 - [x] **Task 55.3: SVG Styling Support**
   - Ensure the raw editor correctly parses `<svg>` tags and allows users to bind Tailwind classes (like `fill-current`, `text-blue-500`) directly to the SVG paths.
+
+## Phase 56: Structural Layout Controls (Flex/Grid Wrap)
+*Status: Complete*
+
+- [x] **Task 56.1: Flex Wrap Controls**
+  - Add a dropdown for `flex-wrap` (`nowrap`, `wrap`, `wrap-reverse`) in the Layout section when an element is set to `display: flex`.
+- [x] **Task 56.2: Align Content**
+  - Add a dropdown for `align-content` (useful for wrapped flex containers and grids) to control multi-line alignment.
+- [x] **Task 56.3: Auto-Fit / Auto-Fill Grid Toggles**
+  - Add helper UI buttons to quickly inject `repeat(auto-fit, minmax(..., 1fr))` into the `grid-template-columns` input for responsive grids.
