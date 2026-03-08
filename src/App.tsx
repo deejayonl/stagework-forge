@@ -169,7 +169,7 @@ export default function App() {
       {!isPreview && (
         <>
           {/* Mobile Bottom Navigation */}
-          <div className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] bg-surface/80 backdrop-blur-xl border-t border-border/50 z-[100] flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+          <div className="md:hidden fixed bottom-0 left-0 right-0 min-h-[5rem] bg-surface/80 backdrop-blur-xl border-t border-border/50 z-[100] flex items-center justify-around px-2 pb-safe pt-2 shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}

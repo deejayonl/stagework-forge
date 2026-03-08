@@ -585,7 +585,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
            <div className="text-center px-5 max-w-4xl mx-auto w-full pt-[12vh] md:pt-[15vh]">
              
              
-             <h1 className="text-[2rem] leading-[1.15] sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 tracking-tighter text-ink text-center">
+             <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-6 tracking-tighter text-ink text-center">
                All great outputs start with{' '}
                <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400">
                  intentional input

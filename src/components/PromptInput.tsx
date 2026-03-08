@@ -300,7 +300,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
                       <button
                         type="button"
                         onClick={() => removeAttachment(att.id)}
-                        className="absolute -top-2 -right-2 p-1 bg-indigo-500 text-ink rounded-full shadow-sm hover:bg-indigo-600 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="absolute -top-3 -right-3 p-2 bg-indigo-500 text-ink rounded-full shadow-sm hover:bg-indigo-600 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
                       >
                         <X className="w-3 h-3" />
                       </button>
