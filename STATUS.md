@@ -473,10 +473,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 ## Phase 36: Mobile Live Preview & Sync Enhancements
 *Status: In Progress*
 
-- [ ] **Task 36.1: QR Code Generation**
+- [x] **Task 36.1: QR Code Generation**
   - Add a QR code button to the Stage view header.
   - Generate a QR code pointing to a live preview URL (e.g., `/preview/:projectId`) so users can scan and view the active project on their mobile device.
 - [ ] **Task 36.2: WebSocket Live Sync (Preview)**
   - Implement a WebSocket connection in the BFF to push live DOM/style mutations from the main editor directly to any connected mobile preview clients.
-- [ ] **Task 36.3: Mobile Device Frame Wrap**
+- [x] **Task 36.3: Mobile Device Frame Wrap**
   - In the Stage view, when the "Mobile" breakpoint is selected, wrap the iframe in a visually distinct, realistic mobile device frame (e.g., an iPhone bezel) for better presentation.

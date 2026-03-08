@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GeneratedFile } from '../types';
 import { flattenFilesForPreview, createZipDownload } from '../utils/fileUtils';
-import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2, Rocket, Image as ImageIcon } from 'lucide-react';
+import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2, Rocket, Image as ImageIcon, QrCode } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 
+import { QRCodeSVG } from "qrcode.react";
 import { PropertyInspector } from './PropertyInspector';
 import { MediaManager } from "./MediaManager";
 import { DOMTreeExplorer } from './DOMTreeExplorer';
@@ -76,6 +77,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isQROpen, setIsQROpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
   const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
   const [mediaPickCallback, setMediaPickCallback] = useState<((url: string) => void) | null>(null);
@@ -892,6 +894,34 @@ useEffect(() => {
           </div>
         )}
 
+          <div className="relative">
+            <button
+              onClick={() => setIsQROpen(!isQROpen)}
+              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isQROpen ? "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+              aria-label="Mobile Preview QR"
+            >
+              <QrCode className="w-4 h-4" />
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                Mobile Preview
+              </div>
+            </button>
+            {isQROpen && (
+              <div className="absolute top-full mt-4 right-0 bg-white dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded-xl p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95">
+                <h4 className="text-sm font-bold text-hall-900 dark:text-ink mb-2 text-center">Scan to Preview</h4>
+                <div className="bg-white p-2 rounded-lg">
+                  <QRCodeSVG 
+                    value={`${window.location.origin}/preview/${projectId}`} 
+                    size={160} 
+                    bgColor={"#ffffff"} 
+                    fgColor={"#000000"} 
+                    level={"L"} 
+                    includeMargin={false} 
+                  />
+                </div>
+                <p className="text-xs text-hall-500 dark:text-hall-400 mt-3 text-center w-40">Scan with your phone to view the live project.</p>
+              </div>
+            )}
+          </div>
         <div className="flex items-center gap-1 md:gap-2">
            
            <button
