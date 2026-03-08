@@ -415,14 +415,37 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Allow setting `transition` properties (duration, easing) on elements.
 
 ## Phase 31: Theming & Global Styles
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 31.1: Global Theme Variables**
+- [x] **Task 31.1: Global Theme Variables**
   - Add a "Theme" panel to manage global CSS variables (colors, fonts, spacing).
   - Inject these variables into the canvas `<iframe>` root.
-- [ ] **Task 31.2: Typography Management**
+- [x] **Task 31.2: Typography Management**
   - Allow adding custom Google Fonts to the project.
   - Automatically inject `<link href="...fonts.googleapis...">` into the generated HTML `<head>`.
-- [ ] **Task 31.3: Component Library (Symbols)**
+- [x] **Task 31.3: Component Library (Symbols)**
   - Allow saving a selected node as a reusable "Component".
   - Add a "Components" tab to drag-and-drop saved symbols back onto the canvas.
+
+## Phase 32: Undo/Redo System & History
+*Status: Complete*
+
+- [x] **Task 32.1: History Stack Implementation**
+  - Create a state management slice or context for an undo/redo stack.
+  - Push a snapshot of the `files` array (or just the active HTML) onto the stack before any mutation (style change, text edit, drag/drop).
+- [x] **Task 32.2: Undo/Redo Controls**
+  - Add Undo (`Ctrl+Z`) and Redo (`Ctrl+Shift+Z`) keyboard shortcuts.
+  - Add visual undo/redo buttons to the Workspace toolbar.
+- [x] **Task 32.3: State Restoration**
+  - Implement functions to pop from the stack and restore the `files` state, triggering a re-render of the canvas.
+
+## Phase 33: Context Menu Enhancements & Copy/Paste
+*Status: In Progress*
+
+- [ ] **Task 33.1: Context Menu Polish**
+  - Add more actions to the right-click context menu (e.g., Wrap in Container, Extract as Component).
+- [ ] **Task 33.2: Copy/Paste Across Elements**
+  - Implement Copy/Paste of elements via Context Menu.
+  - Add `Ctrl+C` and `Ctrl+V` keyboard shortcuts for copying and pasting selected elements.
+- [ ] **Task 33.3: Copy/Paste Styles**
+  - Add "Copy Styles" and "Paste Styles" options to Context Menu.

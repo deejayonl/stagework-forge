@@ -14,7 +14,7 @@ import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
-import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network, Undo2 } from 'lucide-react';
+import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network, Undo2, Redo2 } from 'lucide-react';
 
 
 interface WorkspaceProps {
@@ -75,6 +75,10 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
   
+  // History Stack for Undo/Redo
+  const [undoStack, setUndoStack] = useState<GeneratedFile[][]>([]);
+  const [redoStack, setRedoStack] = useState<GeneratedFile[][]>([]);
+
   // Local state for files allows editing within the workspace session
   const [localFiles, setLocalFiles] = useState<GeneratedFile[]>(files);
 
@@ -181,7 +185,31 @@ const Workspace: React.FC<WorkspaceProps> = ({
     }
   };
 
+  const pushUndoState = (prevFiles: GeneratedFile[]) => {
+    setUndoStack(prev => [...prev, prevFiles]);
+    setRedoStack([]); // Clear redo stack on new action
+  };
+
+  const handleUndo = () => {
+    if (undoStack.length === 0) return;
+    const prevFiles = undoStack[undoStack.length - 1];
+    setUndoStack(prev => prev.slice(0, -1));
+    setRedoStack(prev => [...prev, localFiles]);
+    setLocalFiles(prevFiles);
+    if (onFileChange) onFileChange(prevFiles, 'Undo');
+  };
+
+  const handleRedo = () => {
+    if (redoStack.length === 0) return;
+    const nextFiles = redoStack[redoStack.length - 1];
+    setRedoStack(prev => prev.slice(0, -1));
+    setUndoStack(prev => [...prev, localFiles]);
+    setLocalFiles(nextFiles);
+    if (onFileChange) onFileChange(nextFiles, 'Redo');
+  };
+
   const handleFileChange = (newContent: string, fileName?: string, commitDescription?: string) => {
+    pushUndoState(localFiles);
     const targetFile = fileName || activeFile;
     const newFiles = localFiles.map(f => 
       f.name === targetFile ? { ...f, content: newContent } : f
@@ -245,11 +273,9 @@ useEffect(() => {
          });
       } else if (e.data.type === 'FORGE_INSERT_COMPONENT') {
          const { html, componentName, targetId } = e.data;
-         setLocalFiles(prevFiles => {
-             const newFiles = [...prevFiles];
-             const fileIndex = newFiles.findIndex(f => f.name === activeFile);
-             if (fileIndex === -1) return prevFiles;
-
+         const newFiles = [...localFiles];
+         const fileIndex = newFiles.findIndex(f => f.name === activeFile);
+         if (fileIndex !== -1) {
              const parser = new DOMParser();
              const doc = parser.parseFromString(newFiles[fileIndex].content, 'text/html');
              const target = targetId ? doc.querySelector(`[data-forge-id="${targetId}"]`) : doc.body;
@@ -265,17 +291,9 @@ useEffect(() => {
                      target.appendChild(child);
                  }
              }
-
-             newFiles[fileIndex] = {
-                 ...newFiles[fileIndex],
-                 content: doc.documentElement.outerHTML
-             };
-
-             if (onFileChange) {
-                 onFileChange(newFiles, 'Drag and Drop Component');
-             }
-             return newFiles;
-         });
+             
+             handleFileChange('<!DOCTYPE html>\n' + doc.documentElement.outerHTML, activeFile, 'Drag and Drop Component');
+         }
       } else if (e.data.type === 'FORGE_CONTEXT_MENU') {
          setSelectedElement(e.data.element);
          setContextMenu({
@@ -309,6 +327,32 @@ useEffect(() => {
     return () => window.removeEventListener('message', handleMessage);
   }, [isInspectorOpen, localFiles, variables, onUpdateVariables]); // added localFiles to dependencies
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input or textarea
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      if (cmdOrCtrl && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          handleRedo();
+        } else {
+          handleUndo();
+        }
+      } else if (cmdOrCtrl && e.key.toLowerCase() === 'y') {
+        e.preventDefault();
+        handleRedo();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undoStack, redoStack, localFiles]);
   
   const findNodePath = (node: any, id: string): number[] | null => {
     if (node.id === id) return node.path;
@@ -860,11 +904,37 @@ useEffect(() => {
            
 
            <button
+             onClick={handleUndo}
+             disabled={undoStack.length === 0}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${undoStack.length === 0 ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="Undo"
+           >
+             <Undo2 className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Undo (Ctrl+Z)
+             </div>
+           </button>
+           
+           <button
+             onClick={handleRedo}
+             disabled={redoStack.length === 0}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${redoStack.length === 0 ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="Redo"
+           >
+             <Redo2 className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Redo (Ctrl+Shift+Z)
+             </div>
+           </button>
+
+           <div className="w-px h-6 bg-hall-200 dark:bg-hall-800 mx-1"></div>
+
+           <button
              onClick={() => setIsHistoryOpen(!isHistoryOpen)}
              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isHistoryOpen ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="History"
            >
-             <Undo2 className="w-4 h-4" />
+             <List className="w-4 h-4" />
              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
                Version History
              </div>
