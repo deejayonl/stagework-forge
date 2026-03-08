@@ -567,3 +567,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Create an `/api/audit/fix` endpoint that takes the HTML and the list of warnings, and uses the LLM to patch the HTML, returning the resolved code.
 - [x] **Task 52.4: State Integration**
   - Ensure the Auto-Fix correctly updates the `workspaces` state and pushes to the Undo/Redo history stack.
+
+## Phase 53: Visual Logic Builder & AI Actions
+*Status: Completed*
+
+- [x] **Task 53.1: Events & Actions UI**
+  - Create a new "Interactions & Logic" tab in `PropertyInspector.tsx`.
+  - Allow users to bind standard DOM events (Click, Hover, Submit) to elements.
+- [x] **Task 53.2: AI Action Generator Modal**
+  - Build `LogicGeneratorModal.tsx` where users can type a natural language prompt (e.g., "When clicked, fetch weather data and update the text element below").
+- [x] **Task 53.3: BFF Route for Logic Generation**
+  - Create `/api/generate-logic` in the Node.js BFF to process the prompt and return raw JavaScript logic.
+- [x] **Task 53.4: Logic Injection Engine**
+  - Update `fileUtils.ts` and `Workspace.tsx` to safely inject the generated JavaScript into the project's global `<script>` execution context.

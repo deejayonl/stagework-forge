@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, Library, Database } from 'lucide-react';
 import { fixHtmlNode, rewriteText, generateImage } from '../services/geminiService';
 import { ImageSize } from '../types';
+import { LogicGeneratorModal } from './LogicGeneratorModal';
 
 interface PropertyInspectorProps {
   selectedElement: any;
@@ -61,6 +62,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   const [imagePrompt, setImagePrompt] = useState('');
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [activeState, setActiveState] = useState<string>('none');
+  const [isLogicModalOpen, setIsLogicModalOpen] = useState(false);
+  const [activeLogicEvent, setActiveLogicEvent] = useState<string | null>(null);
   const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
   if (!selectedElement) return null;
@@ -2795,7 +2798,10 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
         {/* Events */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Events & Actions</h4>
+          <div className="flex items-center justify-between border-b border-hall-200 dark:border-hall-800 pb-1">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider">Events & Actions</h4>
+            <Sparkles className="w-3 h-3 text-indigo-500" />
+          </div>
           
           <div className="space-y-2">
             {['click', 'change', 'submit', 'mouseEnter', 'mouseLeave'].map(eventName => {
@@ -2805,12 +2811,24 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
               return (
                 <div key={eventName} className="space-y-1 bg-hall-50 dark:bg-hall-900/30 p-2 rounded-lg border border-hall-200 dark:border-hall-800">
-                  <label className="text-[10px] font-mono text-hall-600 dark:text-hall-400">on{eventName.charAt(0).toUpperCase() + eventName.slice(1)}</label>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] font-mono text-hall-600 dark:text-hall-400">on{eventName.charAt(0).toUpperCase() + eventName.slice(1)}</label>
+                    <button 
+                      onClick={() => {
+                        setActiveLogicEvent(attrKey);
+                        setIsLogicModalOpen(true);
+                      }}
+                      className="text-[9px] text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 flex items-center gap-1 bg-indigo-50 dark:bg-indigo-900/20 px-1.5 py-0.5 rounded"
+                    >
+                      <Sparkles className="w-2.5 h-2.5" />
+                      AI Logic
+                    </button>
+                  </div>
                   <input
                     type="text"
                     value={currentValue}
                     onChange={(e) => onUpdateAttribute?.(attrKey, e.target.value)}
-                    placeholder="e.g. setVariable:isOpen:true"
+                    placeholder="e.g. setVariable:isOpen:true or custom JS"
                     className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-xs text-hall-900 dark:text-ink focus:ring-1 focus:ring-amber-500 outline-none"
                   />
                 </div>
@@ -2818,7 +2836,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             })}
           </div>
           <p className="text-[9px] text-hall-500 leading-tight">
-            Actions: <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">navigate:page</code>, <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">setVariable:k:v</code>, <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">toggleVariable:k</code>
+            Use AI to generate complex JavaScript, or use built-in actions: <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">navigate:page</code>, <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">setVariable:k:v</code>
           </p>
         </div>
 
@@ -3208,6 +3226,19 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         </div>
 
       </div>
+
+      <LogicGeneratorModal
+        isOpen={isLogicModalOpen}
+        onClose={() => {
+          setIsLogicModalOpen(false);
+          setActiveLogicEvent(null);
+        }}
+        onGenerate={(logic) => {
+          if (activeLogicEvent) {
+            onUpdateAttribute?.(activeLogicEvent, logic);
+          }
+        }}
+      />
     </div>
   );
 };
