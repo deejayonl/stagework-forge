@@ -631,6 +631,81 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               />
             </div>
           </div>
+
+          <div className="grid grid-cols-3 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Flex Grow</label>
+              <input 
+                type="number" 
+                value={styles.flexGrow || ''} 
+                onChange={(e) => handleStyleChange('flexGrow', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="0"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Flex Shrink</label>
+              <input 
+                type="number" 
+                value={styles.flexShrink || ''} 
+                onChange={(e) => handleStyleChange('flexShrink', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="1"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Order</label>
+              <input 
+                type="number" 
+                value={styles.order || ''} 
+                onChange={(e) => handleStyleChange('order', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="0"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Flex Basis</label>
+              <input 
+                type="text" 
+                value={styles.flexBasis || ''} 
+                onChange={(e) => handleStyleChange('flexBasis', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="auto"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Align Self</label>
+              <select
+                value={styles.alignSelf || 'auto'}
+                onChange={(e) => handleStyleChange('alignSelf', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="auto">auto</option>
+                <option value="flex-start">start</option>
+                <option value="flex-end">end</option>
+                <option value="center">center</option>
+                <option value="baseline">baseline</option>
+                <option value="stretch">stretch</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Justify Self</label>
+              <select
+                value={styles.justifySelf || 'auto'}
+                onChange={(e) => handleStyleChange('justifySelf', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="auto">auto</option>
+                <option value="start">start</option>
+                <option value="end">end</option>
+                <option value="center">center</option>
+                <option value="stretch">stretch</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Spacing */}

@@ -563,3 +563,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a dropdown for `mix-blend-mode` (normal, multiply, screen, overlay, darken, lighten, etc.).
 - [x] **Task 45.3: Custom Tailwind Classes Input**
   - Add a raw text area field to allow power users to append or edit custom utility classes directly to the element's `className`.
+## Phase 46: Flex & Grid Item Controls
+*Status: Complete*
+
+- [x] **Task 46.1: Flex Sizing**
+  - Add inputs for `flex-grow`, `flex-shrink`, and `flex-basis` in the Layout section.
+- [x] **Task 46.2: Alignment Overrides**
+  - Add dropdowns for `align-self` and `justify-self`.
+- [x] **Task 46.3: Item Ordering**
+  - Add an input for `order` to control the visual order of flex/grid items.
