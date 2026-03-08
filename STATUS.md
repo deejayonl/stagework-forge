@@ -506,11 +506,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Commit to continue the CI/CD deploy cycle.
 
 ## Phase 40: Advanced CSS Grid Controls
-*Status: In Progress*
+*Status: Complete*
 
 - [x] **Task 40.1: Grid Template Builder UI**
   - Add visual inputs in PropertyInspector for `grid-template-columns` and `grid-template-rows`.
-- [ ] **Task 40.2: Grid Item Controls**
+- [x] **Task 40.2: Grid Item Controls**
   - Add inputs for `grid-column` and `grid-row` to allow elements to span multiple tracks.
-- [ ] **Task 40.3: Grid Gap Linking**
+- [x] **Task 40.3: Grid Gap Linking**
   - Add independent row-gap and column-gap controls.

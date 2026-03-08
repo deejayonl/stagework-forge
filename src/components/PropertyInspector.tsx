@@ -480,8 +480,56 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 </div>
               </div>
 
+              {styles.display === 'grid' && (
+                <div className="grid grid-cols-2 gap-2 mt-1">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500">Row Gap</label>
+                    <input 
+                      type="text" 
+                      value={styles.rowGap || ''} 
+                      onChange={(e) => handleStyleChange('rowGap', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="e.g. 16px"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500">Col Gap</label>
+                    <input 
+                      type="text" 
+                      value={styles.columnGap || ''} 
+                      onChange={(e) => handleStyleChange('columnGap', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="e.g. 16px"
+                    />
+                  </div>
+                </div>
+              )}
+
             </div>
           )}
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Grid Column</label>
+              <input 
+                type="text" 
+                value={styles.gridColumn || ''} 
+                onChange={(e) => handleStyleChange('gridColumn', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. span 2"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Grid Row</label>
+              <input 
+                type="text" 
+                value={styles.gridRow || ''} 
+                onChange={(e) => handleStyleChange('gridRow', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 1 / 3"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Spacing */}
