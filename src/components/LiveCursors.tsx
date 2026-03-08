@@ -11,18 +11,19 @@ interface Cursor {
 
 interface LiveCursorsProps {
   roomName: string;
+  onUsersChange?: (users: {id: number, name: string, color: string}[]) => void;
 }
 
 const COLORS = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef', '#f43f5e'];
 
-export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName }) => {
+export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName, onUsersChange }) => {
   const [cursors, setCursors] = useState<Map<number, Cursor>>(new Map());
   
 
   useEffect(() => {
     const ydoc = new Y.Doc();
-    // Use a public y-websocket server for demo/preparation
-    const wsProvider = new WebsocketProvider('wss://demos.yjs.dev', `forge-${roomName}`, ydoc);
+    // Use the BFF websocket server for production
+    const wsProvider = new WebsocketProvider('wss://sgfbackend.deejay.onl/sync', `${roomName}`, ydoc);
     
     const awareness = wsProvider.awareness;
     
@@ -47,8 +48,17 @@ export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName }) => {
     awareness.on('change', () => {
       const states = awareness.getStates();
       const newCursors = new Map<number, Cursor>();
+      const users: {id: number, name: string, color: string}[] = [];
       
       states.forEach((state, clientID) => {
+        if (state.user) {
+          users.push({
+            id: clientID,
+            name: state.user.name,
+            color: state.user.color
+          });
+        }
+        
         if (clientID !== wsProvider.awareness.clientID) {
           if (state.cursor && state.user) {
             newCursors.set(clientID, {
@@ -62,6 +72,9 @@ export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName }) => {
       });
       
       setCursors(newCursors);
+      if (onUsersChange) {
+        onUsersChange(users);
+      }
     });
 
     

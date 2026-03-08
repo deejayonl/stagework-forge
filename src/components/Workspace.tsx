@@ -19,6 +19,7 @@ import { DeployPanel } from './DeployPanel';
 import { ContextMenu, ContextMenuAction } from './ContextMenu';
 import { Moon, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component, ShieldCheck } from 'lucide-react';
 import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
+import { LiveCursors } from './LiveCursors';
 
 
 interface WorkspaceProps {
@@ -46,6 +47,7 @@ interface WorkspaceProps {
   onUpdateAssets?: (assets: Record<string, string>) => void;
   onFileChange?: (files: GeneratedFile[], commitDescription?: string) => void;
   onOpenImageTool?: (onPick: (url: string) => void) => void;
+  activeUsers?: any[];
 }
 
 const WorkspaceInner: React.FC<WorkspaceProps> = ({ 
@@ -71,7 +73,8 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
   onUpdateApis,
   onUpdateAssets,
   onFileChange, 
-  onOpenImageTool 
+  onOpenImageTool,
+  activeUsers = [],
 }) => {
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
   const [activeFile, setActiveFile] = useState<string>(files[0]?.name || '');
@@ -90,6 +93,7 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
   const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
   const [mediaPickCallback, setMediaPickCallback] = useState<((url: string) => void) | null>(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [connectedUsers, setConnectedUsers] = useState<{id: number, name: string, color: string}[]>([]);
   const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
   const { history, pushState, undo, redo, canUndo, canRedo } = useWorkspaceContext();
   
@@ -980,6 +984,7 @@ useEffect(() => {
           : 'w-full rounded-2xl md:rounded-[32px] border-x-0 md:border-x border-y border-hall-200 dark:border-hall-800'
       }`}
     >
+      {projectId && <LiveCursors roomName={projectId} onUsersChange={setConnectedUsers} />}
       {/* Toolbar */}
       <div className="flex items-center justify-between px-3 md:px-4 py-3 border-b border-hall-200 dark:border-hall-800 bg-hall-50 dark:bg-hall-900/50 rounded-t-2xl md:rounded-t-[32px] shrink-0">
         <div className="flex items-center gap-1 p-1 bg-hall-200 dark:bg-hall-800 rounded-full shadow-inner">
@@ -1055,6 +1060,28 @@ useEffect(() => {
         )}
 
         <div className="flex items-center gap-1 md:gap-2">
+          {/* Connected Users Avatar Stack */}
+          {connectedUsers.length > 0 && (
+            <div className="hidden sm:flex items-center mr-2 -space-x-2">
+              {connectedUsers.slice(0, 4).map((user) => (
+                <div 
+                  key={user.id}
+                  className="w-8 h-8 rounded-full border-2 border-hall-50 dark:border-hall-900 flex items-center justify-center text-white text-xs font-bold shadow-sm relative group z-0 hover:z-10 transition-transform hover:scale-110 cursor-pointer"
+                  style={{ backgroundColor: user.color }}
+                >
+                  {user.name.charAt(0).toUpperCase()}
+                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-[10px] font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                    {user.name}
+                  </div>
+                </div>
+              ))}
+              {connectedUsers.length > 4 && (
+                <div className="w-8 h-8 rounded-full border-2 border-hall-50 dark:border-hall-900 bg-hall-200 dark:bg-hall-800 text-hall-600 dark:text-hall-300 flex items-center justify-center text-xs font-bold shadow-sm z-10">
+                  +{connectedUsers.length - 4}
+                </div>
+              )}
+            </div>
+          )}
           <button
             onClick={() => {
               setIsPreviewDarkMode(!isPreviewDarkMode);
@@ -1105,6 +1132,31 @@ useEffect(() => {
               </div>
             </button>
           </div>
+
+          {/* Active Users Avatar Stack */}
+          {activeUsers && activeUsers.length > 0 && (
+            <div className="flex items-center -space-x-2 mr-4 border-r border-hall-200 dark:border-hall-800 pr-4">
+              {activeUsers.slice(0, 3).map((user, i) => (
+                <div 
+                  key={user.id || i}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white dark:border-hall-950 shadow-sm relative group cursor-default"
+                  style={{ backgroundColor: user.color || '#3b82f6', zIndex: 10 - i }}
+                >
+                  {(user.name || 'User').charAt(0).toUpperCase()}
+                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                    {user.name || 'Anonymous User'}
+                  </div>
+                </div>
+              ))}
+              {activeUsers.length > 3 && (
+                <div 
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold bg-hall-200 dark:bg-hall-800 text-hall-600 dark:text-hall-400 border-2 border-white dark:border-hall-950 shadow-sm z-[0]"
+                >
+                  +{activeUsers.length - 3}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="relative">
             <button

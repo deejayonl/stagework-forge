@@ -686,3 +686,23 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a line number gutter to `CodeEditor.tsx` that calculates the number of lines in the `value` string and renders them.
 - [x] **Task 65.2: Sync Line Numbers Scrolling**
   - Ensure the line numbers gutter scrolls perfectly in sync with the `textarea` and `<pre>` elements.
+
+## Phase 66: Real-Time Multiplayer Collaboration
+*Status: Complete*
+
+- [x] **Task 66.1: Migrate LiveCursors WebSocket Provider**
+  - Update `LiveCursors.tsx` to use the BFF WebSocket route (`wss://sgfbackend.deejay.onl/sync`) instead of the public `demos.yjs.dev` server.
+- [x] **Task 66.2: Integrate LiveCursors into Workspace**
+  - Render the `LiveCursors` component globally within `Workspace.tsx` so users can see each other's mouse movements across the editor.
+- [x] **Task 66.3: Multi-User Avatar Stack UI**
+  - Add a small avatar stack in the `Workspace.tsx` OmniBar showing the currently connected users in the project session.
+
+## Phase 67: Version History & Rollback UI
+*Status: Pending*
+
+- [ ] **Task 67.1: History Panel UI**
+  - Create `HistoryPanel.tsx` in `src/components/` to display a list of past snapshots (with timestamps and descriptions).
+- [ ] **Task 67.2: History State Integration**
+  - Hook the `HistoryPanel` into the existing `WorkspaceContext` history stack (`past`, `present`, `future`).
+- [ ] **Task 67.3: Snapshot Restoration Logic**
+  - Allow users to click on a past snapshot in the `HistoryPanel` to instantly revert the `present` state to that point in time.
