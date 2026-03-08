@@ -4,11 +4,12 @@ import { Database, Plus, Trash2, Save, Play, X } from 'lucide-react';
 
 interface ApiIntegrationsPanelProps {
   apis: Record<string, ApiEndpoint>;
+  projectId?: string;
   onUpdate: (apis: Record<string, ApiEndpoint>) => void;
   onClose: () => void;
 }
 
-export function ApiIntegrationsPanel({ apis, onUpdate, onClose }: ApiIntegrationsPanelProps) {
+export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: ApiIntegrationsPanelProps) {
   const [selectedApiId, setSelectedApiId] = useState<string | null>(null);
   const [editingApi, setEditingApi] = useState<ApiEndpoint | null>(null);
   const [testResponse, setTestResponse] = useState<string | null>(null);
@@ -52,14 +53,23 @@ export function ApiIntegrationsPanel({ apis, onUpdate, onClose }: ApiIntegration
     setIsTesting(true);
     setTestResponse(null);
     try {
+      let targetUrl = editingApi.url;
       const options: RequestInit = {
         method: editingApi.method,
         headers: editingApi.headers,
       };
+      
       if (editingApi.method !== 'GET' && editingApi.method !== 'HEAD' && editingApi.body) {
         options.body = editingApi.body;
       }
-      const res = await fetch(editingApi.url, options);
+
+      // Use the BFF proxy if projectId is available
+      if (projectId) {
+        const PROXY_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/proxy' : '/api/proxy';
+        targetUrl = `${PROXY_BASE}/${projectId}/${editingApi.id}`;
+      }
+
+      const res = await fetch(targetUrl, options);
       const data = await res.text();
       try {
         const json = JSON.parse(data);

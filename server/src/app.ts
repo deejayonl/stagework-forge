@@ -12,6 +12,7 @@ import { projectRoutes } from './routes/projects.js';
 import { exportRoutes } from './routes/export.js';
 import { autofixRoutes } from './routes/autofix.js';
 import { deployRoutes } from './routes/deploy.js';
+import { proxyRoutes } from './routes/proxy.js';
 import { rateLimiter } from './middleware/rate-limit.js';
 
 export const app = new Hono();
@@ -40,6 +41,7 @@ app.route('/api/projects', projectRoutes);
 app.route('/api/export', exportRoutes);
 app.route('/api/autofix', autofixRoutes);
 app.route('/api/deploy', deployRoutes);
+app.route('/api/proxy', proxyRoutes);
 
 // Health check
 app.get('/api/health', (c) => {

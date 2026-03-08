@@ -61,22 +61,22 @@ export const createZipDownload = async (
             twConfigScript.id = 'forge-tw-config';
             doc.head.appendChild(twConfigScript);
           }
-          twConfigScript.textContent = \`
+          twConfigScript.textContent = `
             tailwind.config = {
               theme: {
                 extend: {
                   colors: {
-                    primary: '\${theme.primary || '#3b82f6'}',
-                    secondary: '\${theme.secondary || '#64748b'}',
-                    accent: '\${theme.accent || '#8b5cf6'}'
+                    primary: '${theme.primary || '#3b82f6'}',
+                    secondary: '${theme.secondary || '#64748b'}',
+                    accent: '${theme.accent || '#8b5cf6'}'
                   },
                   fontFamily: {
-                    sans: ['"\${theme.fontFamily || 'Inter'}"', 'sans-serif']
+                    sans: ['"${theme.fontFamily || 'Inter'}"', 'sans-serif']
                   }
                 }
               }
             }
-          \`;
+          `;
           needsUpdate = true;
           
           if (theme.fontFamily) {
@@ -88,8 +88,8 @@ export const createZipDownload = async (
               doc.head.appendChild(fontLink);
             }
             const formattedName = theme.fontFamily.replace(/ /g, '+');
-            fontLink.setAttribute('href', \`https://fonts.googleapis.com/css2?family=\${formattedName}:wght@300;400;500;600;700&display=swap\`);
-            doc.body.style.fontFamily = \`"\${theme.fontFamily}", sans-serif\`;
+            fontLink.setAttribute('href', `https://fonts.googleapis.com/css2?family=${formattedName}:wght@300;400;500;600;700&display=swap`);
+            doc.body.style.fontFamily = `"${theme.fontFamily}", sans-serif`;
           }
         }
 

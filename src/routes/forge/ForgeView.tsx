@@ -65,8 +65,6 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectSEO,
     updateProjectCollections,
     updateProjectApis,
-    updateProjectCollections,
-    updateProjectSEO,
     addVersionToProject,
     deleteProject, 
     selectProject, 
@@ -516,6 +514,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                        </div>
                        <div className="w-full h-full pt-8 pointer-events-none">
                          <Workspace 
+                           projectId={p.id}
                            files={p.versions[p.currentVersionIndex].files}
                            variables={p.variables || {}}
                            components={p.components || {}}
@@ -533,6 +532,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                 </div>
              ) : (
                 hasProject && <Workspace 
+                 projectId={currentProject?.id}
                  files={previewFiles || currentFiles} 
                  variables={currentProject?.variables || {}}
                  components={currentProject?.components || {}}
@@ -543,10 +543,8 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                  onUpdateVariables={updateProjectVariables}
                  onUpdateComponents={updateProjectComponents}
                  onUpdateTheme={updateProjectTheme}
-          onUpdateSEO={updateProjectSEO}
                  onUpdateCollections={updateProjectCollections}
                  onUpdateApis={updateProjectApis}
-          onUpdateCollections={updateProjectCollections}
                  onUpdateSEO={updateProjectSEO}
                  onFileChange={handleWorkspaceFileChange}
                  onOpenImageTool={(callback) => {

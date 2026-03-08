@@ -15,6 +15,7 @@ export interface ProjectState {
   mutations: any[]; // The real-time changes
   components?: Record<string, string>; // Saved custom components (name -> HTML)
   collections?: Record<string, any>; // CMS Collections
+  apis?: Record<string, any>; // External APIs
   customDomain?: string;
   updatedAt: number;
 }
@@ -50,6 +51,7 @@ class ProjectStore {
       mutations: project.mutations || existing.mutations || [],
       components: project.components || existing.components || {},
       collections: project.collections || existing.collections || {},
+      apis: project.apis || existing.apis || {},
       customDomain: project.customDomain || existing.customDomain,
       updatedAt: now,
     };
