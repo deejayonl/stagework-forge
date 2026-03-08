@@ -678,3 +678,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add Mobile, Tablet, and Desktop icon buttons to the OmniBar in `Workspace.tsx`.
 - [x] **Task 64.3: Iframe Scaling Logic**
   - Wrap the `iframe` preview in a container that scales and resizes based on the selected viewport (e.g., `w-[375px]` for mobile, `w-[768px]` for tablet, `w-full` for desktop) and centers it on the screen with a nice drop shadow when not full width.
+
+## Phase 65: Code Editor Polish
+*Status: Complete*
+
+- [x] **Task 65.1: Code Editor Line Numbers**
+  - Add a line number gutter to `CodeEditor.tsx` that calculates the number of lines in the `value` string and renders them.
+- [x] **Task 65.2: Sync Line Numbers Scrolling**
+  - Ensure the line numbers gutter scrolls perfectly in sync with the `textarea` and `<pre>` elements.
