@@ -544,3 +544,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add inputs for `top`, `right`, `bottom`, and `left` properties (only show when position is not static).
 - [x] **Task 43.3: Overflow Controls**
   - Add toggles/dropdowns for `overflow-x` and `overflow-y` (visible, hidden, scroll, auto).
+
+## Phase 44: Transform & Transition Controls
+*Status: Complete*
+
+- [x] **Task 44.1: Transform Scale & Rotate**
+  - Add inputs for `scale` (X and Y) and `rotate` (degrees) to `PropertyInspector.tsx`.
+- [x] **Task 44.2: Transform Translate**
+  - Add inputs for `translate` (X and Y).
+- [x] **Task 44.3: Custom Transition Settings**
+  - Add inputs for `transition-duration` and `transition-timing-function` (ease, linear, ease-in, ease-out, ease-in-out).

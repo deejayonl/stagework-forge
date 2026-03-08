@@ -57,9 +57,6 @@ export const generateCode = async (
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`,
-            'X-AI-Provider': provider,
-        'X-AI-Provider': provider,
-        'X-AI-Provider': provider,
             'X-AI-Provider': provider
         },
         body: JSON.stringify({

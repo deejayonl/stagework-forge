@@ -103,8 +103,9 @@ export default function App() {
   return (
     <div className="flex h-screen bg-transparent text-ink relative">
       {!isPreview && (
-      {/* Sidebar wrapper to prevent layout shift */}
-      <div className="w-[68px] shrink-0 z-50 relative h-full hidden md:block">
+        <>
+          {/* Sidebar wrapper to prevent layout shift */}
+          <div className="w-[68px] shrink-0 z-50 relative h-full hidden md:block">
         <aside className="absolute top-0 left-0 h-full w-[68px] hover:w-[180px] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] bg-hall-950 border-r border-hall-700/50 flex flex-col items-center hover:items-start py-5 gap-1.5 z-50 group/sidebar overflow-hidden shadow-[4px_0_24px_-8px_rgba(0,0,0,0.5)] hover:shadow-[12px_0_32px_-12px_rgba(0,0,0,0.6)]">
           {/* Logo mark */}
           <div className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-hall-950 font-bold text-sm mb-8 shadow-lg shadow-indigo-500/20 group-hover/sidebar:mx-5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
@@ -161,12 +162,14 @@ export default function App() {
           </div>
         </aside>
       </div>
+        </>
       )}
 
       
       {!isPreview && (
-      {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hall-950 border-t border-hall-800 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+        <>
+          {/* Mobile Bottom Navigation */}
+          <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hall-950 border-t border-hall-800 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
@@ -186,6 +189,7 @@ export default function App() {
           </NavLink>
         ))}
       </div>
+        </>
       )}
 
       {/* Main content */}

@@ -1011,11 +1011,78 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
+        {/* Transform & Transition */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Transform & Transition</h4>
+          
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Scale</label>
+              <input 
+                type="text" 
+                value={styles.scale || ''} 
+                onChange={(e) => handleStyleChange('scale', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 1.2 or 1.2 1"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Rotate</label>
+              <input 
+                type="text" 
+                value={styles.rotate || ''} 
+                onChange={(e) => handleStyleChange('rotate', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 45deg"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1 mt-2">
+            <label className="text-[10px] text-hall-500">Translate (X Y)</label>
+            <input 
+              type="text" 
+              value={styles.translate || ''} 
+              onChange={(e) => handleStyleChange('translate', e.target.value)}
+              className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              placeholder="e.g. 10px 20px"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Transition Duration</label>
+              <input 
+                type="text" 
+                value={styles.transitionDuration || ''} 
+                onChange={(e) => handleStyleChange('transitionDuration', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 300ms"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Timing Function</label>
+              <select
+                value={styles.transitionTimingFunction || ''}
+                onChange={(e) => handleStyleChange('transitionTimingFunction', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">Default</option>
+                <option value="ease">ease</option>
+                <option value="linear">linear</option>
+                <option value="ease-in">ease-in</option>
+                <option value="ease-out">ease-out</option>
+                <option value="ease-in-out">ease-in-out</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         
         {/* Form Elements */}
         {['input', 'textarea', 'select', 'form', 'button'].includes(tagName.toLowerCase()) && (
           <div className="space-y-3">
-            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Form Properties</h4>
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Form Properties</h4>
             
             {tagName.toLowerCase() === 'form' && (
               <div className="space-y-2">
