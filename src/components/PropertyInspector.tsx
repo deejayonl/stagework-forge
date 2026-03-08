@@ -24,6 +24,7 @@ interface PropertyInspectorProps {
   onAddTableRow?: () => void;
   onAddTableColumn?: () => void;
   pages?: string[];
+  activeBreakpoint?: 'desktop' | 'tablet' | 'mobile';
 }
 
 export const PropertyInspector: React.FC<PropertyInspectorProps> = ({ 
@@ -47,7 +48,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onSaveComponent,
   onAddTableRow,
   onAddTableColumn,
-  pages = []
+  pages = [],
+  activeBreakpoint = 'desktop'
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isRewriting, setIsRewriting] = useState(false);
@@ -91,7 +93,14 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   return (
     <div className="w-64 h-full bg-hall-50/95 dark:bg-hall-950/95 backdrop-blur-xl border-l border-hall-200 dark:border-hall-800 flex flex-col shadow-2xl z-50 overflow-y-auto">
       <div className="flex items-center justify-between p-4 border-b border-hall-200 dark:border-hall-800">
-        <h3 className="text-sm font-bold text-hall-900 dark:text-ink">Inspector</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-bold text-hall-900 dark:text-ink">Inspector</h3>
+          {activeBreakpoint !== 'desktop' && (
+            <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+              {activeBreakpoint}
+            </span>
+          )}
+        </div>
         <button onClick={onClose} className="text-hall-500 hover:text-hall-900 dark:hover:text-ink">
           ✕
         </button>
@@ -1052,11 +1061,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
           <div className="grid grid-cols-2 gap-2">
             {['animate-pulse', 'animate-bounce', 'animate-spin', 'animate-ping'].map(anim => {
-              const isActive = selectedElement.className?.includes(anim);
+              const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+              const prefixedAnim = prefix + anim;
+              const isActive = selectedElement.className?.includes(prefixedAnim);
               return (
                 <button
                   key={anim}
-                  onClick={() => onToggleClass && onToggleClass(anim, !isActive)}
+                  onClick={() => onToggleClass && onToggleClass(prefixedAnim, !isActive)}
                   className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
                 >
                   {anim.replace('animate-', '')}
@@ -1069,11 +1080,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Transitions</h4>
           <div className="grid grid-cols-2 gap-2">
             {['transition-all', 'transition-colors', 'transition-opacity', 'transition-transform'].map(trans => {
-              const isActive = selectedElement.className?.includes(trans);
+              const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+              const prefixedTrans = prefix + trans;
+              const isActive = selectedElement.className?.includes(prefixedTrans);
               return (
                 <button
                   key={trans}
-                  onClick={() => onToggleClass && onToggleClass(trans, !isActive)}
+                  onClick={() => onToggleClass && onToggleClass(prefixedTrans, !isActive)}
                   className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
                 >
                   {trans.replace('transition-', '')}
@@ -1157,11 +1170,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
           <div className="grid grid-cols-2 gap-2 mt-2">
             {['duration-150', 'duration-300', 'duration-500', 'duration-700'].map(dur => {
-              const isActive = selectedElement.className?.includes(dur);
+              const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+              const prefixedDur = prefix + dur;
+              const isActive = selectedElement.className?.includes(prefixedDur);
               return (
                 <button
                   key={dur}
-                  onClick={() => onToggleClass && onToggleClass(dur, !isActive)}
+                  onClick={() => onToggleClass && onToggleClass(prefixedDur, !isActive)}
                   className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
                 >
                   {dur.replace('duration-', '')}ms

@@ -386,3 +386,24 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update `Workspace.tsx`'s `MediaManager` `onUpload` handler to post files to the new BFF route instead of using `URL.createObjectURL`.
 - [x] **Task 38.4: Image Property Integration**
   - `PropertyInspector.tsx` is already integrated with `Workspace.tsx` to allow selecting an image from the Media Manager.
+
+## Phase 39: Responsive Breakpoints Editor
+*Status: Complete*
+
+- [x] **Task 39.1: Breakpoint Toggle UI**
+  - Add Desktop, Tablet, and Mobile toggle icons to the `StageView.tsx` or `Workspace.tsx` header (where the preview iframe is).
+- [x] **Task 39.2: Breakpoint State Management**
+  - Add `activeBreakpoint` (e.g., 'base', 'sm', 'md', 'lg') to the workspace state.
+  - Ensure the Stage preview iframe resizes to match the selected breakpoint (Desktop: 100%, Tablet: 768px, Mobile: 375px).
+- [x] **Task 39.3: Responsive Property Inspector**
+  - Update `PropertyInspector.tsx` to apply Tailwind classes with the correct prefix (e.g., `md:`, `sm:`) based on the active breakpoint.
+
+## Phase 40: Custom Fonts & Typography Management
+*Status: Pending*
+
+- [ ] **Task 40.1: Font Manager UI**
+  - Create a modal or sidebar panel to browse and select from a curated list of Google Fonts.
+- [ ] **Task 40.2: Font Injection Logic**
+  - Inject selected Google Fonts `<link>` tags into the project's `<head>` configuration so they render in the Stage preview.
+- [ ] **Task 40.3: Property Inspector Integration**
+  - Update `PropertyInspector.tsx` typography section to populate the `font-family` dropdown with the user's selected custom fonts.
