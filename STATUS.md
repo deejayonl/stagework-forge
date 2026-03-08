@@ -600,3 +600,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Allow users to define fields (Text, Number, Boolean, Image) for each collection.
 - [x] **Task 55.3: Dynamic Data Binding**
   - Update `PropertyInspector.tsx` to allow binding element text/images to collection data.
+
+## Phase 56: Advanced Animation & Interaction Engine
+*Status: Pending*
+
+- [ ] **Task 56.1: Animation Panel in Property Inspector**
+  - Add a dedicated "Animations" section in `PropertyInspector.tsx`.
+  - Include presets for Entrance (Fade, Slide, Zoom), Hover (Scale, Glow), and Scroll Reveal (AOS-style).
+- [ ] **Task 56.2: Keyframe Timeline Builder**
+  - Create a visual timeline for complex multi-step animations on selected elements.
+- [ ] **Task 56.3: Lottie & Rive Integration**
+  - Allow users to upload or link `.json` Lottie files and `.riv` files as native components in the Component Library.
