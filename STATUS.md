@@ -106,5 +106,5 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 5.1: Verify API Routes**
   - Ensure that the application correctly hits `https://sgfbackend.deejay.onl/api/generate` and `https://sgfbackend.deejay.onl/api/mutate`.
   - Validate that the responses are correctly parsed and rendered in the Studio and Stage tabs.
-- [ ] **Task 5.2: Verify State Transitions**
+- [x] **Task 5.2: Verify State Transitions**
   - Test the flow from Script -> Studio -> Stage to ensure loading screens and routing work as expected.
