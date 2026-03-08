@@ -1,8 +1,8 @@
 const fs = require('fs');
-const path = './STATUS.md';
-let code = fs.readFileSync(path, 'utf8');
+let content = fs.readFileSync('STATUS.md', 'utf8');
 
-code = code.replace('- [ ] **Task 33.1', '- [x] **Task 33.1');
-code = code.replace('*Status: In Progress*', '*Status: Complete*');
+content = content.replace(/## Phase 44\.5: Mobile Layout Finalization \(Stage\)\n\*Status: Pending\*/g, '## Phase 44.5: Mobile Layout Finalization (Stage)\n*Status: Completed*');
+content = content.replace(/- \[ \] \*\*Task 44\.5\.1: Stage Input Viewport Fix\*\*/g, '- [x] **Task 44.5.1: Stage Input Viewport Fix**');
+content = content.replace(/- \[ \] \*\*Task 44\.5\.2: Top Header & Iframe Resizing\*\*/g, '- [x] **Task 44.5.2: Top Header & Iframe Resizing**');
 
-fs.writeFileSync(path, code, 'utf8');
+fs.writeFileSync('STATUS.md', content);

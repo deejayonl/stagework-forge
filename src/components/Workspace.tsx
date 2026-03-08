@@ -1296,7 +1296,7 @@ useEffect(() => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 relative overflow-hidden rounded-b-[32px]">
+      <div className="flex-1 min-h-0 relative overflow-hidden rounded-b-[32px]">
         
         
         {/* Pages Manager Panel */}

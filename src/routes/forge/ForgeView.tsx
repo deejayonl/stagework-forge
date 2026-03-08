@@ -645,10 +645,10 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
         </div>
 
         <div 
-          className={`absolute left-0 right-0 z-50 flex flex-col items-center justify-start px-3 md:px-4 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`absolute left-0 right-0 z-50 flex flex-col items-center justify-start px-3 md:px-4 pb-safe transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isInitialGen 
               ? 'top-[15vh]' 
-              : 'top-[80px]' 
+              : hasProject ? 'bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-6 md:top-auto' : 'top-[80px]' 
           }`}
         >
           <div className={`w-full transition-all duration-700 ease-out pointer-events-auto ${hasProject ? 'max-w-2xl' : 'max-w-3xl'}`}>

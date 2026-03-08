@@ -458,6 +458,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 44.3: Canvas Integration**
   - Upon successful generation, automatically update the selected `<img>` element's `src` attribute with the new asset URL.
 
+## Phase 44.5: Mobile Layout Finalization (Stage)
+*Status: Completed*
+
+- [x] **Task 44.5.1: Stage Input Viewport Fix**
+  - Force the `StageView` input container and bottom navigation to respect the iOS Safe Area (`pb-safe`) and `env(safe-area-inset-bottom)` so the "Ask Forge" input is not clipped by the iOS swipe indicator.
+- [x] **Task 44.5.2: Top Header & Iframe Resizing**
+  - Ensure the top header and the Preview iframe flex dynamically (`min-h-0`, `flex-1`) so they do not push the bottom navigation off-screen on mobile devices.
+- [ ] **Task 44.5.3: Script Tab Typography bounds**
+  - Ensure the "All great outputs" slogan uses `text-3xl sm:text-5xl` to prevent layout breaking on narrow screens.
+
 ## Phase 45: Advanced Layout Controls (Flexbox/Grid GUI)
 *Status: Pending*
 

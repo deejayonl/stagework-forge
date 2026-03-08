@@ -108,7 +108,7 @@ export default function ScriptView() {
   }
 
   return (
-    <div className="w-full h-full flex flex-col bg-hall-950 text-ink overflow-auto p-4 md:p-8 lg:p-12 relative isolate">
+    <div className="w-full min-h-full flex flex-col bg-hall-950 text-ink p-4 md:p-8 lg:p-12 relative isolate">
       {/* Background ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[40vh] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
@@ -116,7 +116,7 @@ export default function ScriptView() {
         
         {/* Typography & Slogan Section */}
         <div className="text-center mb-12 space-y-6">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-hall-100 via-hall-300 to-hall-500 leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-hall-100 via-hall-300 to-hall-500 leading-tight">
             All great outputs start <br className="hidden md:block"/> with intentional input.
           </h1>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-hall-400 max-w-2xl mx-auto px-4 sm:px-0 font-medium leading-relaxed">
