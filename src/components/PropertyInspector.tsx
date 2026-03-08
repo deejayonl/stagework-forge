@@ -1187,6 +1187,94 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
+        {/* Media & Interactions */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Media & Interactions</h4>
+          
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Opacity</label>
+              <div className="flex items-center gap-2">
+                <input 
+                  type="range" 
+                  min="0" 
+                  max="1" 
+                  step="0.05"
+                  value={styles.opacity !== undefined ? parseFloat(styles.opacity) : 1} 
+                  onChange={(e) => handleStyleChange('opacity', e.target.value)}
+                  className="flex-1 accent-amber-500"
+                />
+                <span className="text-[10px] text-hall-900 dark:text-ink w-6 text-right">
+                  {styles.opacity !== undefined ? styles.opacity : '1'}
+                </span>
+              </div>
+            </div>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Cursor</label>
+              <select
+                value={styles.cursor || 'auto'}
+                onChange={(e) => handleStyleChange('cursor', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="auto">auto</option>
+                <option value="default">default</option>
+                <option value="pointer">pointer</option>
+                <option value="text">text</option>
+                <option value="move">move</option>
+                <option value="not-allowed">not-allowed</option>
+                <option value="grab">grab</option>
+                <option value="grabbing">grabbing</option>
+                <option value="crosshair">crosshair</option>
+                <option value="wait">wait</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Pointer Events</label>
+              <select
+                value={styles.pointerEvents || 'auto'}
+                onChange={(e) => handleStyleChange('pointerEvents', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="auto">auto</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+          </div>
+
+          {(tagName.toLowerCase() === 'img' || tagName.toLowerCase() === 'video' || tagName.toLowerCase() === 'iframe') && (
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">Object Fit</label>
+                <select
+                  value={styles.objectFit || 'fill'}
+                  onChange={(e) => handleStyleChange('objectFit', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="fill">fill</option>
+                  <option value="contain">contain</option>
+                  <option value="cover">cover</option>
+                  <option value="none">none</option>
+                  <option value="scale-down">scale-down</option>
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">Object Position</label>
+                <input 
+                  type="text" 
+                  value={styles.objectPosition || ''} 
+                  onChange={(e) => handleStyleChange('objectPosition', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="e.g. center"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
         
         {/* Form Elements */}
         {['input', 'textarea', 'select', 'form', 'button'].includes(tagName.toLowerCase()) && (

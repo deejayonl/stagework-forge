@@ -572,3 +572,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add dropdowns for `align-self` and `justify-self`.
 - [x] **Task 46.3: Item Ordering**
   - Add an input for `order` to control the visual order of flex/grid items.
+## Phase 47: Image & Interaction Polish
+*Status: Complete*
+
+- [x] **Task 47.1: Object Fit & Position**
+  - Add dropdowns for `object-fit` and `object-position` (useful for `<img>` and `<video>` tags).
+- [x] **Task 47.2: Opacity & Cursor Controls**
+  - Add a slider/input for `opacity` (0 to 1).
+  - Add a dropdown for `cursor` (auto, pointer, not-allowed, grab, etc.).
+- [x] **Task 47.3: Pointer Events**
+  - Add a toggle for `pointer-events` (auto, none) to control interaction flow.
