@@ -101,7 +101,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-transparent text-ink relative">
+    <div className="flex h-[100dvh] bg-transparent text-ink relative">
       {!isPreview && (
         <>
           {/* Sidebar wrapper to prevent layout shift */}
@@ -169,7 +169,7 @@ export default function App() {
       {!isPreview && (
         <>
           {/* Mobile Bottom Navigation */}
-          <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hall-950 border-t border-hall-800 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+          <div className="md:hidden fixed bottom-0 left-0 right-0 min-h-[4rem] bg-surface/90 backdrop-blur-md border-t border-border z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
@@ -193,7 +193,7 @@ export default function App() {
       )}
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto min-w-0 relative pb-16 md:pb-0">
+      <main className="flex-1 overflow-auto min-w-0 relative pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
 
         <ErrorBoundary>
           <Suspense fallback={<PageLoader />}>

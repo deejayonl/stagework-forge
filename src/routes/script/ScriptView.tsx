@@ -116,10 +116,10 @@ export default function ScriptView() {
         
         {/* Typography & Slogan Section */}
         <div className="text-center mb-12 space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-hall-100 via-hall-300 to-hall-500 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-hall-100 via-hall-300 to-hall-500 leading-tight">
             All great outputs start <br className="hidden md:block"/> with intentional input.
           </h1>
-          <p className="text-base md:text-lg lg:text-xl text-hall-400 max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-hall-400 max-w-2xl mx-auto px-4 sm:px-0 font-medium leading-relaxed">
             Take 5 minutes to write your ideas out. We need to compact user ideas into executable plans.
           </p>
         </div>

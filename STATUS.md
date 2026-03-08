@@ -93,11 +93,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 ## Phase 4.5: Mobile Responsiveness Sweep
 *Status: Complete*
 
-- [x] **Task 4.5.1: Global Mobile Navigation**
+- [ ] **Task 4.5.1: Global Mobile Navigation**
   - Ensure the sidebar collapses into a hamburger menu or bottom tab bar on mobile screens.
-- [x] **Task 4.5.2: Responsive Script Tab**
+- [ ] **Task 4.5.2: Responsive Script Tab**
   - Ensure the device sliders and intentional input area scale gracefully on `sm:` and `md:` breakpoints.
-- [x] **Task 4.5.3: Responsive Studio & Stage**
+- [ ] **Task 4.5.3: Responsive Studio & Stage**
   - Ensure the Canvas (Studio) and Live Render (Stage) are usable on mobile devices, preventing horizontal overflow where unintended and scaling down UI overlays.
 
 ## Phase 5: End-to-End Verification
