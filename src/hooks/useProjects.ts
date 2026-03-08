@@ -58,7 +58,7 @@ export const useProjects = (storageToken: string | null) => {
     ydocRef.current = ydoc;
 
     // Use a public demo server for preparation phase
-    const provider = new WebsocketProvider('wss://demos.yjs.dev', `forge-project-${currentProjectId}`, ydoc);
+    const provider = new WebsocketProvider(`wss://sgfbackend.deejay.onl/sync`, `${currentProjectId}`, ydoc);
     providerRef.current = provider;
 
     const awareness = provider.awareness;

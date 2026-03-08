@@ -20,12 +20,12 @@ wss.on('connection', (ws, req) => {
   const host = req.headers.host || 'localhost';
   const url = new URL(req.url || '', `http://${host}`);
   
-  if (url.pathname !== '/sync') {
+  if (!url.pathname.startsWith('/sync/')) {
     ws.close(1008, 'Invalid path');
     return;
   }
 
-  const projectId = url.searchParams.get('projectId');
+  const projectId = url.pathname.replace('/sync/', '');
   if (!projectId) {
     ws.close(1008, 'Project ID is required');
     return;
@@ -44,7 +44,7 @@ wss.on('connection', (ws, req) => {
     if (clients) {
       for (const client of clients) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(message.toString());
+          client.send(message, { binary: true });
         }
       }
     }
