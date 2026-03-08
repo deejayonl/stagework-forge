@@ -522,9 +522,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Enhance the visual feedback when dragging a component from the library onto the Canvas/Stage.
 
 ## Phase 49: Advanced Export & Deployment Options
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 49.1: Next.js App Router Export**
+- [x] **Task 49.1: Next.js App Router Export**
   - Add support for exporting the project as a Next.js App Router application (using `app/page.tsx` structure).
-- [ ] **Task 49.2: Vue 3 Export**
+- [x] **Task 49.2: Vue 3 Export**
   - Add support for exporting the project as a Vue 3 Single File Component (`.vue`).

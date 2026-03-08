@@ -14,6 +14,7 @@ const FRAMEWORKS = [
   { id: 'vite', name: 'React + Vite', icon: <Code2 className="w-5 h-5" />, desc: 'Production-ready React application with Tailwind CSS.' },
   { id: 'html', name: 'HTML / Tailwind', icon: <Globe className="w-5 h-5" />, desc: 'Simple static HTML file with embedded Tailwind CSS.' },
   { id: 'nextjs', name: 'Next.js', icon: <FileJson className="w-5 h-5" />, desc: 'Full-stack Next.js app router setup with Tailwind CSS.' },
+  { id: 'vue', name: 'Vue 3', icon: <Code2 className="w-5 h-5" />, desc: 'Vue 3 Single File Component setup with Tailwind CSS.' },
 ];
 
 export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, onExport, onDeploy }) => {

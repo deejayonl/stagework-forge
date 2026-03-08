@@ -67,9 +67,41 @@ exportRoutes.get('/:id', async (c) => {
         devDependencies: {
           "tailwindcss": "^3.4.1",
           "postcss": "^8",
-          "autoprefixer": "^10.0.1"
+          "autoprefixer": "^10.0.1",
+          "typescript": "^5",
+          "@types/node": "^20",
+          "@types/react": "^18",
+          "@types/react-dom": "^18"
         }
       }, null, 2), { name: 'package.json' });
+
+      
+      archive.append(JSON.stringify({
+        "compilerOptions": {
+          "lib": ["dom", "dom.iterable", "esnext"],
+          "allowJs": true,
+          "skipLibCheck": true,
+          "strict": true,
+          "noEmit": true,
+          "esModuleInterop": true,
+          "module": "esnext",
+          "moduleResolution": "bundler",
+          "resolveJsonModule": true,
+          "isolatedModules": true,
+          "jsx": "preserve",
+          "incremental": true,
+          "plugins": [
+            {
+              "name": "next"
+            }
+          ],
+          "paths": {
+            "@/*": ["./*"]
+          }
+        },
+        "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+        "exclude": ["node_modules"]
+      }, null, 2), { name: 'tsconfig.json' });
 
       archive.append(`/** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -93,7 +125,11 @@ export const metadata = {
   description: '${seoDescription}',
 }
 
-export default function RootLayout({ children }) {
+import React from 'react'
+
+import React from 'react'
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -104,7 +140,7 @@ export default function RootLayout({ children }) {
       <body>{children}</body>
     </html>
   )
-}`, { name: 'app/layout.jsx' });
+}`, { name: 'app/layout.tsx' });
 
       let mainHtml = filesToExport.find((f: any) => f.name === 'index.html' || f.name.endsWith('.html'));
       if (mainHtml) {
@@ -115,13 +151,15 @@ export default function RootLayout({ children }) {
         // Convert class= to className=
         const jsxContent = content.replace(/class=/g, 'className=');
 
-        archive.append(`export default function Home() {
+        archive.append(`import React from 'react'
+
+export default function Home() {
   return (
     <>
       ${jsxContent}
     </>
   )
-}`, { name: 'app/page.jsx' });
+}`, { name: 'app/page.tsx' });
       }
 
     } else if (framework === 'vite') {
@@ -213,6 +251,87 @@ export default App`, { name: 'src/App.jsx' });
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>`, { name: 'index.html' });
+
+    
+    } else if (framework === 'vue') {
+      archive.append(JSON.stringify({
+        name: project.name.replace(/[^a-z0-9]/gi, '-').toLowerCase(),
+        version: "0.0.0",
+        private: true,
+        type: "module",
+        scripts: {
+          "dev": "vite",
+          "build": "vite build",
+          "preview": "vite preview"
+        },
+        dependencies: {
+          "vue": "^3.4.29",
+          "lucide-vue-next": "^0.400.0"
+        },
+        devDependencies: {
+          "@vitejs/plugin-vue": "^5.0.5",
+          "vite": "^5.3.1",
+          "tailwindcss": "^3.4.4",
+          "postcss": "^8.4.38",
+          "autoprefixer": "^10.4.19"
+        }
+      }, null, 2), { name: 'package.json' });
+
+      archive.append(`import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+})`, { name: 'vite.config.js' });
+
+      archive.append(`/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}`, { name: 'tailwind.config.js' });
+
+      archive.append(`@tailwind base;
+@tailwind components;
+@tailwind utilities;`, { name: 'src/style.css' });
+
+      archive.append(`import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
+
+createApp(App).mount('#app')`, { name: 'src/main.js' });
+
+      let mainHtml = filesToExport.find((f) => f.name === 'index.html' || f.name.endsWith('.html'));
+      if (mainHtml) {
+        const bodyMatch = mainHtml.content.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+        let content = bodyMatch ? bodyMatch[1] : mainHtml.content;
+        
+        archive.append(`<template>
+${content}
+</template>
+
+<script setup>
+</script>`, { name: 'src/App.vue' });
+      }
+
+      archive.append(`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${seoTitle}</title>
+    <meta name="description" content="${seoDescription}" />${seoFavicon}${seoOgImage}${seoCustomMeta}
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>`, { name: 'index.html' });
 
