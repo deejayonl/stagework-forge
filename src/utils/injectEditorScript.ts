@@ -604,6 +604,19 @@ export const injectEditorScript = (htmlContent: string): string => {
             if (el) {
               selectedElement = el;
               updateBox(highlightBox, el);
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          } else if (e.data.type === 'FORGE_HOVER_NODE') {
+            const { id } = e.data;
+            if (!id) {
+              hoverBox.style.display = 'none';
+              return;
+            }
+            const el = document.querySelector(\`[data-forge-id="\${id}"]\`);
+            if (el) {
+              updateBox(hoverBox, el);
+            } else {
+              hoverBox.style.display = 'none';
             }
           }
         });

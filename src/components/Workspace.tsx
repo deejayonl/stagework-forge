@@ -766,6 +766,16 @@ useEffect(() => {
     }
   };
 
+  const handleHoverNode = (id: string | null) => {
+    const iframe = document.querySelector('iframe[title="Preview"]') as HTMLIFrameElement;
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({
+        type: 'FORGE_HOVER_NODE',
+        id
+      }, '*');
+    }
+  };
+
 
   const getFileIcon = (name: string) => {
     if (name.endsWith('.html')) return <Monitor className="w-4 h-4" />;
@@ -1103,6 +1113,7 @@ useEffect(() => {
             tree={domTree} 
             selectedNodeId={selectedElement?.id || null} 
             onSelectNode={handleSelectNode}
+            onHoverNode={handleHoverNode}
             onMoveNode={handleMoveNode}
             onClose={() => setIsTreeOpen(false)} 
           />

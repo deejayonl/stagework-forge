@@ -451,12 +451,22 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add "Copy Styles" and "Paste Styles" options to Context Menu.
 
 ## Phase 34: Advanced DOM Tree & Drag-and-Drop
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 34.1: DOM Tree Refactoring**
+- [x] **Task 34.1: DOM Tree Refactoring**
   - Make DOM tree items collapsible/expandable.
   - Show visual indicators for element types (e.g., icons for div, span, img).
-- [ ] **Task 34.2: Drag-and-Drop in DOM Tree**
+- [x] **Task 34.2: Drag-and-Drop in DOM Tree**
   - Allow dragging nodes within the DOM tree panel to reorder them or move them inside other elements.
-- [ ] **Task 34.3: DOM Tree Highlighting**
+- [x] **Task 34.3: DOM Tree Highlighting**
   - Hovering over a node in the DOM tree should highlight the corresponding element on the canvas.
+## Phase 35: Media Manager & Asset Uploading
+*Status: In Progress*
+
+- [ ] **Task 35.1: Media Manager Component**
+  - Create a new `MediaManager` UI panel to view uploaded assets.
+- [ ] **Task 35.2: Image Upload Handling**
+  - Allow users to upload images (drag-and-drop or file select).
+  - Store assets locally using `FileReader` (Base64) or `URL.createObjectURL` for the preview session.
+- [ ] **Task 35.3: Asset Integration**
+  - Allow inserting uploaded images directly onto the canvas or as background images.

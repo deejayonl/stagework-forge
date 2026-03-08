@@ -14,6 +14,7 @@ interface DOMTreeExplorerProps {
   tree: DOMNode | null;
   selectedNodeId: string | null;
   onSelectNode: (id: string) => void;
+  onHoverNode?: (id: string | null) => void;
   onClose: () => void;
   onMoveNode?: (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => void;
 }
@@ -23,8 +24,9 @@ const TreeNode: React.FC<{
   depth: number;
   selectedNodeId: string | null;
   onSelectNode: (id: string) => void;
+  onHoverNode?: (id: string | null) => void;
   onMoveNode?: (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => void;
-}> = ({ node, depth, selectedNodeId, onSelectNode, onMoveNode }) => {
+}> = ({ node, depth, selectedNodeId, onSelectNode, onHoverNode, onMoveNode }) => {
   const [isExpanded, setIsExpanded] = useState(depth < 2);
   const [dragOverPos, setDragOverPos] = useState<'top' | 'bottom' | 'center' | null>(null);
   
@@ -95,6 +97,8 @@ const TreeNode: React.FC<{
           e.stopPropagation();
           onSelectNode(node.id);
         }}
+        onMouseEnter={() => onHoverNode && onHoverNode(node.id)}
+        onMouseLeave={() => onHoverNode && onHoverNode(null)}
       >
         <div 
           className="w-4 h-4 flex items-center justify-center cursor-pointer"
@@ -129,6 +133,7 @@ const TreeNode: React.FC<{
               depth={depth + 1} 
               selectedNodeId={selectedNodeId}
               onSelectNode={onSelectNode}
+              onHoverNode={onHoverNode}
               onMoveNode={onMoveNode}
             />
           ))}
@@ -142,6 +147,7 @@ export const DOMTreeExplorer: React.FC<DOMTreeExplorerProps> = ({
   tree, 
   selectedNodeId, 
   onSelectNode,
+  onHoverNode,
   onMoveNode,
   onClose
 }) => {
@@ -164,6 +170,7 @@ export const DOMTreeExplorer: React.FC<DOMTreeExplorerProps> = ({
             depth={0} 
             selectedNodeId={selectedNodeId} 
             onSelectNode={onSelectNode} 
+            onHoverNode={onHoverNode}
             onMoveNode={onMoveNode}
           />
         ) : (
