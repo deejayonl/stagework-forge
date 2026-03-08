@@ -74,6 +74,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     canRedo,
     undo,
     redo,
+    jumpToVersion,
     isSyncing,
     syncError,
     activeUsers
@@ -533,7 +534,10 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
              ) : (
                 hasProject && <Workspace 
                  projectId={currentProject?.id}
-                 files={previewFiles || currentFiles} 
+                 files={previewFiles || currentFiles}
+                 versions={currentProject?.versions}
+                 currentVersionIndex={currentProject?.currentVersionIndex}
+                 onJumpToVersion={jumpToVersion} 
                  variables={currentProject?.variables || {}}
                  components={currentProject?.components || {}}
                  theme={currentProject?.theme || {}}

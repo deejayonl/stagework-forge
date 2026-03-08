@@ -319,6 +319,18 @@ export const useProjects = (storageToken: string | null) => {
     }));
   }, [currentProject, currentProjectId]);
 
+  
+  const jumpToVersion = useCallback((index: number) => {
+    setProjects(prev => prev.map(p => {
+      if (p.id === currentProjectId) {
+        if (index >= 0 && index < p.versions.length) {
+          return { ...p, currentVersionIndex: index };
+        }
+      }
+      return p;
+    }));
+  }, [currentProjectId]);
+
   const redo = useCallback(() => {
     if (!currentProject || currentProject.currentVersionIndex >= currentProject.versions.length - 1) return;
     setProjects(prev => prev.map(p => {
@@ -422,6 +434,7 @@ export const useProjects = (storageToken: string | null) => {
     selectProject,
     undo,
     redo,
+    jumpToVersion,
     startNewProject,
     loadProjectsFromBFF,
     canUndo: currentProject ? currentProject.currentVersionIndex > 0 : false,

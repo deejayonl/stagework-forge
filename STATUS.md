@@ -342,12 +342,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Implement a BFF endpoint that bundles the project (like the Export ZIP) and pushes it to the configured deployment provider.
 
 ## Phase 24: Context Menus & Advanced DOM Tree
-*Status: In Progress*
+*Status: Complete*
 
 - [x] **Task 24.1: Stage Context Menu**
   - Implement a custom right-click context menu within the Stage iframe (`injectEditorScript.ts` and `StageView.tsx` or similar).
   - Include options: Duplicate, Delete, Copy HTML, Paste HTML, Save as Component.
-- [x] **Task 24.2: DOM Tree Drag - [ ] **Task 24.2: DOM Tree Drag & Drop** Drop**
+- [x] **Task 24.2: DOM Tree Drag & Drop**
   - Add drag-and-drop support to the `DOMTreeExplorer` to allow reordering elements and changing parent-child relationships visually.
-- [ ] **Task 24.3: History Visualizer**
+- [x] **Task 24.3: History Visualizer**
   - Add a "History" tab to the left sidebar to display the stack of mutations (Undo/Redo steps), allowing users to jump back to a specific state.

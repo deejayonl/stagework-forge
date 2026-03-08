@@ -14,12 +14,15 @@ import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
-import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network } from 'lucide-react';
+import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network, Undo2 } from 'lucide-react';
 
 
 interface WorkspaceProps {
   projectId?: string;
   files: GeneratedFile[];
+  versions?: any[];
+  currentVersionIndex?: number;
+  onJumpToVersion?: (index: number) => void;
   variables?: Record<string, string>;
   components?: Record<string, string>;
   theme?: Record<string, string>;
@@ -69,6 +72,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
   
   // Local state for files allows editing within the workspace session
@@ -849,6 +853,17 @@ useEffect(() => {
              </div>
            </button>
            
+
+           <button
+             onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isHistoryOpen ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="History"
+           >
+             <Undo2 className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Version History
+             </div>
+           </button>
            <button
              onClick={() => setIsTreeOpen(!isTreeOpen)}
              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isTreeOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
@@ -981,6 +996,33 @@ useEffect(() => {
         </div>
 
         
+        
+        {/* History Panel */}
+        <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isHistoryOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div className="w-64 h-full bg-hall-50/95 dark:bg-hall-950/95 backdrop-blur-xl border-r border-hall-200 dark:border-hall-800 flex flex-col shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-hall-200 dark:border-hall-800 shrink-0">
+              <h3 className="text-sm font-bold text-hall-900 dark:text-ink flex items-center gap-2">
+                <Undo2 className="w-4 h-4" />
+                History
+              </h3>
+              <button onClick={() => setIsHistoryOpen(false)} className="text-hall-500 hover:text-hall-900 dark:hover:text-ink">✕</button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+              {versions && versions.map((v, idx) => (
+                <div 
+                  key={v.id || idx}
+                  onClick={() => onJumpToVersion && onJumpToVersion(idx)}
+                  className={`p-3 rounded-lg cursor-pointer transition-all border ${idx === currentVersionIndex ? 'bg-amber-500/10 border-amber-500/50 text-amber-900 dark:text-amber-400' : 'bg-white dark:bg-hall-900 border-hall-200 dark:border-hall-800 text-hall-700 dark:text-hall-300 hover:border-amber-500/30 hover:shadow-md'}`}
+                >
+                  <div className="text-xs font-bold mb-1">{idx === 0 ? 'Initial Generation' : `Mutation ${idx}`}</div>
+                  <div className="text-[10px] opacity-70 truncate" title={v.prompt || 'Manual Edit'}>{v.prompt || 'Manual Edit'}</div>
+                  <div className="text-[9px] opacity-50 mt-1">{new Date(v.timestamp).toLocaleTimeString()}</div>
+                </div>
+              )).reverse()}
+            </div>
+          </div>
+        </div>
+
         {/* Collections Panel */}
         <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isCollectionsOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
           <CollectionsPanel 
