@@ -174,6 +174,19 @@ export const injectEditorScript = (htmlContent: string): string => {
           e.preventDefault();
           e.stopPropagation();
           
+          // Check if clicking a link while holding Ctrl/Cmd
+          const link = e.target.closest('a');
+          if (link && (e.ctrlKey || e.metaKey)) {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+              window.parent.postMessage({
+                type: 'FORGE_NAVIGATE',
+                target: href
+              }, '*');
+              return;
+            }
+          }
+          
           selectedElement = e.target;
           
           // Execute click action if present

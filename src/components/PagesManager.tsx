@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileCode, Plus, Trash2, X, Check } from 'lucide-react';
+import { FileCode, Plus, Trash2, X, Check, Edit2 } from 'lucide-react';
 import { GeneratedFile } from '../types';
 
 interface PagesManagerProps {
@@ -8,6 +8,7 @@ interface PagesManagerProps {
   onPageChange: (name: string) => void;
   onAddPage: (name: string) => void;
   onDeletePage: (name: string) => void;
+  onRenamePage: (oldName: string, newName: string) => void;
 }
 
 export const PagesManager: React.FC<PagesManagerProps> = ({
@@ -15,10 +16,14 @@ export const PagesManager: React.FC<PagesManagerProps> = ({
   currentPage,
   onPageChange,
   onAddPage,
-  onDeletePage
+  onDeletePage,
+  onRenamePage
 }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newPageName, setNewPageName] = useState('');
+  
+  const [editingPage, setEditingPage] = useState<string | null>(null);
+  const [editPageName, setEditPageName] = useState('');
 
   const htmlFiles = files.filter(f => f.name.endsWith('.html') || f.name === 'index.html');
 
@@ -31,6 +36,17 @@ export const PagesManager: React.FC<PagesManagerProps> = ({
       setNewPageName('');
       setIsAdding(false);
     }
+  };
+
+  const handleRename = (oldName: string) => {
+    if (editPageName.trim() && editPageName !== oldName) {
+      const formattedName = editPageName.trim().endsWith('.html') ? editPageName.trim() : `${editPageName.trim()}.html`;
+      if (!files.find(f => f.name === formattedName)) {
+        onRenamePage(oldName, formattedName);
+      }
+    }
+    setEditingPage(null);
+    setEditPageName('');
   };
 
   return (
@@ -82,22 +98,67 @@ export const PagesManager: React.FC<PagesManagerProps> = ({
                   ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                   : 'hover:bg-hall-100 dark:hover:bg-hall-800 text-hall-700 dark:text-hall-300'
               }`}
-              onClick={() => onPageChange(file.name)}
+              onClick={() => {
+                if (editingPage !== file.name) {
+                  onPageChange(file.name);
+                }
+              }}
             >
-              <div className="flex items-center gap-2 truncate">
-                <FileCode className="w-4 h-4 opacity-50" />
-                <span className="text-sm truncate">{file.name}</span>
-              </div>
-              {file.name !== 'index.html' && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDeletePage(file.name);
-                  }}
-                  className="p-1 opacity-0 group-hover:opacity-100 hover:text-red-500 transition-opacity"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
+              {editingPage === file.name ? (
+                <div className="flex items-center gap-2 w-full" onClick={e => e.stopPropagation()}>
+                  <input
+                    type="text"
+                    value={editPageName}
+                    onChange={(e) => setEditPageName(e.target.value)}
+                    className="flex-1 bg-white dark:bg-black border border-amber-300 focus:ring-0 text-sm text-hall-900 dark:text-ink p-1 rounded"
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleRename(file.name);
+                      if (e.key === 'Escape') {
+                        setEditingPage(null);
+                        setEditPageName('');
+                      }
+                    }}
+                  />
+                  <button onClick={() => handleRename(file.name)} className="text-green-500 hover:text-green-600">
+                    <Check className="w-3.5 h-3.5" />
+                  </button>
+                  <button onClick={() => { setEditingPage(null); setEditPageName(''); }} className="text-red-500 hover:text-red-600">
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 truncate">
+                    <FileCode className="w-4 h-4 opacity-50" />
+                    <span className="text-sm truncate">{file.name}</span>
+                  </div>
+                  {file.name !== 'index.html' && (
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingPage(file.name);
+                          setEditPageName(file.name);
+                        }}
+                        className="p-1 hover:text-amber-500 transition-colors"
+                        title="Rename"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeletePage(file.name);
+                        }}
+                        className="p-1 hover:text-red-500 transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ))}

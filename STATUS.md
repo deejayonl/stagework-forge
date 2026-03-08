@@ -348,11 +348,19 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Inject these fields into the `PreviewView` iframe HTML generation.
 
 ## Phase 35: Multi-page Architecture & Routing
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 35.1: File Explorer UI**
+- [x] **Task 35.1: File Explorer UI**
   - Create a new sidebar panel for managing multiple HTML pages (e.g., `index.html`, `about.html`, `contact.html`).
   - Allow users to create, rename, and delete pages within the project.
-- [ ] **Task 35.2: Page Routing Logic**
+- [x] **Task 35.2: Page Routing Logic**
   - Update `Workspace.tsx` to switch between active pages.
   - Ensure the Stage preview updates to reflect the currently selected HTML file.
+
+## Phase 36: Cloud Integrations & Deployments
+*Status: Pending*
+
+- [ ] **Task 36.1: Vercel Integration BFF Route**
+  - Implement `/api/deploy/vercel/:projectId` in the Node.js BFF to receive the Vercel Personal Access Token, package the project files into a Vercel-compatible format, and deploy using the Vercel REST API.
+- [ ] **Task 36.2: Netlify Integration BFF Route**
+  - Implement `/api/deploy/netlify/:projectId` in the Node.js BFF to receive the Netlify PAT, package the project files as a static site, and deploy using the Netlify REST API.

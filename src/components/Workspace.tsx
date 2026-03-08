@@ -330,11 +330,24 @@ useEffect(() => {
            y: e.data.y,
            element: e.data.element
          });
+      } else if (e.data.type === 'FORGE_NAVIGATE') {
+         const dest = e.data.target;
+         // Handle absolute paths like /about.html or relative like ./about.html
+         const cleanDest = dest.replace(/^(\.\/|\/)/, '');
+         if (cleanDest && cleanDest.endsWith('.html')) {
+            setCurrentPage(cleanDest);
+            setActiveFile(cleanDest);
+         } else if (cleanDest) {
+            setCurrentPage(`${cleanDest}.html`);
+            setActiveFile(`${cleanDest}.html`);
+         }
+         return;
       } else if (e.data.type === 'FORGE_EXECUTE_ACTION') {
          const { action, key, value, target } = e.data;
          if (action === 'navigate') {
             const dest = target.endsWith('.html') ? target : `${target}.html`;
             setCurrentPage(dest);
+            setActiveFile(dest);
             return;
          }
          if (onUpdateVariables) {
@@ -1291,7 +1304,10 @@ useEffect(() => {
           <PagesManager 
             files={localFiles}
             currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+              setActiveFile(page);
+            }}
             onAddPage={(name) => {
               const newFile = { name: name.endsWith('.html') ? name : `${name}.html`, content: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n  <div class="min-h-screen bg-white text-black p-8">New Page</div>\n</body>\n</html>', type: 'html' as const };
               const newFiles = [...localFiles, newFile];
@@ -1302,8 +1318,21 @@ useEffect(() => {
               if (name === 'index.html') return; // Cannot delete index
               const newFiles = localFiles.filter(f => f.name !== name);
               setLocalFiles(newFiles);
-              if (currentPage === name) setCurrentPage('index.html');
+              if (currentPage === name) {
+                setCurrentPage('index.html');
+                setActiveFile('index.html');
+              }
               if (onFileChange) onFileChange(newFiles, `Deleted page ${name}`);
+            }}
+            onRenamePage={(oldName, newName) => {
+              if (oldName === 'index.html') return; // Cannot rename index
+              const newFiles = localFiles.map(f => f.name === oldName ? { ...f, name: newName } : f);
+              setLocalFiles(newFiles);
+              if (currentPage === oldName) {
+                setCurrentPage(newName);
+                setActiveFile(newName);
+              }
+              if (onFileChange) onFileChange(newFiles, `Renamed page ${oldName} to ${newName}`);
             }}
           />
         </div>
