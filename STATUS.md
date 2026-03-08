@@ -296,10 +296,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update the `workspaces` state to include global metadata.
   - Inject metadata into the exported HTML `<head>`.
 ## Phase 29: Variable Binding & API Testing UI
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 29.1: API Integrations Panel UI**
+- [x] **Task 29.1: API Integrations Panel UI**
   - Refine `ApiIntegrationsPanel.tsx` to allow adding custom API endpoints (GET, POST, PUT, DELETE) with headers and body.
   - Implement a "Test Request" button that executes the fetch and stores the response JSON in the project state.
-- [ ] **Task 29.2: Variable Binding in Property Inspector**
+- [x] **Task 29.2: Variable Binding in Property Inspector**
   - Add a dedicated section in `PropertyInspector.tsx` to allow binding elements (like text or image source) to specific keys from the tested API response or Collections.

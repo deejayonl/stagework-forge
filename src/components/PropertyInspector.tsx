@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Library } from 'lucide-react';
+import { Sparkles, Library, Database } from 'lucide-react';
 import { fixHtmlNode, rewriteText } from '../services/geminiService';
 
 interface PropertyInspectorProps {
@@ -185,45 +185,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-hall-700 dark:text-hall-300">Text Content</label>
-              {hasBindings && onBindVariable && (
-                <select 
-                  className="text-[10px] bg-hall-100 dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded p-1 text-hall-700 dark:text-hall-300 outline-none max-w-[100px]"
-                  value={selectedElement.dataset?.bindText || ''}
-                  onChange={(e) => onBindVariable('text', e.target.value)}
-                >
-                  <option value="">Static Text</option>
-                  {Object.values(collections).length > 0 ? (
-                    Object.values(collections).map((c: any) => (
-                      <optgroup key={c.id} label={`Collection: ${c.name}`}>
-                        {c.fields.map((f: any) => (
-                          <option key={`${c.id}.${f.name}`} value={`item.${f.name}`}>
-                            Bind: item.{f.name}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))
-                  ) : (
-                    <optgroup label="List Item Bindings">
-                      <option value="item">Bind: item (string)</option>
-                      <option value="item.name">Bind: item.name</option>
-                      <option value="item.title">Bind: item.title</option>
-                      <option value="item.description">Bind: item.description</option>
-                    </optgroup>
-                  )}
-                  <optgroup label="Global Variables">
-                    {Object.keys(variables).map(key => (
-                      <option key={key} value={key}>Bind: {key}</option>
-                    ))}
-                  </optgroup>
-                  {Object.values(apis || {}).length > 0 && (
-                    <optgroup label="API Responses">
-                      {Object.values(apis || {}).map((api: any) => (
-                        <option key={api.id} value={`api.${api.id}.response`}>Bind: {api.name} Response</option>
-                      ))}
-                    </optgroup>
-                  )}
-                </select>
-              )}
+              
             </div>
                         <textarea 
               value={textContent}
@@ -257,45 +219,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-hall-700 dark:text-hall-300">Image Source</label>
-              {hasBindings && onBindVariable && (
-                <select 
-                  className="text-[10px] bg-hall-100 dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded p-1 text-hall-700 dark:text-hall-300 outline-none max-w-[100px]"
-                  value={selectedElement.dataset?.bindSrc || ''}
-                  onChange={(e) => onBindVariable('src', e.target.value)}
-                >
-                  <option value="">Static Image</option>
-                  {Object.values(collections || {}).length > 0 ? (
-                    Object.values(collections || {}).map((c: any) => (
-                      <optgroup key={c.id} label={`Collection: ${c.name}`}>
-                        {c.fields.filter((f: any) => f.type === 'image' || f.type === 'text').map((f: any) => (
-                          <option key={`${c.id}.${f.name}`} value={`item.${f.name}`}>
-                            Bind: item.{f.name}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))
-                  ) : (
-                    <optgroup label="List Item Bindings">
-                      <option value="item">Bind: item (string URL)</option>
-                      <option value="item.image">Bind: item.image</option>
-                      <option value="item.url">Bind: item.url</option>
-                      <option value="item.src">Bind: item.src</option>
-                    </optgroup>
-                  )}
-                  <optgroup label="Global Variables">
-                    {Object.keys(variables).map(key => (
-                      <option key={key} value={key}>Bind: {key}</option>
-                    ))}
-                  </optgroup>
-                  {Object.values(apis || {}).length > 0 && (
-                    <optgroup label="API Responses">
-                      {Object.values(apis || {}).map((api: any) => (
-                        <option key={api.id} value={`api.${api.id}.response`}>Bind: {api.name} Response</option>
-                      ))}
-                    </optgroup>
-                  )}
-                </select>
-              )}
+              
             </div>
             <button
               onClick={onOpenImageTool}
@@ -2405,6 +2329,163 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             )}
           </div>
         </div>
+        
+        {/* Data Bindings */}
+        {hasBindings && onBindVariable && (
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 flex items-center gap-2">
+              <Database className="w-3.5 h-3.5 text-indigo-500" />
+              Data Bindings
+            </h4>
+            
+            <div className="space-y-3 bg-indigo-50/50 dark:bg-indigo-900/10 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800/30">
+              
+              {/* Text Binding */}
+              {textContent !== undefined && tagName !== 'IMG' && (
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300">Text Content</label>
+                  <div className="flex gap-1">
+                    <select 
+                      className="flex-1 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                      value={selectedElement.dataset?.bindText?.split('.')[0] || selectedElement.dataset?.bindText || ''}
+                      onChange={(e) => {
+                        const base = e.target.value;
+                        if (!base) onBindVariable('text', '');
+                        else onBindVariable('text', base);
+                      }}
+                    >
+                      <option value="">Static Text</option>
+                      <optgroup label="List Item">
+                        <option value="item">item</option>
+                      </optgroup>
+                      <optgroup label="Global Variables">
+                        {Object.keys(variables).map(key => (
+                          <option key={key} value={key}>{key}</option>
+                        ))}
+                      </optgroup>
+                      {Object.values(apis || {}).length > 0 && (
+                        <optgroup label="API Responses">
+                          {Object.values(apis || {}).map((api: any) => (
+                            <option key={api.id} value={`api.${api.id}.response`}>{api.name} Response</option>
+                          ))}
+                        </optgroup>
+                      )}
+                    </select>
+                    {selectedElement.dataset?.bindText && (
+                      <input 
+                        type="text" 
+                        placeholder=".path.to.key"
+                        className="w-24 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                        value={selectedElement.dataset?.bindText?.includes('.') ? '.' + selectedElement.dataset?.bindText?.split('.').slice(1).join('.') : ''}
+                        onChange={(e) => {
+                          const base = selectedElement.dataset?.bindText?.split('.')[0] || '';
+                          const path = e.target.value.replace(/^\.+/, ''); // remove leading dots
+                          onBindVariable('text', path ? `${base}.${path}` : base);
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Image Source Binding */}
+              {tagName === 'IMG' && (
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300">Image Source (URL)</label>
+                  <div className="flex gap-1">
+                    <select 
+                      className="flex-1 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                      value={selectedElement.dataset?.bindSrc?.split('.')[0] || selectedElement.dataset?.bindSrc || ''}
+                      onChange={(e) => {
+                        const base = e.target.value;
+                        if (!base) onBindVariable('src', '');
+                        else onBindVariable('src', base);
+                      }}
+                    >
+                      <option value="">Static Image</option>
+                      <optgroup label="List Item">
+                        <option value="item">item</option>
+                      </optgroup>
+                      <optgroup label="Global Variables">
+                        {Object.keys(variables).map(key => (
+                          <option key={key} value={key}>{key}</option>
+                        ))}
+                      </optgroup>
+                      {Object.values(apis || {}).length > 0 && (
+                        <optgroup label="API Responses">
+                          {Object.values(apis || {}).map((api: any) => (
+                            <option key={api.id} value={`api.${api.id}.response`}>{api.name} Response</option>
+                          ))}
+                        </optgroup>
+                      )}
+                    </select>
+                    {selectedElement.dataset?.bindSrc && (
+                      <input 
+                        type="text" 
+                        placeholder=".path.to.image"
+                        className="w-24 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                        value={selectedElement.dataset?.bindSrc?.includes('.') ? '.' + selectedElement.dataset?.bindSrc?.split('.').slice(1).join('.') : ''}
+                        onChange={(e) => {
+                          const base = selectedElement.dataset?.bindSrc?.split('.')[0] || '';
+                          const path = e.target.value.replace(/^\.+/, '');
+                          onBindVariable('src', path ? `${base}.${path}` : base);
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* List Rendering Binding */}
+              {tagName !== 'IMG' && (
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300">List Rendering (Array)</label>
+                  <div className="flex gap-1">
+                    <select 
+                      className="flex-1 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                      value={selectedElement.dataset?.bindList?.split('.')[0] || selectedElement.dataset?.bindList || ''}
+                      onChange={(e) => {
+                        const base = e.target.value;
+                        if (!base) onBindVariable('list', '');
+                        else onBindVariable('list', base);
+                      }}
+                    >
+                      <option value="">Static Children</option>
+                      <optgroup label="Global Variables">
+                        {Object.keys(variables).map(key => (
+                          <option key={key} value={key}>{key}</option>
+                        ))}
+                      </optgroup>
+                      {Object.values(apis || {}).length > 0 && (
+                        <optgroup label="API Responses">
+                          {Object.values(apis || {}).map((api: any) => (
+                            <option key={api.id} value={`api.${api.id}.response`}>{api.name} Response</option>
+                          ))}
+                        </optgroup>
+                      )}
+                    </select>
+                    {selectedElement.dataset?.bindList && (
+                      <input 
+                        type="text" 
+                        placeholder=".path.to.array"
+                        className="w-24 text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
+                        value={selectedElement.dataset?.bindList?.includes('.') ? '.' + selectedElement.dataset?.bindList?.split('.').slice(1).join('.') : ''}
+                        onChange={(e) => {
+                          const base = selectedElement.dataset?.bindList?.split('.')[0] || '';
+                          const path = e.target.value.replace(/^\.+/, '');
+                          onBindVariable('list', path ? `${base}.${path}` : base);
+                        }}
+                      />
+                    )}
+                  </div>
+                  <p className="text-[9px] text-indigo-600/70 dark:text-indigo-400/70 leading-tight">Bind to an array to repeat this element.</p>
+                </div>
+              )}
+
+            </div>
+          </div>
+        )}
+
         {/* Advanced Customizations */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Advanced</h4>

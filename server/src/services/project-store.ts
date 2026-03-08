@@ -18,6 +18,7 @@ export interface ProjectState {
   apis?: Record<string, any>; // External APIs
   assets?: Record<string, string>; // Saved assets (name -> base64/url)
   customDomain?: string;
+  seo?: Record<string, string>;
   updatedAt: number;
 }
 

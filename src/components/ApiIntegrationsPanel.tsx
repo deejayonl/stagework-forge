@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ApiEndpoint } from '../types';
 import { Database, Plus, Trash2, Save, Play, X } from 'lucide-react';
 
@@ -14,6 +14,13 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
   const [editingApi, setEditingApi] = useState<ApiEndpoint | null>(null);
   const [testResponse, setTestResponse] = useState<string | null>(null);
   const [isTesting, setIsTesting] = useState(false);
+  const [headersText, setHeadersText] = useState('{}');
+
+  useEffect(() => {
+    if (editingApi) {
+      setHeadersText(JSON.stringify(editingApi.headers, null, 2));
+    }
+  }, [editingApi?.id]);
 
   const handleAdd = () => {
     const id = 'api_' + Math.random().toString(36).substr(2, 9);
@@ -27,11 +34,20 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
     };
     setEditingApi(newApi);
     setSelectedApiId(id);
+    setHeadersText(JSON.stringify(newApi.headers, null, 2));
   };
 
   const handleSave = () => {
     if (editingApi) {
-      onUpdate({ ...apis, [editingApi.id]: editingApi });
+      let parsedHeaders = editingApi.headers;
+      try {
+        parsedHeaders = JSON.parse(headersText);
+      } catch (err) {
+        // Fallback to existing headers if invalid JSON
+      }
+      
+      const apiToSave = { ...editingApi, headers: parsedHeaders };
+      onUpdate({ ...apis, [apiToSave.id]: apiToSave });
       setEditingApi(null);
       setSelectedApiId(null);
     }
@@ -54,9 +70,17 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
     setTestResponse(null);
     try {
       let targetUrl = editingApi.url;
+      
+      let parsedHeaders = editingApi.headers;
+      try {
+        parsedHeaders = JSON.parse(headersText);
+      } catch (err) {
+        // Use existing headers if text is invalid
+      }
+      
       const options: RequestInit = {
         method: editingApi.method,
-        headers: editingApi.headers,
+        headers: parsedHeaders,
       };
       
       if (editingApi.method !== 'GET' && editingApi.body) {
@@ -85,6 +109,7 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
         ...apis,
         [editingApi.id]: {
            ...editingApi,
+           headers: parsedHeaders,
            lastResponse: parsedResponse
         }
       });
@@ -126,6 +151,7 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
                   onClick={() => {
                     setSelectedApiId(api.id);
                     setEditingApi(api);
+                    setTestResponse(api.lastResponse ? JSON.stringify(api.lastResponse, null, 2) : null);
                   }}
                   className="p-3 bg-hall-900 border border-hall-800 rounded-xl cursor-pointer hover:border-indigo-500/50 transition-colors group"
                 >
@@ -193,15 +219,8 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
             <div>
               <label className="block text-xs font-medium text-hall-400 mb-1">Headers (JSON)</label>
               <textarea
-                value={JSON.stringify(editingApi.headers, null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    setEditingApi({ ...editingApi, headers: parsed });
-                  } catch (err) {
-                    // ignore invalid json while typing
-                  }
-                }}
+                value={headersText}
+                onChange={e => setHeadersText(e.target.value)}
                 className="w-full h-24 bg-hall-900 border border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-100 font-mono focus:outline-none focus:border-indigo-500"
               />
             </div>
