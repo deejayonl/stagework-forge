@@ -706,6 +706,49 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               placeholder="linear-gradient(...)"
             />
           </div>
+
+          {styles.backgroundImage && (
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">Size</label>
+                <select
+                  value={styles.backgroundSize || 'auto'}
+                  onChange={(e) => handleStyleChange('backgroundSize', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="auto">auto</option>
+                  <option value="cover">cover</option>
+                  <option value="contain">contain</option>
+                  <option value="100% 100%">100% 100%</option>
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">Position</label>
+                <select
+                  value={styles.backgroundPosition || '0% 0%'}
+                  onChange={(e) => handleStyleChange('backgroundPosition', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="0% 0%">top left</option>
+                  <option value="50% 50%">center</option>
+                  <option value="100% 100%">bottom right</option>
+                </select>
+              </div>
+              <div className="space-y-1 col-span-2">
+                <label className="text-[10px] text-hall-500">Repeat</label>
+                <select
+                  value={styles.backgroundRepeat || 'repeat'}
+                  onChange={(e) => handleStyleChange('backgroundRepeat', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="repeat">repeat</option>
+                  <option value="no-repeat">no-repeat</option>
+                  <option value="repeat-x">repeat-x</option>
+                  <option value="repeat-y">repeat-y</option>
+                </select>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Effects & Borders */}
@@ -725,12 +768,30 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             </div>
             <div className="space-y-1">
               <label className="text-[10px] text-hall-500">Box Shadow</label>
+              <select
+                value={['none', '0 1px 2px 0 rgb(0 0 0 / 0.05)', '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)', '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)', '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)', '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)', '0 25px 50px -12px rgb(0 0 0 / 0.25)'].includes(styles.boxShadow || 'none') ? (styles.boxShadow || 'none') : 'custom'}
+                onChange={(e) => {
+                  if (e.target.value !== 'custom') {
+                    handleStyleChange('boxShadow', e.target.value);
+                  }
+                }}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink mb-1"
+              >
+                <option value="none">None</option>
+                <option value="0 1px 2px 0 rgb(0 0 0 / 0.05)">sm</option>
+                <option value="0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)">DEFAULT</option>
+                <option value="0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)">md</option>
+                <option value="0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)">lg</option>
+                <option value="0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)">xl</option>
+                <option value="0 25px 50px -12px rgb(0 0 0 / 0.25)">2xl</option>
+                <option value="custom">Custom...</option>
+              </select>
               <input 
                 type="text" 
                 value={styles.boxShadow || ''} 
                 onChange={(e) => handleStyleChange('boxShadow', e.target.value)}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
-                placeholder="none"
+                placeholder="Custom (e.g. 0 4px rgba(0,0,0,0.1))"
               />
             </div>
           </div>
@@ -756,6 +817,33 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 onChange={(e) => handleStyleChange('opacity', e.target.value)}
                 className="w-12 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink"
                 placeholder="1"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] text-hall-500 flex justify-between">
+              <span>Backdrop Blur</span>
+              <span className="text-hall-900 dark:text-ink font-mono text-[9px]">
+                {styles.backdropFilter ? styles.backdropFilter.replace('blur(', '').replace(')', '') : '0px'}
+              </span>
+            </label>
+            <div className="flex items-center gap-2">
+              <input 
+                type="range" 
+                min="0" 
+                max="64" 
+                step="1"
+                value={styles.backdropFilter ? parseInt(styles.backdropFilter.replace('blur(', '')) || 0 : 0} 
+                onChange={(e) => handleStyleChange('backdropFilter', `blur(${e.target.value}px)`)}
+                className="flex-1 accent-amber-500"
+              />
+              <input
+                type="text"
+                value={styles.backdropFilter ? styles.backdropFilter.replace('blur(', '').replace(')', '') : ''}
+                onChange={(e) => handleStyleChange('backdropFilter', `blur(${e.target.value})`)}
+                className="w-12 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink"
+                placeholder="0px"
               />
             </div>
           </div>

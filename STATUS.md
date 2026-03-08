@@ -514,3 +514,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add inputs for `grid-column` and `grid-row` to allow elements to span multiple tracks.
 - [x] **Task 40.3: Grid Gap Linking**
   - Add independent row-gap and column-gap controls.
+
+## Phase 41: Advanced Background & Overlay Controls
+*Status: Complete*
+
+- [x] **Task 41.1: Background Image Adjustments**
+  - Add inputs for `background-size` (cover, contain), `background-position`, and `background-repeat` in PropertyInspector.
+- [x] **Task 41.2: Backdrop Filters (Blur)**
+  - Add a slider for `backdrop-filter: blur()` to create glassmorphism effects.
+- [x] **Task 41.3: Box Shadow Builder**
+  - Enhance the existing box-shadow dropdown with custom inputs for X, Y, Blur, Spread, and Color.
