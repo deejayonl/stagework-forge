@@ -327,32 +327,6 @@ useEffect(() => {
     return () => window.removeEventListener('message', handleMessage);
   }, [isInspectorOpen, localFiles, variables, onUpdateVariables]); // added localFiles to dependencies
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if user is typing in an input or textarea
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-        return;
-      }
-
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
-
-      if (cmdOrCtrl && e.key.toLowerCase() === 'z') {
-        e.preventDefault();
-        if (e.shiftKey) {
-          handleRedo();
-        } else {
-          handleUndo();
-        }
-      } else if (cmdOrCtrl && e.key.toLowerCase() === 'y') {
-        e.preventDefault();
-        handleRedo();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [undoStack, redoStack, localFiles]);
   
   const findNodePath = (node: any, id: string): number[] | null => {
     if (node.id === id) return node.path;
@@ -412,11 +386,51 @@ useEffect(() => {
     });
   };
 
+  const handleWrapInContainer = () => {
+    if (!selectedElement) return;
+    updateLocalHtml(selectedElement.path, (el) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'w-full p-4';
+      el.parentNode?.insertBefore(wrapper, el);
+      wrapper.appendChild(el);
+    }, false, 'Wrap in Container');
+    setContextMenu(null);
+  };
+
+  const handleCopyStyles = () => {
+    if (!selectedElement) return;
+    const stylesToCopy = JSON.stringify({ className: selectedElement.className || '', style: selectedElement.style || '' });
+    navigator.clipboard.writeText(`forge-styles:${stylesToCopy}`).then(() => {
+      setContextMenu(null);
+    });
+  };
+
+  const handlePasteStyles = async () => {
+    if (!selectedElement) return;
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text.startsWith('forge-styles:')) {
+        const styles = JSON.parse(text.replace('forge-styles:', ''));
+        updateLocalHtml(selectedElement.path, (el) => {
+          if (styles.className) {
+            el.className = styles.className;
+          }
+          if (styles.style) {
+            el.setAttribute('style', styles.style);
+          }
+        }, false, 'Paste Styles');
+      }
+    } catch (e) {
+      console.error('Failed to read clipboard');
+    }
+    setContextMenu(null);
+  };
+
   const handlePasteHtml = async () => {
     if (!selectedElement) return;
     try {
       const text = await navigator.clipboard.readText();
-      if (text) {
+      if (text && !text.startsWith('forge-styles:')) {
         updateLocalHtml(selectedElement.path, (el) => {
           el.insertAdjacentHTML('afterend', text);
         }, false, 'Paste HTML');
@@ -426,6 +440,43 @@ useEffect(() => {
     }
     setContextMenu(null);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input or textarea
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      if (cmdOrCtrl && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          handleRedo();
+        } else {
+          handleUndo();
+        }
+      } else if (cmdOrCtrl && e.key.toLowerCase() === 'y') {
+        e.preventDefault();
+        handleRedo();
+      } else if (cmdOrCtrl && e.key.toLowerCase() === 'c') {
+        if (selectedElement) {
+          e.preventDefault();
+          handleCopyHtml();
+        }
+      } else if (cmdOrCtrl && e.key.toLowerCase() === 'v') {
+        if (selectedElement) {
+          e.preventDefault();
+          handlePasteHtml();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undoStack, redoStack, localFiles, selectedElement]);
 
   const handleSaveAsComponent = () => {
     if (!selectedElement || !onUpdateComponents) return;
@@ -1312,6 +1363,12 @@ useEffect(() => {
             <div className="border-t border-gray-100 my-1"></div>
             <button
               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handleWrapInContainer}
+            >
+              Wrap in Container
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               onClick={handleCopyHtml}
             >
               Copy HTML
@@ -1321,6 +1378,19 @@ useEffect(() => {
               onClick={handlePasteHtml}
             >
               Paste HTML
+            </button>
+            <div className="border-t border-gray-100 my-1"></div>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handleCopyStyles}
+            >
+              Copy Styles
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handlePasteStyles}
+            >
+              Paste Styles
             </button>
             {onUpdateComponents && (
               <>

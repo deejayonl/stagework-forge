@@ -440,12 +440,23 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Implement functions to pop from the stack and restore the `files` state, triggering a re-render of the canvas.
 
 ## Phase 33: Context Menu Enhancements & Copy/Paste
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 33.1: Context Menu Polish**
+- [x] **Task 33.1: Context Menu Polish**
   - Add more actions to the right-click context menu (e.g., Wrap in Container, Extract as Component).
-- [ ] **Task 33.2: Copy/Paste Across Elements**
+- [x] **Task 33.2: Copy/Paste Across Elements**
   - Implement Copy/Paste of elements via Context Menu.
   - Add `Ctrl+C` and `Ctrl+V` keyboard shortcuts for copying and pasting selected elements.
-- [ ] **Task 33.3: Copy/Paste Styles**
+- [x] **Task 33.3: Copy/Paste Styles**
   - Add "Copy Styles" and "Paste Styles" options to Context Menu.
+
+## Phase 34: Advanced DOM Tree & Drag-and-Drop
+*Status: In Progress*
+
+- [ ] **Task 34.1: DOM Tree Refactoring**
+  - Make DOM tree items collapsible/expandable.
+  - Show visual indicators for element types (e.g., icons for div, span, img).
+- [ ] **Task 34.2: Drag-and-Drop in DOM Tree**
+  - Allow dragging nodes within the DOM tree panel to reorder them or move them inside other elements.
+- [ ] **Task 34.3: DOM Tree Highlighting**
+  - Hovering over a node in the DOM tree should highlight the corresponding element on the canvas.
