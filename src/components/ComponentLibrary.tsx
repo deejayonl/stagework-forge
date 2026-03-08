@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
+import { MessageSquare, Mail, ShoppingCart, LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X, Search } from 'lucide-react';
 
 interface ComponentLibraryProps {
   onInsertComponent: (html: string) => void;
@@ -146,91 +146,153 @@ const COMPONENTS = [
   }
 ];
 
+
+  {
+    category: 'Forms',
+    icon: <Mail className="w-4 h-4" />,
+    items: [
+      {
+        name: 'Contact Form',
+        html: `<section class="py-24 bg-white dark:bg-black"><div class="max-w-3xl mx-auto px-6"><div class="text-center mb-12"><h2 class="text-3xl font-bold text-hall-900 dark:text-ink">Get in touch</h2><p class="mt-4 text-hall-600 dark:text-hall-400">We'd love to hear from you. Please fill out this form.</p></div><form class="space-y-6 bg-hall-50 dark:bg-hall-950 p-8 rounded-2xl border border-hall-200 dark:border-hall-800"><div class="grid grid-cols-1 gap-6 sm:grid-cols-2"><div><label class="block text-sm font-medium text-hall-700 dark:text-hall-300">First name</label><input type="text" class="mt-2 block w-full rounded-md border-hall-300 dark:border-hall-700 bg-white dark:bg-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3" placeholder="Jane"></div><div><label class="block text-sm font-medium text-hall-700 dark:text-hall-300">Last name</label><input type="text" class="mt-2 block w-full rounded-md border-hall-300 dark:border-hall-700 bg-white dark:bg-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3" placeholder="Doe"></div></div><div><label class="block text-sm font-medium text-hall-700 dark:text-hall-300">Email</label><input type="email" class="mt-2 block w-full rounded-md border-hall-300 dark:border-hall-700 bg-white dark:bg-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3" placeholder="you@example.com"></div><div><label class="block text-sm font-medium text-hall-700 dark:text-hall-300">Message</label><textarea rows="4" class="mt-2 block w-full rounded-md border-hall-300 dark:border-hall-700 bg-white dark:bg-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3" placeholder="How can we help?"></textarea></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-sm">Send message</button></form></div></section>`
+      },
+      {
+        name: 'Newsletter Signup',
+        html: `<section class="py-16 bg-indigo-600 dark:bg-indigo-900"><div class="max-w-7xl mx-auto px-6 lg:flex lg:items-center lg:justify-between"><div class="lg:w-0 lg:flex-1"><h2 class="text-3xl font-extrabold text-white sm:text-4xl">Sign up for our newsletter</h2><p class="mt-4 max-w-3xl text-lg text-indigo-100">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</p></div><div class="mt-8 lg:mt-0 lg:ml-8"><form class="sm:flex"><label for="email-address" class="sr-only">Email address</label><input id="email-address" name="email" type="email" autocomplete="email" required class="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white focus:border-white sm:max-w-xs rounded-md" placeholder="Enter your email"><div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0"><button type="submit" class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">Notify me</button></div></form><p class="mt-3 text-sm text-indigo-200">We care about the protection of your data. Read our <a href="#" class="text-white font-medium underline">Privacy Policy.</a></p></div></div></section>`
+      }
+    ]
+  },
+  {
+    category: 'Testimonials',
+    icon: <MessageSquare className="w-4 h-4" />,
+    items: [
+      {
+        name: 'Testimonial Grid',
+        html: `<section class="py-24 bg-hall-50 dark:bg-hall-950"><div class="max-w-7xl mx-auto px-6"><h2 class="text-center text-3xl font-bold text-hall-900 dark:text-ink mb-16">Loved by developers</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-8"><div class="bg-white dark:bg-black p-8 rounded-2xl shadow-sm border border-hall-200 dark:border-hall-800"><div class="flex gap-1 text-yellow-400 mb-4"><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="text-hall-700 dark:text-hall-300 mb-6">"This platform has completely transformed how we build products. The speed is unmatched."</p><div class="flex items-center gap-4"><img src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=random" alt="Avatar" class="w-10 h-10 rounded-full" /><div><h4 class="text-sm font-bold text-hall-900 dark:text-ink">Sarah Jenkins</h4><p class="text-xs text-hall-500">CTO at TechCorp</p></div></div></div><div class="bg-white dark:bg-black p-8 rounded-2xl shadow-sm border border-hall-200 dark:border-hall-800"><div class="flex gap-1 text-yellow-400 mb-4"><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="text-hall-700 dark:text-hall-300 mb-6">"I can't imagine going back to our old workflow. This saves us hundreds of hours."</p><div class="flex items-center gap-4"><img src="https://ui-avatars.com/api/?name=Michael+Chen&background=random" alt="Avatar" class="w-10 h-10 rounded-full" /><div><h4 class="text-sm font-bold text-hall-900 dark:text-ink">Michael Chen</h4><p class="text-xs text-hall-500">Lead Developer</p></div></div></div><div class="bg-white dark:bg-black p-8 rounded-2xl shadow-sm border border-hall-200 dark:border-hall-800"><div class="flex gap-1 text-yellow-400 mb-4"><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div><p class="text-hall-700 dark:text-hall-300 mb-6">"The cleanest, most intuitive interface I have ever used. Highly recommended."</p><div class="flex items-center gap-4"><img src="https://ui-avatars.com/api/?name=Emma+Davis&background=random" alt="Avatar" class="w-10 h-10 rounded-full" /><div><h4 class="text-sm font-bold text-hall-900 dark:text-ink">Emma Davis</h4><p class="text-xs text-hall-500">Product Manager</p></div></div></div></div></div></section>`
+      },
+      {
+        name: 'Featured Quote',
+        html: `<section class="py-24 bg-indigo-600 dark:bg-indigo-900 overflow-hidden"><div class="relative max-w-7xl mx-auto px-6"><div class="relative"><img class="mx-auto h-8" src="https://tailwindui.com/img/logos/workcation-logo-white.svg" alt="Workcation"><blockquote class="mt-10"><div class="max-w-3xl mx-auto text-center text-2xl leading-9 font-medium text-white"><p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.&rdquo;</p></div><footer class="mt-8"><div class="md:flex md:items-center md:justify-center"><div class="md:flex-shrink-0"><img class="mx-auto h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""></div><div class="mt-3 text-center md:mt-0 md:ml-4 md:flex md:items-center"><div class="text-base font-medium text-white">Judith Black</div><svg class="hidden md:block mx-1 h-5 w-5 text-indigo-300" fill="currentColor" viewBox="0 0 20 20"><path d="M11 0h3L9 20H6l5-20z" /></svg><div class="text-base font-medium text-indigo-200">CEO, Workcation</div></div></div></footer></blockquote></div></div></section>`
+      }
+    ]
+  },
+
 export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComponent, savedComponents = {}, onClose }) => {
   const customItems = Object.entries(savedComponents).map(([name, html]) => ({ name, html }));
   const [hoveredItem, setHoveredItem] = useState<{name: string, html: string} | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredCustomItems = customItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  
+  const filteredComponents = COMPONENTS.map(category => ({
+    ...category,
+    items: category.items.filter(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      category.category.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  })).filter(category => category.items.length > 0);
+
+  const hasResults = filteredCustomItems.length > 0 || filteredComponents.length > 0;
 
   return (
     <div className="w-80 h-full bg-hall-50/95 dark:bg-hall-950/95 backdrop-blur-xl border-r border-hall-200 dark:border-hall-800 flex flex-col shadow-2xl z-50 overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b border-hall-200 dark:border-hall-800 bg-white/50 dark:bg-black/50 backdrop-blur-md">
-        <div className="flex items-center gap-2">
-          <LayoutGrid className="w-5 h-5 text-indigo-500" />
-          <h3 className="text-sm font-bold text-hall-900 dark:text-ink tracking-wide">Components</h3>
+        <div className="flex flex-col gap-3 w-full">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <LayoutGrid className="w-5 h-5 text-indigo-500" />
+              <h3 className="text-sm font-bold text-hall-900 dark:text-ink tracking-wide">Components</h3>
+            </div>
+            <button onClick={onClose} className="p-1 rounded-md text-hall-500 hover:text-hall-900 hover:bg-hall-200 dark:hover:text-ink dark:hover:bg-hall-800 transition-colors">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-hall-400" />
+            <input 
+              type="text" 
+              placeholder="Search components..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 bg-hall-100 dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded-lg text-sm text-hall-900 dark:text-ink focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder:text-hall-500"
+            />
+          </div>
         </div>
-        <button onClick={onClose} className="p-1 rounded-md text-hall-500 hover:text-hall-900 hover:bg-hall-200 dark:hover:text-ink dark:hover:bg-hall-800 transition-colors">
-          <X className="w-4 h-4" />
-        </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-8 custom-scrollbar">
-        <div className="text-xs text-hall-500 dark:text-hall-400 bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/50 flex items-start gap-2">
-          <MousePointerClick className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
-          <p>Click a component to append it to the selected element on the Stage, or drag and drop it.</p>
-        </div>
-
-        {customItems.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider flex items-center gap-2 px-1">
-              <Settings2 className="w-3.5 h-3.5" />
-              Saved Components
-            </h4>
-            <div className="grid grid-cols-1 gap-2">
-              {customItems.map((item, j) => (
-                <button
-                  key={j}
-                  draggable
-                  onMouseEnter={() => setHoveredItem(item)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                  onDragStart={(e) => {
-                    e.dataTransfer.setData('text/html', item.html);
-                    e.dataTransfer.setData('application/forge-component', item.name);
-                  }}
-                  onClick={() => onInsertComponent(item.html)}
-                  className="flex items-center justify-between bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-colors group cursor-grab active:cursor-grabbing"
-                >
-                  <span className="text-sm font-medium text-indigo-900 dark:text-indigo-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
-                    {item.name}
-                  </span>
-                  <div className="w-6 h-6 rounded bg-indigo-100 dark:bg-indigo-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="text-indigo-600 dark:text-indigo-300 text-xs">+</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+      <div className="flex-1 overflow-y-auto p-4 space-y-8 scrollbar-thin scrollbar-thumb-hall-300 dark:scrollbar-thumb-hall-700">
+        {!hasResults ? (
+          <div className="flex flex-col items-center justify-center h-40 text-center px-4">
+            <Search className="w-8 h-8 text-hall-300 dark:text-hall-700 mb-3" />
+            <p className="text-sm font-medium text-hall-900 dark:text-ink">No components found</p>
+            <p className="text-xs text-hall-500 dark:text-hall-400 mt-1">Try a different search term</p>
           </div>
+        ) : (
+          <>
+            {filteredCustomItems.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider flex items-center gap-2 px-1">
+                  <Settings2 className="w-4 h-4" />
+                  Custom Components
+                </h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {filteredCustomItems.map((item, i) => (
+                    <button
+                      key={i}
+                      draggable
+                      onMouseEnter={() => setHoveredItem(item)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      onDragStart={(e) => {
+                        e.dataTransfer.setData('text/html', item.html);
+                        e.dataTransfer.setData('application/forge-component', item.name);
+                      }}
+                      onClick={() => onInsertComponent(item.html)}
+                      className="flex items-center justify-between bg-white dark:bg-black border border-hall-200 dark:border-hall-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-all group cursor-grab active:cursor-grabbing hover:shadow-md"
+                    >
+                      <span className="text-sm font-medium text-hall-700 dark:text-hall-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
+                        {item.name}
+                      </span>
+                      <div className="w-6 h-6 rounded bg-hall-100 dark:bg-hall-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-hall-600 dark:text-hall-400 text-xs group-hover:text-indigo-600 dark:group-hover:text-indigo-400">+</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {filteredComponents.map((group, i) => (
+              <div key={i} className="space-y-3">
+                <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider flex items-center gap-2 px-1">
+                  {group.icon}
+                  {group.category}
+                </h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {group.items.map((item, j) => (
+                    <button
+                      key={j}
+                      draggable
+                      onMouseEnter={() => setHoveredItem(item)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      onDragStart={(e) => {
+                        e.dataTransfer.setData('text/html', item.html);
+                        e.dataTransfer.setData('application/forge-component', item.name);
+                      }}
+                      onClick={() => onInsertComponent(item.html)}
+                      className="flex items-center justify-between bg-white dark:bg-black border border-hall-200 dark:border-hall-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-all group cursor-grab active:cursor-grabbing hover:shadow-md"
+                    >
+                      <span className="text-sm font-medium text-hall-700 dark:text-hall-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
+                        {item.name}
+                      </span>
+                      <div className="w-6 h-6 rounded bg-hall-100 dark:bg-hall-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-hall-600 dark:text-hall-400 text-xs group-hover:text-indigo-600 dark:group-hover:text-indigo-400">+</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
         )}
-
-        {COMPONENTS.map((group, i) => (
-          <div key={i} className="space-y-3">
-            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider flex items-center gap-2 px-1">
-              {group.icon}
-              {group.category}
-            </h4>
-            <div className="grid grid-cols-1 gap-2">
-              {group.items.map((item, j) => (
-                <button
-                  key={j}
-                  draggable
-                  onMouseEnter={() => setHoveredItem(item)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                  onDragStart={(e) => {
-                    e.dataTransfer.setData('text/html', item.html);
-                    e.dataTransfer.setData('application/forge-component', item.name);
-                  }}
-                  onClick={() => onInsertComponent(item.html)}
-                  className="flex items-center justify-between bg-white dark:bg-black border border-hall-200 dark:border-hall-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-all group cursor-grab active:cursor-grabbing hover:shadow-md"
-                >
-                  <span className="text-sm font-medium text-hall-700 dark:text-hall-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
-                    {item.name}
-                  </span>
-                  <div className="w-6 h-6 rounded bg-hall-100 dark:bg-hall-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="text-hall-600 dark:text-hall-400 text-xs group-hover:text-indigo-600 dark:group-hover:text-indigo-400">+</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
       </div>
 
       {hoveredItem && (

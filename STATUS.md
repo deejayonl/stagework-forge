@@ -645,3 +645,19 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - The Global Input Prompt in `StageView` (the bottom chat bar) needs a UI pass. It should look like an elegant, floating pill that expands slightly on focus, similar to modern AI chat interfaces.
 - [x] **Task 60.2: Implement Global Input Loading States**
   - When the user submits a prompt to the BFF (`/api/mutate`), the Global Input should show a clear, non-blocking loading state (e.g., a subtle pulsing glow or a spinning icon inside the input) while the DOM mutation streams in.
+
+## Phase 61: Component Library Search & Filter Polish
+*Status: Complete*
+
+- [x] **Task 61.1: Component Search Bar**
+  - Add a sticky search input at the top of `ComponentLibrary.tsx` to instantly filter components by name or category.
+- [x] **Task 61.2: Empty State UI**
+  - Show a friendly "No components found" message when a search yields no results.
+
+## Phase 62: Extended UI Components
+*Status: Complete*
+
+- [x] **Task 62.1: Forms & Inputs Components**
+  - Add a 'Forms' category to `ComponentLibrary.tsx` containing Contact Form and Newsletter Signup.
+- [x] **Task 62.2: Testimonials & Social Proof**
+  - Add a 'Testimonials' category to `ComponentLibrary.tsx` with a Testimonial Grid and single featured quote.
