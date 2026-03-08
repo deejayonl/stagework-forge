@@ -617,7 +617,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 57.1: E-Commerce Components in Library**
   - Expand `ComponentLibrary.tsx` to include an "E-Commerce" category with Product Card, Product Grid, and Checkout Button.
-- [ ] **Task 57.2: Stripe Settings UI**
+- [x] **Task 57.2: Stripe Settings UI**
   - Add a "Payments" tab in `ProjectSettingsModal.tsx` to configure Stripe Publishable Key and Secret Key.
-- [ ] **Task 57.3: Payment Action Logic**
+- [x] **Task 57.3: Payment Action Logic**
   - Update `LogicGeneratorModal.tsx` to recognize "Trigger Stripe Checkout" or "Process Payment" intents, injecting Stripe.js initialization logic.

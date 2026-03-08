@@ -3,12 +3,14 @@ import { Sparkles, X, Loader2 } from 'lucide-react';
 
 interface LogicGeneratorModalProps {
   isOpen: boolean;
+  payments?: Record<string, string>;
   onClose: () => void;
   onGenerate: (logic: string) => void;
 }
 
 export const LogicGeneratorModal: React.FC<LogicGeneratorModalProps> = ({
   isOpen,
+  payments = {},
   onClose,
   onGenerate
 }) => {
@@ -25,7 +27,7 @@ export const LogicGeneratorModal: React.FC<LogicGeneratorModalProps> = ({
       const response = await fetch('/api/generate-logic', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({ prompt, payments })
       });
       
       if (!response.ok) throw new Error('Failed to generate logic');

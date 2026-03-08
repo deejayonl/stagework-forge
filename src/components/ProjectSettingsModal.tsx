@@ -5,11 +5,13 @@ interface ProjectSettingsModalProps {
   auth: Record<string, string>;
   onUpdateAuth: (auth: Record<string, string>) => void;
   seo: Record<string, string>;
+  payments?: Record<string, string>;
+  onUpdatePayments?: (payments: Record<string, string>) => void;
   onUpdateSEO: (seo: Record<string, string>) => void;
   onClose: () => void;
 }
 
-export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo, onUpdateSEO, auth, onUpdateAuth, onClose }) => {
+export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo, onUpdateSEO, auth, onUpdateAuth, payments = {}, onUpdatePayments, onClose }) => {
   const [title, setTitle] = useState(seo.title || '');
   const [description, setDescription] = useState(seo.description || '');
   const [ogImage, setOgImage] = useState(seo.ogImage || '');
@@ -21,6 +23,8 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
   const [supabaseUrl, setSupabaseUrl] = useState(auth?.supabaseUrl || '');
   const [supabaseKey, setSupabaseKey] = useState(auth?.supabaseKey || '');
   const [firebaseConfig, setFirebaseConfig] = useState(auth?.firebaseConfig || '');
+  const [stripePublishableKey, setStripePublishableKey] = useState(payments?.stripePublishableKey || '');
+  const [stripeSecretKey, setStripeSecretKey] = useState(payments?.stripeSecretKey || '');
   const [activeTab, setActiveTab] = useState('seo');
 
   const handleSave = () => {
@@ -34,6 +38,12 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
       customHead,
       customBody
     });
+    if (onUpdatePayments) {
+      onUpdatePayments({
+        stripePublishableKey,
+        stripeSecretKey
+      });
+    }
     onUpdateAuth({
       ...auth,
       provider: authProvider,
@@ -81,6 +91,12 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'auth' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
           >
             Authentication
+          </button>
+          <button 
+            onClick={() => setActiveTab('payments')}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'payments' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
+          >
+            Payments
           </button>
         </div>
 
@@ -199,7 +215,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
                 </div>
               </div>
             </div>
-          ) : (
+          ) : activeTab === 'auth' ? (
             <div>
               <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">Authentication Configuration</h3>
               <p className="text-xs text-hall-500 mb-4">Integrate Supabase or Firebase to enable authentication and database capabilities in your app.</p>
@@ -272,6 +288,38 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">Payment Configuration</h3>
+              <p className="text-xs text-hall-500 mb-4">Configure Stripe to accept payments natively in your application.</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                    Stripe Publishable Key
+                  </label>
+                  <input 
+                    type="text"
+                    value={stripePublishableKey}
+                    onChange={(e) => setStripePublishableKey(e.target.value)}
+                    placeholder="pk_test_..."
+                    className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                    Stripe Secret Key
+                  </label>
+                  <input 
+                    type="password"
+                    value={stripeSecretKey}
+                    onChange={(e) => setStripeSecretKey(e.target.value)}
+                    placeholder="sk_test_..."
+                    className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
               </div>
             </div>
           )}

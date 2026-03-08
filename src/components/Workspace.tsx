@@ -34,6 +34,7 @@ interface WorkspaceProps {
   seo?: Record<string, string>;
   collections?: Record<string, any>;
   apis?: Record<string, any>;
+  payments?: Record<string, string>;
   assets?: Record<string, string>;
   onUpdateVariables?: (variables: Record<string, string>) => void;
   onUpdateComponents?: (components: Record<string, string>) => void;
@@ -60,6 +61,7 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
   seo = {},
   collections = {},
   apis = {},
+  payments = {},
   assets = {},
   onUpdateVariables, 
   onUpdateComponents,
@@ -1589,6 +1591,7 @@ useEffect(() => {
             variables={variables}
             collections={collections}
             apis={apis}
+            payments={payments}
             customFonts={customFonts}
             pages={localFiles.filter(f => f.name.endsWith('.html') || f.name === 'index.html').map(f => f.name)}
             onBindVariable={handleBindVariable}

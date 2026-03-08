@@ -10,6 +10,7 @@ interface PropertyInspectorProps {
   variables?: Record<string, string>;
   collections?: Record<string, any>;
   apis?: Record<string, any>;
+  payments?: Record<string, string>;
   customFonts?: string[];
   onBindVariable?: (attribute: string, variableName: string) => void;
   onUpdateStyle: (property: string, value: string, state?: string) => void;
@@ -37,6 +38,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   variables = {},
   collections = {},
   apis = {},
+  payments = {},
   customFonts = [],
   onBindVariable,
   onUpdateStyle, 
@@ -3279,6 +3281,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
       <LogicGeneratorModal
         isOpen={isLogicModalOpen}
+        payments={payments}
         onClose={() => {
           setIsLogicModalOpen(false);
           setActiveLogicEvent(null);

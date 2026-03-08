@@ -470,6 +470,20 @@ export const useProjects = (storageToken: string | null) => {
     if (updatedProject) syncProjectToBFF(updatedProject);
   }, [currentProjectId, storageToken]);
 
+  const updateProjectPayments = useCallback((payments: Record<string, string>) => {
+    if (!currentProjectId) return;
+    let updatedProject: Project | null = null;
+    setProjects(prev => {
+      const p = prev.find(proj => proj.id === currentProjectId);
+      if (!p) return prev;
+      updatedProject = { ...p, payments };
+      return prev.map(proj => proj.id === currentProjectId ? updatedProject! : proj);
+    });
+    if (updatedProject && storageToken) {
+      saveProjectToCloud(updatedProject, storageToken);
+    }
+  }, [currentProjectId, storageToken]);
+
   const updateProjectAuth = useCallback((auth: Record<string, string>) => {
     if (!currentProjectId) return;
     let updatedProject: Project | null = null;
@@ -499,6 +513,7 @@ export const useProjects = (storageToken: string | null) => {
     updateProjectFonts,
     updateProjectSEO,
     updateProjectAuth,
+    updateProjectPayments,
     updateProjectCollections,
     updateProjectApis,
     updateProjectAssets,

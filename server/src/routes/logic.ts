@@ -6,7 +6,7 @@ export const logicRoutes = new Hono();
 
 logicRoutes.post('/', async (c) => {
   try {
-    const { prompt } = await c.req.json();
+    const { prompt, payments } = await c.req.json();
     
     if (!prompt) {
       return c.json({ error: 'Prompt is required' }, 400);
@@ -20,6 +20,8 @@ logicRoutes.post('/', async (c) => {
     const google = createGoogleGenerativeAI({ apiKey });
     const model = google('gemini-2.5-flash');
 
+    const stripeKey = payments?.stripePublishableKey || 'pk_test_YOUR_STRIPE_KEY';
+
     const systemPrompt = `You are an expert vanilla JavaScript developer.
 The user will describe an action or event handler logic.
 Your job is to generate ONLY the raw JavaScript code that accomplishes this.
@@ -32,15 +34,21 @@ If it involves fetching data, use \`fetch\` and \`async/await\` (using an IIFE i
 Example input: "Fetch weather for London and alert it"
 Example output: fetch('https://wttr.in/London?format=3').then(r => r.text()).then(t => alert(t));
 
-You have access to a global authentication object: `window.forgeAuth`.
+You have access to a global authentication object: \`window.forgeAuth\`.
 It has properties:
-- `window.forgeAuth.currentUser` (object or null)
-- `window.forgeAuth.login(userObj)`
-- `window.forgeAuth.logout()`
+- \`window.forgeAuth.currentUser\` (object or null)
+- \`window.forgeAuth.login(userObj)\`
+- \`window.forgeAuth.logout()\`
 
-If the prompt mentions logging in, use `window.forgeAuth.login({ email: 'user@example.com', name: 'User' })` (or extract details from the prompt).
-If it mentions logging out, use `window.forgeAuth.logout()`.
-If it mentions showing/hiding elements based on auth, check `window.forgeAuth.currentUser`.`;
+If the prompt mentions logging in, use \`window.forgeAuth.login({ email: 'user@example.com', name: 'User' })\` (or extract details from the prompt).
+If it mentions logging out, use \`window.forgeAuth.logout()\`.
+If it mentions showing/hiding elements based on auth, check \`window.forgeAuth.currentUser\`.
+
+If the prompt mentions "Trigger Stripe Checkout", "Process Payment", or anything related to Stripe payments:
+Use the provided Stripe Publishable Key: "${stripeKey}"
+Generate the logic to load Stripe.js (if not already loaded, e.g. checking \`window.Stripe\`), initialize Stripe with the key, and redirect to checkout or process a payment.
+Example:
+if (!window.Stripe) { const s = document.createElement('script'); s.src = 'https://js.stripe.com/v3/'; s.onload = () => { const stripe = Stripe('${stripeKey}'); stripe.redirectToCheckout({ lineItems: [{ price: 'price_id', quantity: 1 }], mode: 'payment', successUrl: window.location.href, cancelUrl: window.location.href }); }; document.head.appendChild(s); } else { const stripe = Stripe('${stripeKey}'); stripe.redirectToCheckout({ lineItems: [{ price: 'price_id', quantity: 1 }], mode: 'payment', successUrl: window.location.href, cancelUrl: window.location.href }); }`;
 
     const { text } = await generateText({
       model,

@@ -67,6 +67,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectFonts,
     updateProjectSEO,
     updateProjectAuth,
+    updateProjectPayments,
     updateProjectCollections,
     updateProjectApis,
     updateProjectAssets,
@@ -503,6 +504,8 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
           onUpdateSEO={updateProjectSEO}
           auth={currentProject.auth || {}}
           onUpdateAuth={updateProjectAuth}
+          payments={currentProject.payments || {}}
+          onUpdatePayments={updateProjectPayments}
           onClose={() => setIsSettingsOpen(false)} 
         />
       )}
@@ -562,6 +565,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                  seo={currentProject?.seo || {}}
                  collections={currentProject?.collections || {}}
                  apis={currentProject?.apis || {}}
+                 payments={currentProject?.payments || {}}
                  onUpdateVariables={updateProjectVariables}
                  onUpdateComponents={updateProjectComponents}
                  onUpdateTheme={updateProjectTheme}
