@@ -95,6 +95,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, onExp
                   <svg viewBox="0 0 76 65" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4"><path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor"/></svg>
                   Deploy to Vercel
                 </button>
+
+                <button 
+                  onClick={() => onDeploy(framework, 'netlify')}
+                  className="w-full py-3 px-4 bg-[#00c7b7] hover:bg-[#00b3a4] text-white font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
+                >
+                  <svg viewBox="0 0 115 115" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5"><path d="M57.5 115C89.2564 115 115 89.2564 115 57.5C115 25.7436 89.2564 0 57.5 0C25.7436 0 0 25.7436 0 57.5C0 89.2564 25.7436 115 57.5 115Z" fill="currentColor"/><path d="M25 57.5L57.5 25L90 57.5L57.5 90L25 57.5Z" fill="white"/></svg>
+                  Deploy to Netlify
+                </button>
                 
                 <button 
                   onClick={() => onDeploy(framework, 'github')}

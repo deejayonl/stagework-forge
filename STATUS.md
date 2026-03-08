@@ -362,5 +362,5 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 36.1: Vercel Integration BFF Route**
   - Implement `/api/deploy/vercel/:projectId` in the Node.js BFF to receive the Vercel Personal Access Token, package the project files into a Vercel-compatible format, and deploy using the Vercel REST API.
-- [ ] **Task 36.2: Netlify Integration BFF Route**
+- [x] **Task 36.2: Netlify Integration BFF Route**
   - Implement `/api/deploy/netlify/:projectId` in the Node.js BFF to receive the Netlify PAT, package the project files as a static site, and deploy using the Netlify REST API.
