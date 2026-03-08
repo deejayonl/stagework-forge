@@ -1074,6 +1074,79 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               );
             })}
           </div>
+          <div className="grid grid-cols-2 gap-2 mt-3">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Duration</label>
+              <input 
+                type="text" 
+                value={styles.animationDuration || ''} 
+                onChange={(e) => handleStyleChange('animationDuration', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 2s, 500ms"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Delay</label>
+              <input 
+                type="text" 
+                value={styles.animationDelay || ''} 
+                onChange={(e) => handleStyleChange('animationDelay', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. 1s"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-1 mt-2">
+            <label className="text-[10px] text-hall-500">Timing Function (Easing)</label>
+            <div className="flex gap-2">
+              <select 
+                value={styles.animationTimingFunction || ''} 
+                onChange={(e) => handleStyleChange('animationTimingFunction', e.target.value)}
+                className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">Default</option>
+                <option value="linear">linear</option>
+                <option value="ease">ease</option>
+                <option value="ease-in">ease-in</option>
+                <option value="ease-out">ease-out</option>
+                <option value="ease-in-out">ease-in-out</option>
+              </select>
+              <input 
+                type="text" 
+                value={styles.animationTimingFunction || ''} 
+                onChange={(e) => handleStyleChange('animationTimingFunction', e.target.value)}
+                className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="cubic-bezier(...)"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1 mt-3 pt-3 border-t border-hall-200 dark:border-hall-800">
+            <label className="text-[10px] text-hall-500 font-bold">Custom Animation</label>
+            <div className="space-y-2">
+              <input 
+                type="text" 
+                value={styles.animationName || ''} 
+                onChange={(e) => handleStyleChange('animationName', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="Animation Name (e.g. slideIn)"
+              />
+              <textarea
+                value={selectedElement.dataset?.keyframes || ''}
+                onChange={(e) => {
+                  if (onUpdateAttribute) {
+                    onUpdateAttribute('data-keyframes', e.target.value);
+                  }
+                }}
+                className="w-full h-20 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink font-mono"
+                placeholder="@keyframes slideIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}"
+              />
+              <p className="text-[8px] text-hall-500">Define keyframes here and they will be injected automatically.</p>
+            </div>
+          </div>
+
+
           <div className="grid grid-cols-2 gap-2 mt-2">
             {['duration-150', 'duration-300', 'duration-500', 'duration-700'].map(dur => {
               const isActive = selectedElement.className?.includes(dur);

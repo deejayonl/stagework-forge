@@ -779,10 +779,32 @@ useEffect(() => {
     updateLocalHtml(selectedElement.path, (el) => {
       if (value) {
         el.setAttribute(attr, value);
+        
+        if (attr === 'data-keyframes') {
+          const doc = el.ownerDocument;
+          let styleBlock = doc.getElementById(`forge-keyframes-${selectedElement.id}`);
+          if (!styleBlock) {
+            styleBlock = doc.createElement('style');
+            styleBlock.id = `forge-keyframes-${selectedElement.id}`;
+            doc.head.appendChild(styleBlock);
+          }
+          styleBlock.textContent = value;
+        }
       } else {
         el.removeAttribute(attr);
+        
+        if (attr === 'data-keyframes') {
+          const doc = el.ownerDocument;
+          const styleBlock = doc.getElementById(`forge-keyframes-${selectedElement.id}`);
+          if (styleBlock) styleBlock.remove();
+        }
       }
     }, false, `Update ${attr} to ${value}`);
+
+    const iframe = document.querySelector('iframe[title="Preview"]') as HTMLIFrameElement;
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'FORGE_RELOAD' }, '*');
+    }
   };
 
   const handleSelectNode = (id: string) => {
