@@ -179,3 +179,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 14.1: Clean up unused react imports**
   - Fix unused `isComponentsOpen` in `Workspace.tsx`.
   - Fix unused `bootstrapProgress` in `ForgeView.tsx`.
+
+## Phase 15: Workspace Component TypeScript Fixes
+*Status: Complete*
+
+- [x] **Task 15.1: Fix missing versions array reference**
+  - Fix undefined `versions` and missing variables in `Workspace.tsx` around line 1312 and 1315.

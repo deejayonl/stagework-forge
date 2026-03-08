@@ -45,6 +45,9 @@ interface WorkspaceProps {
 
 const Workspace: React.FC<WorkspaceProps> = ({ 
   projectId,
+  versions,
+  currentVersionIndex,
+  onJumpToVersion,
   files, 
   variables = {}, 
   components = {},
