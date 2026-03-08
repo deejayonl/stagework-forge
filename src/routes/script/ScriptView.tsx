@@ -89,7 +89,7 @@ export default function ScriptView() {
         })
       });
       
-      console.log("Executable Plan Generated:", response);
+      
       
       // Ensure the user sees at least some of the cool terminal logs
       setTimeout(() => {

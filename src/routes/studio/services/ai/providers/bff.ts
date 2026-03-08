@@ -10,7 +10,7 @@ export class BFFProvider implements AIProvider {
     constructor() {}
 
     private async callBFF(message: string, sessionKey: string = "nest:default", mediaConfig?: any): Promise<any> {
-        console.log("DEBUG: Calling BFF API...", { message, sessionKey, mediaConfig });
+        
         const apiBase = getApiBase();
         const response = await fetch(`${apiBase}/chat`, {
             method: 'POST',
@@ -30,7 +30,7 @@ export class BFFProvider implements AIProvider {
         }
 
         const data = await response.json();
-        console.log("DEBUG: BFF API Data received:", data);
+        
         if (data.error) throw new Error(data.error);
 
         // Store commands for retrieval after generation

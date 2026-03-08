@@ -980,12 +980,12 @@ This is your **Infinite Canvas** for intelligent collaboration.
   };
 
   const executeUICommands = (commands: any[]) => {
-      console.log("DEBUG: executeUICommands called with:", commands);
+      
       if (!commands || commands.length === 0) return;
 
       commands.forEach(cmd => {
           const { command, args } = cmd;
-          console.log("DEBUG: Executing UI Command:", command, args);
+          
 
           const centerX = window.innerWidth / 2;
           const centerY = window.innerHeight / 2;
