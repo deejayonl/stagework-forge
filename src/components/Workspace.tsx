@@ -16,6 +16,7 @@ import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2 } from 'lucide-react';
+import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 
 
 interface WorkspaceProps {
@@ -44,7 +45,7 @@ interface WorkspaceProps {
   onOpenImageTool?: (onPick: (url: string) => void) => void;
 }
 
-const Workspace: React.FC<WorkspaceProps> = ({ 
+const WorkspaceInner: React.FC<WorkspaceProps> = ({ 
   projectId,
   versions,
   currentVersionIndex,
@@ -1735,5 +1736,11 @@ useEffect(() => {
 </div>
   );
 };
+
+const Workspace = (props: WorkspaceProps) => (
+  <WorkspaceProvider initialState={{ files: props.files, status: "idle" }}>
+    <WorkspaceInner {...props} />
+  </WorkspaceProvider>
+);
 
 export default Workspace;
