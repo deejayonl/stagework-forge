@@ -534,3 +534,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add sliders/inputs for `line-height` and `letter-spacing` to improve typography control.
 - [x] **Task 42.3: Text Transform & Decoration**
   - Add toggles for `text-transform` (uppercase, lowercase, capitalize) and `text-decoration` (underline, line-through).
+
+## Phase 43: Advanced Layout & Positioning Controls
+*Status: Complete*
+
+- [x] **Task 43.1: Position Type & Z-Index**
+  - Add a dropdown for `position` (static, relative, absolute, fixed, sticky) and an input for `z-index`.
+- [x] **Task 43.2: Directional Offsets**
+  - Add inputs for `top`, `right`, `bottom`, and `left` properties (only show when position is not static).
+- [x] **Task 43.3: Overflow Controls**
+  - Add toggles/dropdowns for `overflow-x` and `overflow-y` (visible, hidden, scroll, auto).

@@ -364,6 +364,107 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               ))}
             </div>
           </div>
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Position</label>
+              <select
+                value={styles.position || 'static'}
+                onChange={(e) => handleStyleChange('position', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="static">static</option>
+                <option value="relative">relative</option>
+                <option value="absolute">absolute</option>
+                <option value="fixed">fixed</option>
+                <option value="sticky">sticky</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Z-Index</label>
+              <input 
+                type="number" 
+                value={styles.zIndex || ''} 
+                onChange={(e) => handleStyleChange('zIndex', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="auto"
+              />
+            </div>
+          </div>
+
+          {styles.position && styles.position !== 'static' && (
+            <div className="grid grid-cols-4 gap-1 mt-1">
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500 block text-center">Top</label>
+                <input 
+                  type="text" 
+                  value={styles.top || ''} 
+                  onChange={(e) => handleStyleChange('top', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[9px] text-center text-hall-900 dark:text-ink"
+                  placeholder="auto"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500 block text-center">Right</label>
+                <input 
+                  type="text" 
+                  value={styles.right || ''} 
+                  onChange={(e) => handleStyleChange('right', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[9px] text-center text-hall-900 dark:text-ink"
+                  placeholder="auto"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500 block text-center">Bottom</label>
+                <input 
+                  type="text" 
+                  value={styles.bottom || ''} 
+                  onChange={(e) => handleStyleChange('bottom', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[9px] text-center text-hall-900 dark:text-ink"
+                  placeholder="auto"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500 block text-center">Left</label>
+                <input 
+                  type="text" 
+                  value={styles.left || ''} 
+                  onChange={(e) => handleStyleChange('left', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[9px] text-center text-hall-900 dark:text-ink"
+                  placeholder="auto"
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Overflow X</label>
+              <select
+                value={styles.overflowX || 'visible'}
+                onChange={(e) => handleStyleChange('overflowX', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="visible">visible</option>
+                <option value="hidden">hidden</option>
+                <option value="scroll">scroll</option>
+                <option value="auto">auto</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Overflow Y</label>
+              <select
+                value={styles.overflowY || 'visible'}
+                onChange={(e) => handleStyleChange('overflowY', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="visible">visible</option>
+                <option value="hidden">hidden</option>
+                <option value="scroll">scroll</option>
+                <option value="auto">auto</option>
+              </select>
+            </div>
+          </div>
           
           {(styles.display === 'flex' || styles.display === 'inline-flex' || styles.display === 'grid') && (
             <div className="space-y-3 bg-hall-50 dark:bg-hall-900/30 p-2 rounded-lg border border-hall-200 dark:border-hall-800">
