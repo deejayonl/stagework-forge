@@ -287,11 +287,19 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 
 ## Phase 28: Global Project Settings & Metadata
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 28.1: Global Settings Modal UI**
+- [x] **Task 28.1: Global Settings Modal UI**
   - Create a `SettingsModal.tsx` accessible from the global header.
   - Add inputs for Project Title, Description, Favicon URL, and Meta Tags.
-- [ ] **Task 28.2: Metadata State Management**
+- [x] **Task 28.2: Metadata State Management**
   - Update the `workspaces` state to include global metadata.
   - Inject metadata into the exported HTML `<head>`.
+## Phase 29: Variable Binding & API Testing UI
+*Status: In Progress*
+
+- [ ] **Task 29.1: API Integrations Panel UI**
+  - Refine `ApiIntegrationsPanel.tsx` to allow adding custom API endpoints (GET, POST, PUT, DELETE) with headers and body.
+  - Implement a "Test Request" button that executes the fetch and stores the response JSON in the project state.
+- [ ] **Task 29.2: Variable Binding in Property Inspector**
+  - Add a dedicated section in `PropertyInspector.tsx` to allow binding elements (like text or image source) to specific keys from the tested API response or Collections.

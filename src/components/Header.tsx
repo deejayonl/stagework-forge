@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Menu, Undo2, Redo2, Image as ImageIcon, Download } from 'lucide-react';
+import { Menu, Undo2, Redo2, Image as ImageIcon, Download, Settings } from 'lucide-react';
 
 interface HeaderProps {
   isDark: boolean;
@@ -13,6 +13,7 @@ interface HeaderProps {
   projectName?: string;
   onOpenAssets: () => void;
   onExport?: () => void;
+  onOpenSettings?: () => void;
   activeUsers?: any[];
 }
 
@@ -25,6 +26,7 @@ const Header: React.FC<HeaderProps> = ({
   projectName,
   onOpenAssets,
   onExport,
+  onOpenSettings,
   activeUsers = []
 }) => {
   return (
@@ -97,6 +99,19 @@ const Header: React.FC<HeaderProps> = ({
 
         {/* Right Side: Tools & Theme */}
         <div className="flex items-center gap-2 pointer-events-auto bg-hall-950/80 bg-hall-900/80 backdrop-blur-xl border border-hall-200 border-hall-800 p-1.5 rounded-full shadow-lg shadow-hall-200/50 shadow-black/50">
+
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              aria-label="Project Settings"
+            >
+              <Settings className="w-4 h-4" />
+              <div className="absolute top-full mt-2 right-0 md:left-1/2 md:-translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+                Project Settings
+              </div>
+            </button>
+          )}
 
           {onExport && (
             <button

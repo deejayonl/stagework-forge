@@ -15,7 +15,6 @@ import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
-import { ProjectSettingsModal } from './ProjectSettingsModal';
 import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network, Undo2, Redo2 } from 'lucide-react';
 
 
@@ -78,7 +77,6 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const [isApisOpen, setIsApisOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isQROpen, setIsQROpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
   const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
@@ -1250,19 +1248,6 @@ useEffect(() => {
            <div className="h-4 w-px bg-hall-300 dark:bg-hall-700 mx-1"></div>
 
            <button
-             onClick={() => setIsSettingsOpen(true)}
-             className="group relative p-2 text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink rounded-full hover:bg-hall-200 dark:hover:bg-hall-800 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500"
-             aria-label="Project Settings"
-           >
-             <Settings className="w-4 h-4" />
-             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
-               Project Settings
-             </div>
-           </button>
-
-           <div className="h-4 w-px bg-hall-300 dark:bg-hall-700 mx-1"></div>
-
-           <button
              onClick={handleOpenNewWindow}
              className="group relative p-2 text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink rounded-full hover:bg-hall-200 dark:hover:bg-hall-800 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500"
              aria-label="Open in New Window"
@@ -1465,18 +1450,6 @@ useEffect(() => {
             }
           }}
         />
-
-        {isSettingsOpen && (
-          <ProjectSettingsModal 
-            seo={seo}
-            onUpdateSEO={(newSEO) => {
-              if (onUpdateSEO) {
-                onUpdateSEO(newSEO);
-              }
-            }}
-            onClose={() => setIsSettingsOpen(false)} 
-          />
-        )}
 
         {/* Property Inspector */}
         <div className={`absolute top-0 bottom-0 right-0 z-30 transition-transform duration-300 ${isInspectorOpen && activeTab === 'preview' ? 'translate-x-0' : 'translate-x-full'}`}>

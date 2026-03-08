@@ -9,6 +9,7 @@ import { generateCode } from '../../services/geminiService';
 import { Attachment, GeneratedFile, BatchImageGeneration } from '../../types';
 import { Sparkles, Layout, Monitor, Briefcase, ChevronRight } from 'lucide-react';
 import { ExportModal } from '../../components/ExportModal';
+import { ProjectSettingsModal } from '../../components/ProjectSettingsModal';
 import { useProjects } from '../../hooks/useProjects';
 import LiveCursors from '../../components/LiveCursors';
 
@@ -33,6 +34,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
   const [error, setError] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isImageToolOpen, setIsImageToolOpen] = useState(false);
   const [imagePickCallback, setImagePickCallback] = useState<((url: string) => void) | null>(null);
   const [isCloudConfigOpen, setIsCloudConfigOpen] = useState(false);
@@ -471,6 +473,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
           setIsImageToolOpen(true);
         }}
         onExport={currentProject ? handleExportOpen : undefined}
+        onOpenSettings={currentProject ? () => setIsSettingsOpen(true) : undefined}
         activeUsers={activeUsers}
       />
 
@@ -492,6 +495,14 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
         onDeploy={handleDeployConfirm}
         projectName={currentProject?.name || 'My Project'}
       />
+
+      {isSettingsOpen && currentProject && (
+        <ProjectSettingsModal 
+          seo={currentProject.seo || {}}
+          onUpdateSEO={updateProjectSEO}
+          onClose={() => setIsSettingsOpen(false)} 
+        />
+      )}
 
       <div 
         className={`absolute inset-0 z-25 bg-black/20 backdrop-blur-[1px] transition-opacity duration-500 ${

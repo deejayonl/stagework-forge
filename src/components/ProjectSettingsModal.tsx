@@ -11,13 +11,17 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
   const [title, setTitle] = useState(seo.title || '');
   const [description, setDescription] = useState(seo.description || '');
   const [ogImage, setOgImage] = useState(seo.ogImage || '');
+  const [faviconUrl, setFaviconUrl] = useState(seo.faviconUrl || '');
+  const [metaTags, setMetaTags] = useState(seo.metaTags || '');
 
   const handleSave = () => {
     onUpdateSEO({
       ...seo,
       title,
       description,
-      ogImage
+      ogImage,
+      faviconUrl,
+      metaTags
     });
     onClose();
   };
@@ -40,7 +44,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
         </div>
 
         {/* Body */}
-        <div className="p-6 space-y-6 flex-1 overflow-y-auto">
+        <div className="p-6 space-y-6 flex-1 overflow-y-auto max-h-[70vh]">
           <div>
             <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">SEO & Metadata</h3>
             
@@ -73,6 +77,19 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
 
               <div>
                 <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                  Favicon URL
+                </label>
+                <input 
+                  type="text"
+                  value={faviconUrl}
+                  onChange={(e) => setFaviconUrl(e.target.value)}
+                  placeholder="https://example.com/favicon.ico"
+                  className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
                   Open Graph Image URL
                 </label>
                 <input 
@@ -81,6 +98,19 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
                   onChange={(e) => setOgImage(e.target.value)}
                   placeholder="https://example.com/og-image.jpg"
                   className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                  Custom Meta Tags (HTML)
+                </label>
+                <textarea 
+                  value={metaTags}
+                  onChange={(e) => setMetaTags(e.target.value)}
+                  placeholder='<meta name="author" content="John Doe">'
+                  rows={3}
+                  className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
                 />
               </div>
             </div>
