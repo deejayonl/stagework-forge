@@ -153,3 +153,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a feature in `ThemeEditor.tsx` to automatically generate complementary color palettes based on a single primary color input.
 - [x] **Task 10.2: Typography Presets**
   - Add font pairing presets (e.g., Inter + Merriweather, Roboto + Open Sans) to the Theme Editor for quick brand styling.
+
+## Phase 11: Export & Deployment Polish
+*Status: Complete*
+
+- [x] **Task 11.1: Refactor Export Modal UI**
+  - Update `ExportModal.tsx` to include a proper body with framework selection (React/Vite, HTML/Tailwind, Vue) instead of cramming buttons into the header.
+  - Separate the "Download ZIP" and "Deploy" actions into distinct, visually appealing sections.
