@@ -61,6 +61,32 @@ const COMPONENTS = [
     ]
   },
   {
+    category: 'Forms',
+    icon: <MousePointerClick className="w-4 h-4" />,
+    items: [
+      {
+        name: 'Contact Form',
+        html: `<form class="max-w-md mx-auto p-6 bg-white dark:bg-black rounded-xl border border-hall-200 dark:border-hall-800 shadow-sm space-y-4"><div class="space-y-2"><label class="block text-sm font-medium text-hall-900 dark:text-ink">Name</label><input type="text" name="name" placeholder="John Doe" required class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" /></div><div class="space-y-2"><label class="block text-sm font-medium text-hall-900 dark:text-ink">Email</label><input type="email" name="email" placeholder="john@example.com" required class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" /></div><div class="space-y-2"><label class="block text-sm font-medium text-hall-900 dark:text-ink">Message</label><textarea name="message" rows="4" placeholder="How can we help?" required class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all resize-none"></textarea></div><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors">Send Message</button></form>`
+      },
+      {
+        name: 'Newsletter Signup',
+        html: `<form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-3"><input type="email" name="email" placeholder="Enter your email" required class="flex-1 px-4 py-3 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" /><button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors whitespace-nowrap">Subscribe</button></form>`
+      },
+      {
+        name: 'Input Field',
+        html: `<input type="text" name="input" placeholder="Type here..." class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" />`
+      },
+      {
+        name: 'Textarea',
+        html: `<textarea name="textarea" rows="4" placeholder="Type your message..." class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all resize-none"></textarea>`
+      },
+      {
+        name: 'Select Dropdown',
+        html: `<select name="select" class="w-full px-4 py-2 border border-hall-200 dark:border-hall-800 rounded-lg bg-white dark:bg-black text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"><option value="">Select an option</option><option value="1">Option 1</option><option value="2">Option 2</option><option value="3">Option 3</option></select>`
+      }
+    ]
+  },
+  {
     category: 'Elements',
     icon: <MousePointerClick className="w-4 h-4" />,
     items: [

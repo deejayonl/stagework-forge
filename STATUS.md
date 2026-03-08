@@ -420,3 +420,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Implement the `undo()` and `redo()` dispatcher functions to shift states between past/present/future.
 - [x] **Task 41.4: UI Buttons**
   - Add visible Undo/Redo icon buttons to the OmniBar in `Workspace.tsx`. Disable them when history buffers are empty.
+
+## Phase 42: Interactive Forms & Form Handling
+*Status: Complete*
+
+- [x] **Task 42.1: Form Components in Library**
+  - Add Form elements (Contact Form, Newsletter Signup, Input Field, Textarea, Checkbox, Radio, Select) to `ComponentLibrary.tsx`.
+- [x] **Task 42.2: Input Configuration Panel**
+  - Add a dedicated "Input Settings" section in `PropertyInspector.tsx`.
+  - When an `<input>`, `<textarea>`, or `<select>` is selected, allow configuring `name`, `type` (text, email, password, etc.), `placeholder`, and `required` attributes.
+- [x] **Task 42.3: Form Action Binding**
+  - When a `<form>` element is selected, allow configuring its `action` URL and `method` (GET/POST) in the Property Inspector.
