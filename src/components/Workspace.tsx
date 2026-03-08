@@ -1393,6 +1393,13 @@ useEffect(() => {
             onInsertComponent={handleInsertComponent}
             savedComponents={components}
             onClose={() => setIsLibraryOpen(false)}
+            onDeleteComponent={(name) => {
+              if (onUpdateComponents) {
+                const newComponents = { ...components };
+                delete newComponents[name];
+                onUpdateComponents(newComponents);
+              }
+            }}
           />
         </div>
 

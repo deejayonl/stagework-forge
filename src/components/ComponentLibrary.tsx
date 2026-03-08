@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { MessageSquare, Mail, ShoppingCart, LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X, Search } from 'lucide-react';
+import { MessageSquare, Mail, ShoppingCart, LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X, Search, Trash2 } from 'lucide-react';
 
 interface ComponentLibraryProps {
   onInsertComponent: (html: string) => void;
   savedComponents?: Record<string, string>;
   onClose: () => void;
+  onDeleteComponent?: (name: string) => void;
 }
 
 const COMPONENTS = [
@@ -176,7 +177,7 @@ const COMPONENTS = [
     ]
   },
 
-export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComponent, savedComponents = {}, onClose }) => {
+export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComponent, savedComponents = {}, onClose, onDeleteComponent }) => {
   const customItems = Object.entries(savedComponents).map(([name, html]) => ({ name, html }));
   const [hoveredItem, setHoveredItem] = useState<{name: string, html: string} | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -236,25 +237,39 @@ export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComp
                 </h4>
                 <div className="grid grid-cols-1 gap-2">
                   {filteredCustomItems.map((item, i) => (
-                    <button
-                      key={i}
-                      draggable
-                      onMouseEnter={() => setHoveredItem(item)}
-                      onMouseLeave={() => setHoveredItem(null)}
-                      onDragStart={(e) => {
-                        e.dataTransfer.setData('text/html', item.html);
-                        e.dataTransfer.setData('application/forge-component', item.name);
-                      }}
-                      onClick={() => onInsertComponent(item.html)}
-                      className="flex items-center justify-between bg-white dark:bg-black border border-hall-200 dark:border-hall-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-all group cursor-grab active:cursor-grabbing hover:shadow-md"
-                    >
-                      <span className="text-sm font-medium text-hall-700 dark:text-hall-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
-                        {item.name}
-                      </span>
-                      <div className="w-6 h-6 rounded bg-hall-100 dark:bg-hall-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span className="text-hall-600 dark:text-hall-400 text-xs group-hover:text-indigo-600 dark:group-hover:text-indigo-400">+</span>
-                      </div>
-                    </button>
+                    <div key={i} className="flex items-center gap-2">
+                      <button
+                        draggable
+                        onMouseEnter={() => setHoveredItem(item)}
+                        onMouseLeave={() => setHoveredItem(null)}
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('text/html', item.html);
+                          e.dataTransfer.setData('application/forge-component', item.name);
+                        }}
+                        onClick={() => onInsertComponent(item.html)}
+                        className="flex-1 flex items-center justify-between bg-white dark:bg-black border border-hall-200 dark:border-hall-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-lg p-3 transition-all group cursor-grab active:cursor-grabbing hover:shadow-md"
+                      >
+                        <span className="text-sm font-medium text-hall-700 dark:text-hall-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate">
+                          {item.name}
+                        </span>
+                        <div className="w-6 h-6 rounded bg-hall-100 dark:bg-hall-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <span className="text-hall-600 dark:text-hall-400 text-xs group-hover:text-indigo-600 dark:group-hover:text-indigo-400">+</span>
+                        </div>
+                      </button>
+                      {onDeleteComponent && (
+                        <button
+                          onClick={() => {
+                            if (window.confirm(`Are you sure you want to delete "${item.name}"?`)) {
+                              onDeleteComponent(item.name);
+                            }
+                          }}
+                          className="p-3 text-hall-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-800"
+                          title="Delete Component"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>

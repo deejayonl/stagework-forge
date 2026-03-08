@@ -661,3 +661,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a 'Forms' category to `ComponentLibrary.tsx` containing Contact Form and Newsletter Signup.
 - [x] **Task 62.2: Testimonials & Social Proof**
   - Add a 'Testimonials' category to `ComponentLibrary.tsx` with a Testimonial Grid and single featured quote.
+
+## Phase 63: Component Library Customization
+*Status: Complete*
+
+- [x] **Task 63.1: Delete Custom Components**
+  - Add a delete button to custom components in `ComponentLibrary.tsx`.
+  - Update `Workspace.tsx` to pass `onDeleteComponent` which removes the component from the `components` record.
