@@ -47,6 +47,8 @@ export interface Project {
   theme?: Record<string, string>;
   seo?: Record<string, string>;
   collections?: Record<string, Collection>;
+  apis?: Record<string, any>;
+  assets?: Record<string, string>;
   apis?: Record<string, ApiEndpoint>;
   
   // Cloud Sync State

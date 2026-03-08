@@ -65,6 +65,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectSEO,
     updateProjectCollections,
     updateProjectApis,
+    updateProjectAssets,
     addVersionToProject,
     deleteProject, 
     selectProject, 
@@ -358,6 +359,12 @@ const [isDark, setIsDark] = useState(true);
       content: base64,
       type: 'image'
     };
+
+    if (currentProject) {
+      const updatedAssets = { ...(currentProject.assets || {}) };
+      updatedAssets[filename] = base64;
+      updateProjectAssets(updatedAssets);
+    }
 
     const integrationPrompt = `
 SYSTEM UPDATE: A new asset has been created and added to the project file system.

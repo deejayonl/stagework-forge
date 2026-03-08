@@ -16,6 +16,7 @@ export interface ProjectState {
   components?: Record<string, string>; // Saved custom components (name -> HTML)
   collections?: Record<string, any>; // CMS Collections
   apis?: Record<string, any>; // External APIs
+  assets?: Record<string, string>; // Saved assets (name -> base64/url)
   customDomain?: string;
   updatedAt: number;
 }
@@ -52,6 +53,7 @@ class ProjectStore {
       components: project.components || existing.components || {},
       collections: project.collections || existing.collections || {},
       apis: project.apis || existing.apis || {},
+      assets: project.assets || existing.assets || {},
       customDomain: project.customDomain || existing.customDomain,
       updatedAt: now,
     };

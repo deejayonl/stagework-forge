@@ -221,3 +221,33 @@ export const fixHtmlNode = async (html: string): Promise<string> => {
     throw error;
   }
 };
+
+export const rewriteText = async (text: string, tone: string): Promise<string> => {
+  try {
+    const apiKey = getApiKey();
+    if (!apiKey) {
+        throw new Error("Gemini API Key is missing.");
+    }
+
+    const REWRITE_URL = import.meta.env?.DEV ? 'http://localhost:3001/api/rewrite' : '/api/rewrite';
+    const response = await fetch(REWRITE_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({ text, tone })
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to rewrite text");
+    }
+
+    const data = await response.json();
+    return data.text;
+
+  } catch (error) {
+    console.error("Rewrite Error:", error);
+    throw error;
+  }
+};

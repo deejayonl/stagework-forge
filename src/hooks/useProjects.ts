@@ -143,7 +143,8 @@ export const useProjects = (storageToken: string | null) => {
           components: project.components,
           theme: project.theme,
           seo: project.seo,
-          collections: project.collections
+          collections: project.collections,
+          assets: project.assets
         })
       });
     } catch (error: any) {
@@ -172,7 +173,8 @@ export const useProjects = (storageToken: string | null) => {
             components: p.components || {},
             theme: p.theme || {},
             seo: p.seo || {},
-            collections: p.collections || {}
+            collections: p.collections || {},
+            assets: p.assets || {}
           })).filter((p: Project) => p.versions.length > 0);
           
           if (loadedProjects.length > 0) {
@@ -388,6 +390,19 @@ export const useProjects = (storageToken: string | null) => {
     if (updatedProject) syncProjectToBFF(updatedProject);
   }, [currentProjectId, storageToken]);
 
+
+  const updateProjectAssets = useCallback((assets: Record<string, string>) => {
+    if (!currentProjectId) return;
+    let updatedProject: Project | null = null;
+    setProjects(prev => {
+      const p = prev.find(proj => proj.id === currentProjectId);
+      if (!p) return prev;
+      updatedProject = { ...p, assets };
+      return prev.map(proj => proj.id === currentProjectId ? updatedProject! : proj);
+    });
+    if (updatedProject) syncProjectToBFF(updatedProject);
+  }, [currentProjectId]);
+
   const updateProjectApis = useCallback((apis: Record<string, any>) => {
     if (!currentProjectId) return;
     let updatedProject: Project | null = null;
@@ -429,6 +444,7 @@ export const useProjects = (storageToken: string | null) => {
     updateProjectSEO,
     updateProjectCollections,
     updateProjectApis,
+    updateProjectAssets,
     addVersionToProject,
     deleteProject,
     selectProject,

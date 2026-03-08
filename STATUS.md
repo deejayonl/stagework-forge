@@ -374,3 +374,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 27.1: Live Sanity Check**
   - Verify the deployed Thin Shell UI and BFF are communicating correctly in production.
+
+
+## Phase 28: AI Content Generation & Asset Management
+*Status: Complete*
+
+- [x] **Task 28.1: AI Text Rewriter**
+  - Implement a BFF endpoint `/api/rewrite` to handle tone/style adjustments for text elements.
+  - Add a "Rewrite with AI" button next to text inputs in the Property Inspector.
+- [x] **Task 28.2: AI Image Generation**
+  - Implement a BFF endpoint `/api/generate-image` that calls the Gemini image model to generate base64/URL images.
+  - Add a "Generate Image" tab to the `ImageTool.tsx` panel.
+- [x] **Task 28.3: Asset Library Persistence**
+  - Automatically save generated and uploaded images to the BFF project store.

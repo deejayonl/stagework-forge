@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles } from 'lucide-react';
-import { fixHtmlNode } from '../services/geminiService';
+import { fixHtmlNode, rewriteText } from '../services/geminiService';
 
 interface PropertyInspectorProps {
   selectedElement: any;
@@ -40,6 +40,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   pages = []
 }) => {
   const [isFixing, setIsFixing] = useState(false);
+  const [isRewriting, setIsRewriting] = useState(false);
   const [isHoverMode, setIsHoverMode] = useState(false);
   const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
@@ -47,6 +48,19 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
   const handleStyleChange = (property: string, value: string) => {
     onUpdateStyle(property, value, isHoverMode ? 'hover' : undefined);
+  };
+
+  const handleRewrite = async (tone: string) => {
+    if (!selectedElement.textContent) return;
+    setIsRewriting(true);
+    try {
+      const newText = await rewriteText(selectedElement.textContent, tone);
+      onUpdateText(newText);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsRewriting(false);
+    }
   };
 
   const handleMagicFix = async () => {
@@ -199,12 +213,30 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 </select>
               )}
             </div>
-            <textarea 
+                        <textarea 
               value={textContent}
               onChange={(e) => onUpdateText(e.target.value)}
               disabled={!!selectedElement.dataset?.bindText}
               className={`w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg p-2 text-sm text-hall-900 dark:text-ink focus:ring-2 focus:ring-amber-500 outline-none resize-y min-h-[60px] ${selectedElement.dataset?.bindText ? 'opacity-50 cursor-not-allowed' : ''}`}
             />
+            {!selectedElement.dataset?.bindText && (
+              <div className="flex items-center gap-1 mt-1 flex-wrap">
+                <span className="text-[10px] text-hall-500 font-bold mr-1 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-500" /> AI Rewrite:
+                </span>
+                {['Professional', 'Casual', 'Shorter', 'Longer'].map(tone => (
+                  <button
+                    key={tone}
+                    onClick={() => handleRewrite(tone.toLowerCase())}
+                    disabled={isRewriting}
+                    className="text-[10px] bg-hall-100 dark:bg-hall-900 hover:bg-hall-200 dark:hover:bg-hall-800 px-2 py-1 rounded text-hall-700 dark:text-hall-300 disabled:opacity-50 transition-colors border border-hall-200 dark:border-hall-800"
+                  >
+                    {isRewriting ? '...' : tone}
+                  </button>
+                ))}
+              </div>
+            )}
+
           </div>
         )}
 
