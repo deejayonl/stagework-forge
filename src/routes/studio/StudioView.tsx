@@ -7,6 +7,7 @@ import InfiniteCanvas from './components/InfiniteCanvas';
 import OmniBar from './components/OmniBar';
 import ChatOverlay from './components/ChatOverlay';
 import StatusIsland from './components/StatusIsland';
+import TargetSelectors from './components/TargetSelectors';
 import ControlPanel from './components/ControlPanel';
 import ContextualTuningChat from './components/ContextualTuningChat';
 import WorkspacePanel from './components/WorkspacePanel';
@@ -98,7 +99,7 @@ export default function StudioView() {
 
           const nodes: CanvasNode[] = plan.blueprints.map((bp: any, index: number) => {
               return {
-                  id: `blueprint-${bp.targetId}-${index}`,
+                  id: `blueprint_${bp.targetId.replace(/\s+/g, "-").toLowerCase()}_${index}`,
                   type: 'text',
                   x: startX + (index * (nodeWidth + 40)), // Layout horizontally
                   y: startY,
@@ -228,6 +229,30 @@ This is your **Infinite Canvas** for intelligent collaboration.
 
   const [isDeploying, setIsDeploying] = useState(false);
   const [isControlPanelOpen, setIsControlPanelOpen] = useState(false);
+
+  const handleToggleTarget = (targetId: string, label: string) => {
+    setNodes(prev => {
+      const existing = prev.find(n => n.id.startsWith(`blueprint_${targetId}`));
+      if (existing) {
+        return prev.filter(n => n.id !== existing.id);
+      }
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const startX = (w / 2) - 200;
+      const startY = (h / 2) - 150;
+      return [...prev, {
+        id: `blueprint_${targetId}_${Date.now()}`,
+        type: "text",
+        x: startX + (prev.length * 40),
+        y: startY + (prev.length * 40),
+        width: 400,
+        height: 300,
+        title: `${label} Blueprint`,
+        content: `# ${label}\n\n**Description:** \n\n## Features\n- `,
+        zIndex: prev.length + 1
+      }];
+    });
+  };
 
   const handleDeployToStage = () => {
     setIsDeploying(true);
@@ -1651,6 +1676,11 @@ This is your **Infinite Canvas** for intelligent collaboration.
   return (
     <div className="w-full h-full relative font-sans text-hall-50 selection:bg-hall-950 selection:text-hall-50 bg-transparent overflow-hidden">
         {isDeploying && <DeployLoader />}
+
+        <TargetSelectors 
+          selectedTargetIds={nodes.map(n => n.id.startsWith("blueprint_") ? n.id.split("_")[1] : "").filter(Boolean)}
+          onToggleTarget={handleToggleTarget}
+        />
 
 
         {/* Background Ambience */}

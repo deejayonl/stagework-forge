@@ -91,7 +91,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
   useEffect(() => {
     if (initialWorkspaces && initialWorkspaces.length > 0 && projects.length === 0 && !isBootstrapping) {
       const activeWorkspace = initialWorkspaces[0];
-      const blueprintNodes = activeWorkspace.nodes.filter((n: any) => n.id.startsWith('blueprint-'));
+      const blueprintNodes = activeWorkspace.nodes.filter((n: any) => n.id.startsWith('blueprint_'));
       
       if (blueprintNodes.length > 0) {
         bootstrapBlueprints(blueprintNodes);

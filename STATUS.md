@@ -542,13 +542,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Manage the `isDarkMode` state and send the `FORGE_TOGGLE_DARK_MODE` message to the `preview-iframe`.
 
 ## Phase 51: The Masterpiece Pipeline (Script -> Studio Organization)
-*Status: Pending*
+*Status: Completed*
 
-- [ ] **Task 51.1: Script Tab Open Canvas**
+- [x] **Task 51.1: Script Tab Open Canvas**
   - Redesign the Script tab to feel like an open, infinite notepad. Users should be able to type anywhere, jot down notes freely, and brainstorm without feeling confined to a small box.
-- [ ] **Task 51.2: Studio Blueprint Organization**
+- [x] **Task 51.2: Studio Blueprint Organization**
   - Ensure that when the Script is processed, the transition to the Studio tab results in a highly organized visual map. It should look like an architectural blueprint (similar to WWDC mind-maps) where users can see all their disconnected notes compacted into a structured project plan.
-- [ ] **Task 51.3: Target Selectors in Studio**
+- [x] **Task 51.3: Target Selectors in Studio**
   - Move or mirror the platform/device target selection logic into the Studio tab, allowing users to dynamically add/remove targets (e.g., watchOS, macOS, iOS) directly from the visual blueprint before final generation.
-- [ ] **Task 51.4: Masterpiece Stage Generation**
+- [x] **Task 51.4: Masterpiece Stage Generation**
   - Ensure that the final transition from Studio to Stage consumes this organized blueprint and generates the complete, polished "masterpiece" application.
