@@ -1,5 +1,18 @@
 
 
+
+export interface CollectionField {
+  name: string;
+  type: 'text' | 'number' | 'boolean' | 'image' | 'date';
+}
+
+export interface Collection {
+  id: string;
+  name: string;
+  fields: CollectionField[];
+  data: Record<string, any>[];
+}
+
 export interface GeneratedFile {
   name: string;
   content: string;
@@ -23,6 +36,7 @@ export interface Project {
   components?: Record<string, string>;
   theme?: Record<string, string>;
   seo?: Record<string, string>;
+  collections?: Record<string, Collection>;
   
   // Cloud Sync State
   cloudFolderId?: number; // ID of the folder in cloud storage

@@ -14,6 +14,7 @@ export interface ProjectState {
   blueprints: any[]; // The generated designs
   mutations: any[]; // The real-time changes
   components?: Record<string, string>; // Saved custom components (name -> HTML)
+  collections?: Record<string, any>; // CMS Collections
   customDomain?: string;
   updatedAt: number;
 }
@@ -48,6 +49,7 @@ class ProjectStore {
       blueprints: project.blueprints || existing.blueprints || [],
       mutations: project.mutations || existing.mutations || [],
       components: project.components || existing.components || {},
+      collections: project.collections || existing.collections || {},
       customDomain: project.customDomain || existing.customDomain,
       updatedAt: now,
     };

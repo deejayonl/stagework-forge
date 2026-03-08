@@ -306,3 +306,17 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 20.3: Internal Link Binding**
   - Add a "Link" property to the Property Inspector for button and text nodes.
   - Allow users to select an internal page from a dropdown to set up routing navigation.
+
+## Phase 21: Data Modeling & Collections (CMS)
+*Status: In Progress*
+
+- [x] **Task 21.1: Data Collections Sidebar Panel**
+  - Create a new "Database" or "CMS" tab in the left sidebar.
+  - Allow users to create Collections (e.g., "Users", "Posts", "Products").
+  - Allow users to define fields for each collection (Text, Number, Boolean, Image, Date).
+- [x] **Task 21.2: BFF Schema Generation & Storage**
+  - Create BFF endpoints (`/api/collections/:projectId`) to save and retrieve the database schemas.
+  - Store the mock data for these collections in the project's state.
+- [ ] **Task 21.3: Data Binding to UI Components**
+  - Update the Property Inspector to allow binding a component (like a List or Grid) to a specific Collection.
+  - Map UI element fields (e.g., Image `src`, Text `content`) to the Collection's fields.

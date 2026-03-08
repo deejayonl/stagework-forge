@@ -10,8 +10,9 @@ import { ComponentLibrary } from './ComponentLibrary';
 import { VariablesPanel } from './VariablesPanel';
 import { ThemeEditor } from './ThemeEditor';
 import { PagesManager } from './PagesManager';
+import { CollectionsPanel } from './CollectionsPanel';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
-import { Settings2, AlignLeft, Library, Database, Palette, Settings } from 'lucide-react';
+import { Settings2, AlignLeft, Library, Database, Palette, Settings, List } from 'lucide-react';
 
 
 interface WorkspaceProps {
@@ -20,10 +21,12 @@ interface WorkspaceProps {
   components?: Record<string, string>;
   theme?: Record<string, string>;
   seo?: Record<string, string>;
+  collections?: Record<string, any>;
   onUpdateVariables?: (variables: Record<string, string>) => void;
   onUpdateComponents?: (components: Record<string, string>) => void;
   onUpdateTheme?: (theme: Record<string, string>) => void;
   onUpdateSEO?: (seo: Record<string, string>) => void;
+  onUpdateCollections?: (collections: Record<string, any>) => void;
   onFileChange?: (files: GeneratedFile[], commitDescription?: string) => void;
   onOpenImageTool?: (onPick: (url: string) => void) => void;
 }
@@ -34,10 +37,12 @@ const Workspace: React.FC<WorkspaceProps> = ({
   components = {},
   theme = {},
   seo = {},
+  collections = {},
   onUpdateVariables, 
   onUpdateComponents,
   onUpdateTheme,
   onUpdateSEO,
+  onUpdateCollections,
   onFileChange, 
   onOpenImageTool 
 }) => {
@@ -50,6 +55,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [iframeLoading, setIframeLoading] = useState(false);
   const [breakpoint, setBreakpoint] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [isVariablesOpen, setIsVariablesOpen] = useState(false);
+  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -109,6 +115,10 @@ const Workspace: React.FC<WorkspaceProps> = ({
       iframe.contentWindow.postMessage({
         type: 'FORGE_UPDATE_SEO',
         seo
+      }, '*');
+      iframe.contentWindow.postMessage({
+        type: 'FORGE_UPDATE_COLLECTIONS',
+        collections
       }, '*');
     }
   }, [seo]);
@@ -677,6 +687,24 @@ useEffect(() => {
            >
              <Database className="w-4 h-4" />
              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Variables
+             </div>
+           </button>
+
+           <button
+             onClick={() => setIsCollectionsOpen(!isCollectionsOpen)}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${isCollectionsOpen ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="Collections"
+           >
+             <List className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Data Collections
+             </div>
+           </button>
+
+           >
+             <Database className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
                Global Variables
              </div>
            </button>
@@ -822,6 +850,20 @@ useEffect(() => {
           />
         </div>
 
+        
+        {/* Collections Panel */}
+        <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isCollectionsOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
+          <CollectionsPanel 
+            collections={collections}
+            onUpdateCollections={(newColls) => {
+              if (onUpdateCollections) {
+                onUpdateCollections(newColls);
+              }
+            }}
+            onClose={() => setIsCollectionsOpen(false)} 
+          />
+        </div>
+
         {/* Theme Editor Panel */}
         <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isThemeOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
           <ThemeEditor 
@@ -906,9 +948,13 @@ useEffect(() => {
                     theme
                   }, '*');
                   iframe.contentWindow.postMessage({
-                    type: 'FORGE_UPDATE_SEO',
-                    seo
-                  }, '*');
+        type: 'FORGE_UPDATE_SEO',
+        seo
+      }, '*');
+      iframe.contentWindow.postMessage({
+        type: 'FORGE_UPDATE_COLLECTIONS',
+        collections
+      }, '*');
                 }
               }}
             />

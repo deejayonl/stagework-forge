@@ -138,7 +138,12 @@ export const useProjects = (storageToken: string | null) => {
         body: JSON.stringify({
           id: project.id,
           name: project.name,
-          mutations: project.versions
+          mutations: project.versions,
+          variables: project.variables,
+          components: project.components,
+          theme: project.theme,
+          seo: project.seo,
+          collections: project.collections
         })
       });
     } catch (error: any) {
@@ -162,7 +167,12 @@ export const useProjects = (storageToken: string | null) => {
             name: p.name,
             createdAt: p.updatedAt || Date.now(),
             versions: p.mutations || [],
-            currentVersionIndex: p.mutations ? p.mutations.length - 1 : 0
+            currentVersionIndex: p.mutations ? p.mutations.length - 1 : 0,
+            variables: p.variables || {},
+            components: p.components || {},
+            theme: p.theme || {},
+            seo: p.seo || {},
+            collections: p.collections || {}
           })).filter((p: Project) => p.versions.length > 0);
           
           if (loadedProjects.length > 0) {
@@ -353,6 +363,19 @@ export const useProjects = (storageToken: string | null) => {
     if (updatedProject) syncProjectToBFF(updatedProject);
   }, [currentProjectId, storageToken]);
 
+  
+  const updateProjectCollections = useCallback((collections: Record<string, any>) => {
+    if (!currentProjectId) return;
+    let updatedProject: Project | null = null;
+    setProjects(prev => {
+      const p = prev.find(proj => proj.id === currentProjectId);
+      if (!p) return prev;
+      updatedProject = { ...p, collections };
+      return prev.map(proj => proj.id === currentProjectId ? updatedProject! : proj);
+    });
+    if (updatedProject) syncProjectToBFF(updatedProject);
+  }, [currentProjectId, storageToken]);
+
   const updateProjectSEO = useCallback((seo: Record<string, string>) => {
     if (!currentProjectId) return;
     let updatedProject: Project | null = null;
@@ -380,6 +403,7 @@ export const useProjects = (storageToken: string | null) => {
     updateProjectComponents,
     updateProjectTheme,
     updateProjectSEO,
+    updateProjectCollections,
     addVersionToProject,
     deleteProject,
     selectProject,
