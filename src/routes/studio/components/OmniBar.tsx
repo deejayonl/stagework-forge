@@ -164,7 +164,7 @@ const OmniBar: React.FC<OmniBarProps> = ({ activeAgent, onSend, isThinking, onSe
     const activeAgentConfig = AGENTS[activeAgent];
 
     return (
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-4 z-[60]">
+        <div className="absolute bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-4 z-[60]">
             <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
             <AgentSelector 
                 isOpen={isMenuOpen} 
