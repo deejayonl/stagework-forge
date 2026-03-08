@@ -72,6 +72,7 @@ export const createZipDownload = async (
           }
           twConfigScript.textContent = `
             tailwind.config = {
+              darkMode: 'class',
               theme: {
                 extend: {
                   colors: {
@@ -239,6 +240,7 @@ export const flattenFilesForPreview = (
       }
       twConfigScript.textContent = `
         tailwind.config = {
+              darkMode: 'class',
           theme: {
             extend: {
               colors: {

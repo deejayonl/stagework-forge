@@ -570,6 +570,8 @@ export const injectEditorScript = (htmlContent: string): string => {
               }
               customBodyEl.innerHTML = seo.customBody;
             }
+          } else if (e.data.type === 'FORGE_TOGGLE_DARK_MODE') {
+            document.documentElement.classList.toggle('dark');
           } else if (e.data.type === 'FORGE_UPDATE_VARIABLES') {
             const variables = e.data.variables;
             

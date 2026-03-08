@@ -16,7 +16,7 @@ import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { ContextMenu, ContextMenuAction } from './ContextMenu';
-import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component } from 'lucide-react';
+import { Moon, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component } from 'lucide-react';
 import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 
 
@@ -110,6 +110,7 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
     }
   }, [files]);
 
+  const [isPreviewDarkMode, setIsPreviewDarkMode] = useState(false);
   const skipIframeReload = useRef(false);
 
   // Update preview whenever local files change (including edits)
@@ -1050,6 +1051,23 @@ useEffect(() => {
         )}
 
         <div className="flex items-center gap-1 md:gap-2">
+          <button
+            onClick={() => {
+              setIsPreviewDarkMode(!isPreviewDarkMode);
+              const iframe = document.getElementById("preview-iframe") as HTMLIFrameElement;
+              if (iframe?.contentWindow) {
+                iframe.contentWindow.postMessage({ type: "FORGE_TOGGLE_DARK_MODE" }, "*");
+              }
+            }}
+            className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-indigo-500 ${isPreviewDarkMode ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+            aria-label="Toggle Preview Dark Mode"
+          >
+            <Moon className="w-4 h-4" />
+            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+              Preview Dark Mode
+            </div>
+          </button>
+
           {/* Undo/Redo Controls */}
           <div className="flex items-center mr-2 border-r border-hall-200 dark:border-hall-800 pr-2">
             <button
@@ -1199,6 +1217,23 @@ useEffect(() => {
             </div>
           </button>
            
+
+           <button
+            onClick={() => {
+              setIsPreviewDarkMode(!isPreviewDarkMode);
+              const iframe = document.getElementById("preview-iframe") as HTMLIFrameElement;
+              if (iframe?.contentWindow) {
+                iframe.contentWindow.postMessage({ type: "FORGE_TOGGLE_DARK_MODE" }, "*");
+              }
+            }}
+            className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${isPreviewDarkMode ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+            aria-label="Toggle Preview Dark Mode"
+          >
+            <Moon className="w-4 h-4" />
+            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+              Preview Dark Mode
+            </div>
+          </button>
 
            <button
              onClick={handleUndo}

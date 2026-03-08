@@ -39,8 +39,8 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 2.1: Route & Shell Creation**
   - Create `ScriptView.tsx` and map it as the primary landing page (1st tab).
 - [x] **Task 2.2: Typography & Slogan**
-  - Add the central slogan: *"All great outputs start with intentional input."* (Make it visually striking, clean typography).
-  - Add subtext instruction: *"Take 5 minutes to write your ideas out. We need to compact user ideas into executable plans."*
+  - Add the central slogan: *"Great inputs make for even greater outputs."* (Make it visually striking, clean typography).
+  - Add subtext instruction: *"Spend some time thinking about what it is you want to build. Jot down all your notes... etc"*
 - [x] **Task 2.3: Device Target Sliding Window**
   - Implement a sliding window/carousel allowing users to select multiple deployment targets simultaneously.
   - **Targets to include:** Mobile App (Phone), Mobile App (Tablet), Web Portfolio, Business Landing Page, Internal SaaS Dashboard, MacOS Desktop App, Windows Desktop App.
@@ -528,3 +528,27 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add support for exporting the project as a Next.js App Router application (using `app/page.tsx` structure).
 - [x] **Task 49.2: Vue 3 Export**
   - Add support for exporting the project as a Vue 3 Single File Component (`.vue`).
+
+## Phase 50: Dark Mode Preview Engine
+*Status: Complete*
+
+- [x] **Task 50.1: Tailwind Dark Mode Config**
+  - Update `fileUtils.ts` to inject `darkMode: 'class'` into the `tailwind.config` script inside the compiled HTML.
+- [x] **Task 50.2: Iframe Dark Mode Listener**
+  - Update `injectEditorScript.ts` to listen for a new `FORGE_TOGGLE_DARK_MODE` postMessage event.
+  - When received, toggle the `dark` class on `document.documentElement` inside the iframe.
+- [x] **Task 50.3: Workspace UI Toggle**
+  - Add a "Toggle Dark Mode" button (with a Moon icon) to the toolbar in `Workspace.tsx` (next to the Undo/Redo buttons).
+  - Manage the `isDarkMode` state and send the `FORGE_TOGGLE_DARK_MODE` message to the `preview-iframe`.
+
+## Phase 51: The Masterpiece Pipeline (Script -> Studio Organization)
+*Status: Pending*
+
+- [ ] **Task 51.1: Script Tab Open Canvas**
+  - Redesign the Script tab to feel like an open, infinite notepad. Users should be able to type anywhere, jot down notes freely, and brainstorm without feeling confined to a small box.
+- [ ] **Task 51.2: Studio Blueprint Organization**
+  - Ensure that when the Script is processed, the transition to the Studio tab results in a highly organized visual map. It should look like an architectural blueprint (similar to WWDC mind-maps) where users can see all their disconnected notes compacted into a structured project plan.
+- [ ] **Task 51.3: Target Selectors in Studio**
+  - Move or mirror the platform/device target selection logic into the Studio tab, allowing users to dynamically add/remove targets (e.g., watchOS, macOS, iOS) directly from the visual blueprint before final generation.
+- [ ] **Task 51.4: Masterpiece Stage Generation**
+  - Ensure that the final transition from Studio to Stage consumes this organized blueprint and generates the complete, polished "masterpiece" application.
