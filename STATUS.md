@@ -580,3 +580,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Create `/api/generate-logic` in the Node.js BFF to process the prompt and return raw JavaScript logic.
 - [x] **Task 53.4: Logic Injection Engine**
   - Update `fileUtils.ts` and `Workspace.tsx` to safely inject the generated JavaScript into the project's global `<script>` execution context.
+
+## Phase 54: Authentication Integrations (Supabase/Firebase)
+*Status: Pending*
+
+- [ ] **Task 54.1: Auth Integrations UI**
+  - Create an "Authentication" panel in the global settings to configure Supabase URL/Key or Firebase Config.
+- [ ] **Task 54.2: Auth State Management**
+  - Inject a global \`window.forgeAuth\` object into the iframe preview to manage \`currentUser\` state.
+- [ ] **Task 54.3: Auth AI Logic Actions**
+  - Update the Logic Generator to understand auth context (e.g., "Log in user with email and password", "Sign out", "Show element only if logged in").
