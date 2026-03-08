@@ -1681,8 +1681,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 <option value="ping 1s cubic-bezier(0, 0, 0.2, 1) infinite">Ping</option>
                 <option value="pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite">Pulse</option>
                 <option value="bounce 1s infinite">Bounce</option>
-                <option value="fadeIn 0.5s ease-in-out">Fade In</option>
-                <option value="slideInUp 0.5s ease-out">Slide Up</option>
+                <option value="fade-in 0.5s ease-in-out">Fade In</option>
+                <option value="fade-in-up 0.5s ease-out">Slide Up</option>
               </select>
             </div>
             <div className="grid grid-cols-2 gap-2">

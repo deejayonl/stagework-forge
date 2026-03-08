@@ -336,3 +336,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 33.1: Animation UI Panel**
   - Add a new section in `PropertyInspector.tsx` for Animations (Entrance, Hover, Scroll).
   - Support configuring animation type (fade, slide, scale), duration, and delay.
+
+## Phase 34: Global Custom Code Injection
+*Status: In Progress*
+
+- [ ] **Task 34.1: Custom Code Modal UI**
+  - Extend `ProjectSettingsModal.tsx` to include an "Advanced" tab or section for Custom Head Code and Custom Body Code.
+  - Add textareas for injecting raw `<style>` and `<script>` tags.
+- [ ] **Task 34.2: Code Injection Logic**
+  - Update `seo` state to include `customHead` and `customBody` fields.
+  - Inject these fields into the `PreviewView` iframe HTML generation.

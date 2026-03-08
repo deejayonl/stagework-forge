@@ -12,7 +12,12 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
   const [description, setDescription] = useState(seo.description || '');
   const [ogImage, setOgImage] = useState(seo.ogImage || '');
   const [faviconUrl, setFaviconUrl] = useState(seo.faviconUrl || '');
-  const [metaTags, setMetaTags] = useState(seo.metaTags || '');
+  const [metaTags,
+      customHead,
+      customBody, setMetaTags] = useState(seo.metaTags || '');
+  const [customHead, setCustomHead] = useState(seo.customHead || '');
+  const [customBody, setCustomBody] = useState(seo.customBody || '');
+  const [activeTab, setActiveTab] = useState('seo');
 
   const handleSave = () => {
     onUpdateSEO({
@@ -43,10 +48,30 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
           </button>
         </div>
 
+        
+        {/* Tabs */}
+        <div className="flex px-6 border-b border-hall-200 dark:border-hall-800">
+          <button 
+            onClick={() => setActiveTab('seo')}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'seo' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
+          >
+            SEO & Metadata
+          </button>
+          <button 
+            onClick={() => setActiveTab('code')}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'code' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
+          >
+            Custom Code
+          </button>
+        </div>
+
         {/* Body */}
+        
         <div className="p-6 space-y-6 flex-1 overflow-y-auto max-h-[70vh]">
-          <div>
-            <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">SEO & Metadata</h3>
+          {activeTab === 'seo' ? (
+            <div>
+              <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">SEO & Metadata</h3>
+
             
             <div className="space-y-4">
               <div>
@@ -114,8 +139,50 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
                 />
               </div>
             </div>
-          </div>
+          
+            </div>
+          ) : (
+            <div>
+              <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">Custom Code Injection</h3>
+              <p className="text-xs text-hall-500 mb-4">Inject raw HTML, CSS, or JavaScript into your project. Code will be executed in the preview and exported files.</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                    Custom &lt;head&gt; Code
+                  </label>
+                  <textarea 
+                    value={customHead}
+                    onChange={(e) => setCustomHead(e.target.value)}
+                    placeholder='<!-- e.g. Google Analytics, custom fonts, global styles -->
+<style>
+  body { background: #000; }
+</style>'
+                    rows={6}
+                    className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-amber-500 resize-y"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                    Custom &lt;body&gt; Code (Before closing tag)
+                  </label>
+                  <textarea 
+                    value={customBody}
+                    onChange={(e) => setCustomBody(e.target.value)}
+                    placeholder='<!-- e.g. Chat widgets, tracking scripts -->
+<script>
+  console.log("App loaded");
+</script>'
+                    rows={6}
+                    className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-amber-500 resize-y"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-hall-200 dark:border-hall-800 bg-hall-50 dark:bg-hall-900/50 flex justify-end gap-3">
