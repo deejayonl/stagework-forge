@@ -482,10 +482,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - In the Stage view, when the "Mobile" breakpoint is selected, wrap the iframe in a visually distinct, realistic mobile device frame (e.g., an iPhone bezel) for better presentation.
 
 ## Phase 37: External AI Models Config
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 37.1: Anthropic & OpenAI Integration**
+- [x] **Task 37.1: Anthropic & OpenAI Integration**
   - Add Claude 3.5 Sonnet and GPT-4o configurations to `CloudConfig` component.
   - Plumb selected model through to the `generateCode` service.
-- [ ] **Task 37.2: Custom API Key Storage**
+- [x] **Task 37.2: Custom API Key Storage**
   - Save external API keys to `localStorage` securely.

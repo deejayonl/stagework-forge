@@ -2,14 +2,33 @@
 import { parse as parsePartialJson } from "partial-json";
 import { GeneratedFile, ImageSize, Attachment, DetectedAsset } from "../types";
 
-const getApiKey = () => {
-    let localKey = '';
-    const savedKeys = localStorage.getItem('forge_api_keys');
-    if (savedKeys) {
-        try { localKey = JSON.parse(savedKeys).gemini; } catch(e){}
+
+const getAiConfig = () => {
+    const provider = localStorage.getItem('forge_ai_provider') || 'gemini';
+    let apiKey = '';
+    
+    if (provider === 'gemini') {
+        apiKey = localStorage.getItem('gemini_api_key') || (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+    } else if (provider === 'anthropic') {
+        apiKey = localStorage.getItem('anthropic_api_key') || (import.meta as any).env?.VITE_ANTHROPIC_API_KEY || '';
+    } else if (provider === 'openai') {
+        apiKey = localStorage.getItem('openai_api_key') || (import.meta as any).env?.VITE_OPENAI_API_KEY || '';
     }
-    return localKey || (import.meta as any).env?.VITE_GEMINI_API_KEY || localStorage.getItem('gemini_api_key') || '';
+
+    // Fallback to legacy forge_api_keys if present
+    if (!apiKey) {
+        const savedKeys = localStorage.getItem('forge_api_keys');
+        if (savedKeys) {
+            try { 
+                const keys = JSON.parse(savedKeys);
+                apiKey = keys[provider] || keys.gemini || ''; 
+            } catch(e){}
+        }
+    }
+
+    return { provider, apiKey };
 };
+
 
 // Use proxy in dev, or relative in prod
 const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/generate' : '/api/generate';
@@ -27,9 +46,9 @@ export const generateCode = async (
   signal?: AbortSignal
 ): Promise<GeneratedFile[]> => {
   try {
-    const apiKey = getApiKey();
+    const { provider, apiKey } = getAiConfig();
     if (!apiKey) {
-        throw new Error("Gemini API Key is missing. Please add it to your settings.");
+        throw new Error(`${provider.toUpperCase()} API Key is missing. Please add it to your settings.`);
     }
 
     const MUTATE_URL = import.meta.env?.DEV ? 'http://localhost:3001/api/mutate' : '/api/mutate';
@@ -37,7 +56,11 @@ export const generateCode = async (
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Authorization': `Bearer ${apiKey}`,
+            'X-AI-Provider': provider,
+        'X-AI-Provider': provider,
+        'X-AI-Provider': provider,
+            'X-AI-Provider': provider
         },
         body: JSON.stringify({
             prompt,
@@ -123,9 +146,9 @@ export const generateImage = async (
   size: ImageSize
 ): Promise<string> => {
   try {
-    const apiKey = getApiKey();
+    const { provider, apiKey } = getAiConfig();
     if (!apiKey) {
-        throw new Error("Gemini API Key is missing. Please add it to your settings.");
+        throw new Error(`${provider.toUpperCase()} API Key is missing. Please add it to your settings.`);
     }
 
     const response = await fetch(`${API_BASE}/generate-image`, {

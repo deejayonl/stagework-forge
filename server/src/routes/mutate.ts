@@ -2,12 +2,16 @@ import { Hono } from 'hono';
 import { stream } from 'hono/streaming';
 import { GoogleGenAI } from "@google/genai";
 import { validateString, validateArray, ValidationError } from '../utils/validate.js';
+import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
 export const mutateRoutes = new Hono();
 
 const MODELS = {
   FAST: 'gemini-2.5-flash',
   THINKING: 'gemini-3.1-pro-preview',
+  ANTHROPIC: 'claude-3-5-sonnet-20241022',
+  OPENAI: 'gpt-4o',
 };
 
 const SYSTEM_INSTRUCTION = `
@@ -40,13 +44,12 @@ Directives:
 6. Images: Use https://picsum.photos/WIDTH/HEIGHT for placeholders.
 `;
 
-const getClient = (c: any) => {
-    const authHeader = c.req.header('Authorization');
-    const apiKey = authHeader ? authHeader.replace('Bearer ', '') : process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        throw new Error("Gemini API Key is missing.");
-    }
-    return new GoogleGenAI({ apiKey });
+const getProviderConfig = (c: any) => {
+  const authHeader = c.req.header('Authorization');
+  const apiKey = authHeader ? authHeader.replace('Bearer ', '') : '';
+  const provider = c.req.header('X-AI-Provider') || 'gemini';
+  if (!apiKey) throw new Error(`${provider.toUpperCase()} API Key is missing.`);
+  return { apiKey, provider };
 };
 
 mutateRoutes.post('/', async (c) => {
@@ -57,9 +60,7 @@ mutateRoutes.post('/', async (c) => {
         const attachments = body.attachments || [];
         const currentFiles = body.currentFiles || [];
         
-        const ai = getClient(c);
-        const modelName = useThinking ? MODELS.THINKING : MODELS.FAST;
-
+        const { apiKey, provider } = getProviderConfig(c);
         let finalPrompt = prompt;
 
         if (currentFiles.length > 0) {
@@ -93,19 +94,90 @@ If you see [IMAGE_ASSET_DATA_PRESERVED_BY_SYSTEM] in a file, please return the f
             });
         }
 
-        const responseStream = await ai.models.generateContentStream({
-            model: modelName,
-            contents: contents,
-            config: {
-                systemInstruction: SYSTEM_INSTRUCTION,
-                responseMimeType: "application/json"
-            }
-        });
 
         return stream(c, async (stream) => {
-            for await (const chunk of responseStream) {
-                if (chunk.text) {
-                    await stream.write(chunk.text);
+            if (provider === 'anthropic') {
+                const anthropic = new Anthropic({ apiKey });
+                const anthropicMessages: any[] = [{ role: 'user', content: finalPrompt }];
+                
+                if (attachments.length > 0) {
+                    const contentArr: any[] = [];
+                    attachments.forEach((att: any) => {
+                        contentArr.push({
+                            type: 'image',
+                            source: {
+                                type: 'base64',
+                                media_type: att.mimeType,
+                                data: att.base64.split(',')[1]
+                            }
+                        });
+                    });
+                    contentArr.push({ type: 'text', text: finalPrompt });
+                    anthropicMessages[0].content = contentArr;
+                }
+
+                const responseStream = await anthropic.messages.create({
+                    model: MODELS.ANTHROPIC,
+                    max_tokens: 8192,
+                    system: SYSTEM_INSTRUCTION,
+                    messages: anthropicMessages,
+                    stream: true
+                });
+
+                for await (const chunk of responseStream) {
+                    if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+                        await stream.write(chunk.delta.text);
+                    }
+                }
+            } else if (provider === 'openai') {
+                const openai = new OpenAI({ apiKey });
+                const openaiMessages: any[] = [
+                    { role: 'system', content: SYSTEM_INSTRUCTION },
+                    { role: 'user', content: finalPrompt }
+                ];
+
+                if (attachments.length > 0) {
+                    const contentArr: any[] = [];
+                    contentArr.push({ type: 'text', text: finalPrompt });
+                    attachments.forEach((att: any) => {
+                        contentArr.push({
+                            type: 'image_url',
+                            image_url: { url: att.base64 }
+                        });
+                    });
+                    openaiMessages[1].content = contentArr;
+                }
+
+                const responseStream = await openai.chat.completions.create({
+                    model: MODELS.OPENAI,
+                    messages: openaiMessages,
+                    response_format: { type: "json_object" },
+                    stream: true
+                });
+
+                for await (const chunk of responseStream) {
+                    if (chunk.choices[0]?.delta?.content) {
+                        await stream.write(chunk.choices[0].delta.content);
+                    }
+                }
+            } else {
+                // Default Gemini
+                const ai = new GoogleGenAI({ apiKey });
+                const modelName = useThinking ? MODELS.THINKING : MODELS.FAST;
+                
+                const responseStream = await ai.models.generateContentStream({
+                    model: modelName,
+                    contents: contents,
+                    config: {
+                        systemInstruction: SYSTEM_INSTRUCTION,
+                        responseMimeType: "application/json"
+                    }
+                });
+
+                for await (const chunk of responseStream) {
+                    if (chunk.text) {
+                        await stream.write(chunk.text);
+                    }
                 }
             }
         });

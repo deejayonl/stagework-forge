@@ -23,6 +23,9 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
 }) => {
   const [inputToken, setInputToken] = useState('');
   const [geminiKey, setGeminiKey] = useState('');
+  const [anthropicKey, setAnthropicKey] = useState('');
+  const [openaiKey, setOpenaiKey] = useState('');
+  const [provider, setProvider] = useState(localStorage.getItem('forge_ai_provider') || 'gemini');
   const [isValidating, setIsValidating] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isDeploying, setIsDeploying] = useState(false);
@@ -38,8 +41,12 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
         setDeployUrl(null);
         
         // Load existing Gemini key
-        const savedKey = localStorage.getItem('gemini_api_key') || '';
-        setGeminiKey(savedKey);
+        const savedGemini = localStorage.getItem('gemini_api_key') || '';
+        setGeminiKey(savedGemini);
+        const savedAnthropic = localStorage.getItem('anthropic_api_key') || '';
+        setAnthropicKey(savedAnthropic);
+        const savedOpenai = localStorage.getItem('openai_api_key') || '';
+        setOpenaiKey(savedOpenai);
         setGeminiStatus('idle');
     }
   }, [isOpen, cloudToken]);
@@ -87,15 +94,22 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
     }
   };
 
-  const handleSaveGeminiKey = () => {
-    if (geminiKey.trim()) {
-      localStorage.setItem('gemini_api_key', geminiKey.trim());
-    } else {
-      localStorage.removeItem('gemini_api_key');
+  
+  const handleSaveKey = () => {
+    if (provider === 'gemini') {
+      if (geminiKey.trim()) localStorage.setItem('gemini_api_key', geminiKey.trim());
+      else localStorage.removeItem('gemini_api_key');
+    } else if (provider === 'anthropic') {
+      if (anthropicKey.trim()) localStorage.setItem('anthropic_api_key', anthropicKey.trim());
+      else localStorage.removeItem('anthropic_api_key');
+    } else if (provider === 'openai') {
+      if (openaiKey.trim()) localStorage.setItem('openai_api_key', openaiKey.trim());
+      else localStorage.removeItem('openai_api_key');
     }
     setGeminiStatus('success');
     setTimeout(() => setGeminiStatus('idle'), 2000);
   };
+
 
   const handleDisconnect = () => {
       onSetCloudToken(null);
@@ -153,10 +167,10 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
                 </div>
                 <div className="flex gap-2">
                     <select 
-                        value={localStorage.getItem("forge_ai_provider") || "gemini"}
+                        value={provider}
                         onChange={(e) => {
+                           setProvider(e.target.value);
                            localStorage.setItem("forge_ai_provider", e.target.value);
-                           // Force re-render to show correct key input
                            setGeminiStatus("idle");
                         }}
                         className="flex-1 bg-hall-50 dark:bg-hall-950 border border-hall-200 dark:border-hall-800 rounded-2xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500"
@@ -172,21 +186,21 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
             <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-hall-900 text-hall-100">
                     <Key className="w-4 h-4 text-amber-500" />
-                    Gemini API Key
+                    {provider === 'gemini' ? 'Gemini API Key' : provider === 'anthropic' ? 'Anthropic API Key' : 'OpenAI API Key'}
                 </div>
                 <div className="text-xs text-hall-500">
-                    Required for code and image generation. Get your key from Google AI Studio.
+                    {provider === 'gemini' ? 'Required for code generation. Get your key from Google AI Studio.' : provider === 'anthropic' ? 'Required for code generation. Get your key from Anthropic Console.' : 'Required for code generation. Get your key from OpenAI Platform.'}
                 </div>
                 <div className="flex gap-2">
                     <input 
                         type="password" 
-                        value={geminiKey}
-                        onChange={(e) => setGeminiKey(e.target.value)}
-                        placeholder="AIzaSy..."
+                        value={provider === 'gemini' ? geminiKey : provider === 'anthropic' ? anthropicKey : openaiKey}
+                        onChange={(e) => provider === 'gemini' ? setGeminiKey(e.target.value) : provider === 'anthropic' ? setAnthropicKey(e.target.value) : setOpenaiKey(e.target.value)}
+                        placeholder={provider === 'gemini' ? "AIzaSy..." : provider === 'anthropic' ? "sk-ant-..." : "sk-..."}
                         className="flex-1 bg-hall-50 bg-hall-950 border border-hall-200 border-hall-800 rounded-2xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                     />
                     <button
-                        onClick={handleSaveGeminiKey}
+                        onClick={handleSaveKey}
                         className="px-4 py-2 bg-hall-900 bg-hall-950 text-ink text-hall-950 hover:bg-hall-800 rounded-2xl text-sm font-medium transition-colors"
                     >
                         Save
