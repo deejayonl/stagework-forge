@@ -15,6 +15,7 @@ interface PropertyInspectorProps {
   onDelete?: () => void;
   onDuplicate?: () => void;
   onOpenImageTool?: () => void;
+  onOpenMediaManager?: () => void;
   onAutoFix?: (html: string) => void;
   onUpdateAttribute?: (attr: string, value: string) => void;
   onSaveComponent?: (html: string) => void;
@@ -34,6 +35,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onDelete,
   onDuplicate,
   onOpenImageTool,
+  onOpenMediaManager,
   onAutoFix,
   onUpdateAttribute,
   onSaveComponent,
@@ -292,6 +294,14 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
               Swap Asset
+            </button>
+            <button
+              onClick={onOpenMediaManager}
+              disabled={!!selectedElement.dataset?.bindSrc}
+              className={`w-full bg-hall-200 hover:bg-hall-300 dark:bg-hall-800 dark:hover:bg-hall-700 text-hall-900 dark:text-ink text-sm font-medium py-2 mt-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedElement.dataset?.bindSrc ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              Choose from Media Manager
             </button>
           </div>
         )}

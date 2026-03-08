@@ -556,6 +556,8 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                  onUpdateTheme={updateProjectTheme}
                  onUpdateCollections={updateProjectCollections}
                  onUpdateApis={updateProjectApis}
+                 assets={currentProject?.assets || {}}
+                 onUpdateAssets={updateProjectAssets}
                  onUpdateSEO={updateProjectSEO}
                  onFileChange={handleWorkspaceFileChange}
                  onOpenImageTool={(callback) => {

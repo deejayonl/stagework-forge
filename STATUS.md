@@ -461,12 +461,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 34.3: DOM Tree Highlighting**
   - Hovering over a node in the DOM tree should highlight the corresponding element on the canvas.
 ## Phase 35: Media Manager & Asset Uploading
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 35.1: Media Manager Component**
+- [x] **Task 35.1: Media Manager Component**
   - Create a new `MediaManager` UI panel to view uploaded assets.
-- [ ] **Task 35.2: Image Upload Handling**
+- [x] **Task 35.2: Image Upload Handling**
   - Allow users to upload images (drag-and-drop or file select).
   - Store assets locally using `FileReader` (Base64) or `URL.createObjectURL` for the preview session.
-- [ ] **Task 35.3: Asset Integration**
+- [x] **Task 35.3: Asset Integration**
   - Allow inserting uploaded images directly onto the canvas or as background images.

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GeneratedFile } from '../types';
 import { flattenFilesForPreview, createZipDownload } from '../utils/fileUtils';
-import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2, Rocket } from 'lucide-react';
+import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2, Rocket, Image as ImageIcon } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 
 import { PropertyInspector } from './PropertyInspector';
+import { MediaManager } from "./MediaManager";
 import { DOMTreeExplorer } from './DOMTreeExplorer';
 import { ComponentLibrary } from './ComponentLibrary';
 import { VariablesPanel } from './VariablesPanel';
@@ -29,12 +30,14 @@ interface WorkspaceProps {
   seo?: Record<string, string>;
   collections?: Record<string, any>;
   apis?: Record<string, any>;
+  assets?: Record<string, string>;
   onUpdateVariables?: (variables: Record<string, string>) => void;
   onUpdateComponents?: (components: Record<string, string>) => void;
   onUpdateTheme?: (theme: Record<string, string>) => void;
   onUpdateSEO?: (seo: Record<string, string>) => void;
   onUpdateCollections?: (collections: Record<string, any>) => void;
   onUpdateApis?: (apis: Record<string, any>) => void;
+  onUpdateAssets?: (assets: Record<string, string>) => void;
   onFileChange?: (files: GeneratedFile[], commitDescription?: string) => void;
   onOpenImageTool?: (onPick: (url: string) => void) => void;
 }
@@ -48,12 +51,14 @@ const Workspace: React.FC<WorkspaceProps> = ({
   seo = {},
   collections = {},
   apis = {},
+  assets = {},
   onUpdateVariables, 
   onUpdateComponents,
   onUpdateTheme,
   onUpdateSEO,
   onUpdateCollections,
   onUpdateApis,
+  onUpdateAssets,
   onFileChange, 
   onOpenImageTool 
 }) => {
@@ -72,6 +77,8 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
+  const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
+  const [mediaPickCallback, setMediaPickCallback] = useState<((url: string) => void) | null>(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
   
@@ -962,6 +969,16 @@ useEffect(() => {
                Deploy Project
              </div>
            </button>
+          <button
+            onClick={() => setIsMediaManagerOpen(!isMediaManagerOpen)}
+            className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isMediaManagerOpen ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+            aria-label="Media Manager"
+          >
+            <ImageIcon className="w-4 h-4" />
+            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+              Media Manager
+            </div>
+          </button>
            
 
            <button
@@ -1209,6 +1226,38 @@ useEffect(() => {
         </div>
 
         {/* Project Settings Modal */}
+        <MediaManager
+          isOpen={isMediaManagerOpen}
+          onClose={() => {
+            setIsMediaManagerOpen(false);
+            setMediaPickCallback(null);
+          }}
+          assets={Object.entries(assets).map(([id, url]) => ({ id, url, name: id, type: "image", size: 0 }))}
+          onUpload={(files) => {
+            const newAssets = { ...assets };
+            Array.from(files).forEach(file => {
+              const url = URL.createObjectURL(file);
+              newAssets[file.name] = url;
+            });
+            if (onUpdateAssets) onUpdateAssets(newAssets);
+          }}
+          onDelete={(id) => {
+            const newAssets = { ...assets };
+            delete newAssets[id];
+            if (onUpdateAssets) onUpdateAssets(newAssets);
+          }}
+          onSelect={(asset) => {
+            if (mediaPickCallback) {
+              mediaPickCallback(asset.url);
+              setIsMediaManagerOpen(false);
+              setMediaPickCallback(null);
+            } else {
+              navigator.clipboard.writeText(asset.url);
+              alert("Asset URL copied to clipboard!");
+            }
+          }}
+        />
+
         {isSettingsOpen && (
           <ProjectSettingsModal 
             seo={seo}
@@ -1238,6 +1287,10 @@ useEffect(() => {
             onDuplicate={handleDuplicateElement}
             onAutoFix={handleAutoFix}
             onClose={() => setIsInspectorOpen(false)} 
+            onOpenMediaManager={() => {
+              setMediaPickCallback(() => handleUpdateSrc);
+              setIsMediaManagerOpen(true);
+            }}
             onOpenImageTool={() => {
                if (onOpenImageTool) {
                    onOpenImageTool(handleUpdateSrc);

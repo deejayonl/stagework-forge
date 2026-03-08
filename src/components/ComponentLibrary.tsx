@@ -32,6 +32,10 @@ const COMPONENTS = [
         html: `<div class="bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded-xl p-6 shadow-sm"><h3 class="text-lg font-bold text-hall-900 dark:text-ink mb-2">Card Title</h3><p class="text-hall-600 dark:text-hall-400 text-sm">This is a simple card component. Replace this text with your content.</p></div>`
       },
       {
+        name: 'Image',
+        html: `<img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Placeholder" class="w-full h-auto rounded-xl shadow-sm border border-hall-200 dark:border-hall-800" />`
+      },
+      {
         name: 'Badge',
         html: `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400">Badge</span>`
       }
