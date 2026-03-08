@@ -1009,6 +1009,40 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               />
             </div>
           </div>
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">CSS Filter</label>
+              <input 
+                type="text" 
+                value={styles.filter || ''} 
+                onChange={(e) => handleStyleChange('filter', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="e.g. blur(2px) grayscale(100%)"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Blend Mode</label>
+              <select
+                value={styles.mixBlendMode || 'normal'}
+                onChange={(e) => handleStyleChange('mixBlendMode', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="normal">normal</option>
+                <option value="multiply">multiply</option>
+                <option value="screen">screen</option>
+                <option value="overlay">overlay</option>
+                <option value="darken">darken</option>
+                <option value="lighten">lighten</option>
+                <option value="color-dodge">color-dodge</option>
+                <option value="color-burn">color-burn</option>
+                <option value="hard-light">hard-light</option>
+                <option value="soft-light">soft-light</option>
+                <option value="difference">difference</option>
+                <option value="exclusion">exclusion</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Transform & Transition */}
@@ -1248,6 +1282,25 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <p className="text-[9px] text-hall-500 leading-tight">
             Actions: <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">navigate:page</code>, <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">setVariable:k:v</code>, <code className="bg-hall-100 dark:bg-hall-900 px-1 py-0.5 rounded">toggleVariable:k</code>
           </p>
+        </div>
+
+        {/* Advanced Customizations */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Advanced</h4>
+          <div className="space-y-2">
+            <label className="text-[10px] text-hall-500 font-bold flex items-center gap-1">
+              Custom Classes
+            </label>
+            <textarea
+              className="w-full h-20 text-xs bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-amber-500 font-mono resize-none"
+              value={selectedElement.className || ''}
+              onChange={(e) => onUpdateAttribute?.('class', e.target.value)}
+              placeholder="e.g. hover:scale-105 sm:hidden"
+            />
+            <p className="text-[9px] text-hall-500 leading-tight">
+              Add raw Tailwind utility classes or custom CSS classes directly to this element.
+            </p>
+          </div>
         </div>
 
         {/* Conditional Visibility */}

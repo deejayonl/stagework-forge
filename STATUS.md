@@ -554,3 +554,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add inputs for `translate` (X and Y).
 - [x] **Task 44.3: Custom Transition Settings**
   - Add inputs for `transition-duration` and `transition-timing-function` (ease, linear, ease-in, ease-out, ease-in-out).
+## Phase 45: Advanced Customizations & Animations
+*Status: Complete*
+
+- [x] **Task 45.1: CSS Filters**
+  - Add input for `filter` (blur, brightness, contrast, grayscale, etc.) in the Effects & Borders section.
+- [x] **Task 45.2: Mix Blend Mode**
+  - Add a dropdown for `mix-blend-mode` (normal, multiply, screen, overlay, darken, lighten, etc.).
+- [x] **Task 45.3: Custom Tailwind Classes Input**
+  - Add a raw text area field to allow power users to append or edit custom utility classes directly to the element's `className`.
