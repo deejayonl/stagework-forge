@@ -101,7 +101,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure the Canvas (Studio) and Live Render (Stage) are usable on mobile devices, preventing horizontal overflow where unintended and scaling down UI overlays.
 
 ## Phase 5: End-to-End Verification
-*Status: Pending*
+*Status: Complete*
 
 - [x] **Task 5.1: Verify API Routes**
   - Ensure that the application correctly hits `https://sgfbackend.deejay.onl/api/generate` and `https://sgfbackend.deejay.onl/api/mutate`.
