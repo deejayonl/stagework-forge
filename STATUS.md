@@ -480,22 +480,38 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure toggling these visual layout buttons correctly adds/removes the corresponding Tailwind utility classes from the selected element.
 
 ## Phase 46: Advanced Spacing Controls (Tailwind Margin/Padding GUI)
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 46.1: Margin Visual Editor**
+- [x] **Task 46.1: Margin Visual Editor**
   - Add visual controls to select margin directions (all, top, right, bottom, left).
   - Add a slider or input for Tailwind margin values (0 to 32, auto).
-- [ ] **Task 46.2: Padding Visual Editor**
+- [x] **Task 46.2: Padding Visual Editor**
   - Add visual controls to select padding directions (all, top, right, bottom, left).
   - Add a slider or input for Tailwind padding values (0 to 32).
-- [ ] **Task 46.3: Tailwind Class Sync**
+- [x] **Task 46.3: Tailwind Class Sync**
   - Ensure updating spacing correctly adds/removes Tailwind utility classes (e.g., `mt-4`, `p-8`) instead of inline styles.
 
 ## Phase 47: Advanced Typography Controls (Tailwind GUI)
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 47.1: Text Size & Weight**
+- [x] **Task 47.1: Text Size & Weight**
   - Add dropdowns for Tailwind text sizes (`text-xs` to `text-9xl`) and font weights (`font-thin` to `font-black`).
-- [ ] **Task 47.2: Text Alignment & Color**
+- [x] **Task 47.2: Text Alignment & Color**
   - Add visual toggles for text alignment (`text-left`, `text-center`, `text-right`, `text-justify`).
   - Add a color picker or palette selector that maps to Tailwind text colors (e.g., `text-blue-500`).
+
+## Phase 48: Component Library Drag & Drop Enhancements
+*Status: Pending*
+
+- [ ] **Task 48.1: Component Hover Previews**
+  - Add visual previews or tooltips in `ComponentLibrary.tsx` when hovering over components.
+- [ ] **Task 48.2: Drop Indicators**
+  - Enhance the visual feedback when dragging a component from the library onto the Canvas/Stage.
+
+## Phase 49: Advanced Export & Deployment Options
+*Status: Pending*
+
+- [ ] **Task 49.1: Next.js App Router Export**
+  - Add support for exporting the project as a Next.js App Router application (using `app/page.tsx` structure).
+- [ ] **Task 49.2: Vue 3 Export**
+  - Add support for exporting the project as a Vue 3 Single File Component (`.vue`).

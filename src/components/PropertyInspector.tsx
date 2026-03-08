@@ -1099,9 +1099,278 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
-        {/* Spacing */}
+        {/* Tailwind Spacing */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Spacing</h4>
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Tailwind Spacing</h4>
+          
+          <div className="space-y-2 bg-hall-50 dark:bg-hall-900/30 p-2 rounded-lg border border-hall-200 dark:border-hall-800">
+            <label className="text-[10px] text-hall-500 font-bold">Padding</label>
+            <div className="grid grid-cols-3 gap-2">
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">All (p)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^p-\d+(\.\d+)?$/) || c === 'p-auto' || c === 'p-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`p-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^p-\d+(\.\d+)?$/) || c === 'p-auto' || c === 'p-px')?.replace('p-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">X-Axis (px)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^px-\d+(\.\d+)?$/) || c === 'px-auto' || c === 'px-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`px-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^px-\d+(\.\d+)?$/) || c === 'px-auto' || c === 'px-px')?.replace('px-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Y-Axis (py)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^py-\d+(\.\d+)?$/) || c === 'py-auto' || c === 'py-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`py-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^py-\d+(\.\d+)?$/) || c === 'py-auto' || c === 'py-px')?.replace('py-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Top (pt)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^pt-\d+(\.\d+)?$/) || c === 'pt-auto' || c === 'pt-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`pt-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^pt-\d+(\.\d+)?$/) || c === 'pt-auto' || c === 'pt-px')?.replace('pt-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Right (pr)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^pr-\d+(\.\d+)?$/) || c === 'pr-auto' || c === 'pr-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`pr-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^pr-\d+(\.\d+)?$/) || c === 'pr-auto' || c === 'pr-px')?.replace('pr-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Bottom (pb)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^pb-\d+(\.\d+)?$/) || c === 'pb-auto' || c === 'pb-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`pb-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^pb-\d+(\.\d+)?$/) || c === 'pb-auto' || c === 'pb-px')?.replace('pb-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Left (pl)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^pl-\d+(\.\d+)?$/) || c === 'pl-auto' || c === 'pl-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`pl-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^pl-\d+(\.\d+)?$/) || c === 'pl-auto' || c === 'pl-px')?.replace('pl-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2 bg-hall-50 dark:bg-hall-900/30 p-2 rounded-lg border border-hall-200 dark:border-hall-800">
+            <label className="text-[10px] text-hall-500 font-bold">Margin</label>
+            <div className="grid grid-cols-3 gap-2">
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">All (m)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^m-\d+(\.\d+)?$/) || c === 'm-auto' || c === 'm-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`m-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^m-\d+(\.\d+)?$/) || c === 'm-auto' || c === 'm-px')?.replace('m-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">X-Axis (mx)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^mx-\d+(\.\d+)?$/) || c === 'mx-auto' || c === 'mx-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`mx-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^mx-\d+(\.\d+)?$/) || c === 'mx-auto' || c === 'mx-px')?.replace('mx-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Y-Axis (my)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^my-\d+(\.\d+)?$/) || c === 'my-auto' || c === 'my-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`my-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^my-\d+(\.\d+)?$/) || c === 'my-auto' || c === 'my-px')?.replace('my-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Top (mt)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^mt-\d+(\.\d+)?$/) || c === 'mt-auto' || c === 'mt-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`mt-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^mt-\d+(\.\d+)?$/) || c === 'mt-auto' || c === 'mt-px')?.replace('mt-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Right (mr)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^mr-\d+(\.\d+)?$/) || c === 'mr-auto' || c === 'mr-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`mr-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^mr-\d+(\.\d+)?$/) || c === 'mr-auto' || c === 'mr-px')?.replace('mr-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Bottom (mb)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^mb-\d+(\.\d+)?$/) || c === 'mb-auto' || c === 'mb-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`mb-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^mb-\d+(\.\d+)?$/) || c === 'mb-auto' || c === 'mb-px')?.replace('mb-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-[9px] text-hall-500">Left (ml)</label>
+                <select 
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  onChange={(e) => {
+                    if (onToggleClass) {
+                      const classes = (selectedElement.className || '').split(' ');
+                      classes.forEach(c => { if (c.match(/^ml-\d+(\.\d+)?$/) || c === 'ml-auto' || c === 'ml-px') onToggleClass(c, false); });
+                      if (e.target.value) onToggleClass(`ml-${e.target.value}`, true);
+                    }
+                  }}
+                  value={(selectedElement.className || '').split(' ').find(c => c.match(/^ml-\d+(\.\d+)?$/) || c === 'ml-auto' || c === 'ml-px')?.replace('ml-', '') || ''}
+                >
+                  <option value="">none</option>
+                  {['0','px','0.5','1','1.5','2','2.5','3','4','5','6','8','10','12','16','20','24','32','40','48','64','auto'].map(v => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Inline Spacing */}
+        <div className="space-y-3 mt-4">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Inline Styles Spacing</h4>
           
           <div className="space-y-1">
             <label className="text-[10px] text-hall-500 font-bold">Padding</label>
@@ -1142,9 +1411,105 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
-        {/* Typography */}
+        {/* Tailwind Typography */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Typography</h4>
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Tailwind Typography</h4>
+          
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Text Size</label>
+              
+              <select 
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                onChange={(e) => {
+                  if (onToggleClass) {
+                    const classes = (selectedElement.className || '').split(' ');
+                    classes.forEach(c => { if (['text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl', 'text-9xl'].includes(c)) onToggleClass(c, false); });
+                    if (e.target.value) onToggleClass(e.target.value, true);
+                  }
+                }}
+                value={(selectedElement.className || '').split(' ').find(c => ['text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl', 'text-9xl'].includes(c)) || ''}
+              >
+                <option value="">default</option>
+                {["text-xs","text-sm","text-base","text-lg","text-xl","text-2xl","text-3xl","text-4xl","text-5xl","text-6xl","text-7xl","text-8xl","text-9xl"].map(v => <option key={v} value={v}>{v.replace('text-', '')}</option>)}
+              </select>
+
+            </div>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Font Weight</label>
+              
+              <select 
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                onChange={(e) => {
+                  if (onToggleClass) {
+                    const classes = (selectedElement.className || '').split(' ');
+                    classes.forEach(c => { if (c.startsWith('font-')) onToggleClass(c, false); });
+                    if (e.target.value) onToggleClass(e.target.value, true);
+                  }
+                }}
+                value={(selectedElement.className || '').split(' ').find(c => c.startsWith('font-')) || ''}
+              >
+                <option value="">default</option>
+                {["font-thin","font-extralight","font-light","font-normal","font-medium","font-semibold","font-bold","font-extrabold","font-black"].map(v => <option key={v} value={v}>{v.replace('font-', '')}</option>)}
+              </select>
+
+            </div>
+          </div>
+
+          <div className="space-y-2 bg-hall-50 dark:bg-hall-900/30 p-2 rounded-lg border border-hall-200 dark:border-hall-800">
+            <label className="text-[10px] text-hall-500 font-bold">Text Alignment</label>
+            <div className="flex gap-1">
+              {['text-left', 'text-center', 'text-right', 'text-justify'].map(align => {
+                const isActive = (selectedElement.className || '').split(' ').includes(align);
+                return (
+                  <button
+                    key={align}
+                    onClick={() => {
+                      if (onToggleClass) {
+                        ['text-left', 'text-center', 'text-right', 'text-justify'].forEach(a => {
+                          if (a !== align && (selectedElement.className || '').split(' ').includes(a)) {
+                            onToggleClass(a, false);
+                          }
+                        });
+                        onToggleClass(align, !isActive);
+                      }
+                    }}
+                    className={`flex-1 text-[10px] py-1 rounded-md font-medium transition-all ${isActive ? 'bg-amber-500 text-white shadow-sm' : 'text-hall-500 hover:text-hall-700 dark:hover:text-hall-300'}`}
+                  >
+                    {align.replace('text-', '')}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] text-hall-500">Text Color</label>
+            <select 
+              className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              onChange={(e) => {
+                if (onToggleClass) {
+                  const classes = (selectedElement.className || '').split(' ');
+                  classes.forEach(c => { 
+                    if (c.startsWith('text-') && !['text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl', 'text-9xl', 'text-left', 'text-center', 'text-right', 'text-justify'].includes(c)) {
+                      onToggleClass(c, false); 
+                    }
+                  });
+                  if (e.target.value) onToggleClass(e.target.value, true);
+                }
+              }}
+              value={(selectedElement.className || '').split(' ').find(c => c.startsWith('text-') && !['text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl', 'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl', 'text-9xl', 'text-left', 'text-center', 'text-right', 'text-justify'].includes(c)) || ''}
+            >
+              <option value="">default</option>
+              {["text-transparent","text-current","text-black","text-white","text-gray-500","text-red-500","text-orange-500","text-amber-500","text-yellow-500","text-lime-500","text-green-500","text-emerald-500","text-teal-500","text-cyan-500","text-sky-500","text-blue-500","text-indigo-500","text-violet-500","text-purple-500","text-fuchsia-500","text-pink-500","text-rose-500"].map(v => <option key={v} value={v}>{v.replace('text-', '')}</option>)}
+            </select>
+          </div>
+        </div>
+
+        {/* Inline Typography */}
+        <div className="space-y-3 mt-4">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Inline Styles Typography</h4>
           
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
