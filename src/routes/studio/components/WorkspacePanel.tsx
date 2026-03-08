@@ -74,7 +74,7 @@ const WorkspacePanel: React.FC<WorkspacePanelProps> = ({
         </div>
         <button 
             onClick={onCreate}
-            className="w-8 h-8 rounded-full bg-text-primary text-bg-main hover:scale-105 flex items-center justify-center transition-all shadow-md"
+            className="w-11 h-11 rounded-full bg-text-primary text-bg-main hover:scale-105 flex items-center justify-center transition-all shadow-md"
             title="New Workspace"
         >
             <i className="fa-solid fa-plus text-xs"></i>
@@ -142,7 +142,7 @@ const WorkspacePanel: React.FC<WorkspacePanelProps> = ({
                         <div className={`flex items-center gap-1 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity duration-200`}>
                              <button 
                                 onClick={(e) => handleStartRename(ws, e)}
-                                className="w-7 h-7 rounded-2xl hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors"
+                                className="w-10 h-10 rounded-2xl hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors"
                                 title="Rename"
                             >
                                 <i className="fa-solid fa-pen text-[10px]"></i>
@@ -150,7 +150,7 @@ const WorkspacePanel: React.FC<WorkspacePanelProps> = ({
                             {workspaces.length > 1 && (
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); onDelete(ws.id); }}
-                                    className="w-7 h-7 rounded-2xl hover:bg-red-500/10 hover:text-red-500 flex items-center justify-center text-text-secondary transition-colors"
+                                    className="w-10 h-10 rounded-2xl hover:bg-red-500/10 hover:text-red-500 flex items-center justify-center text-text-secondary transition-colors"
                                     title="Delete"
                                 >
                                     <i className="fa-solid fa-trash text-[10px]"></i>

@@ -660,7 +660,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                     <button 
                       key={`${s.label}-${i}`}
                       onClick={() => setSuggestion(s.prompt)}
-                      className="px-5 py-2.5 rounded-full bg-hall-50 hover:bg-hall-200 active:bg-hall-300 dark:bg-hall-900/40 dark:hover:bg-hall-800 dark:active:bg-hall-700 backdrop-blur-sm border border-hall-200 dark:border-hall-800/50 text-sm font-semibold text-hall-600 dark:text-hall-300 hover:text-ink transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-90 hover:scale-[1.03] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-hall-950 shadow-sm hover:shadow-md"
+                      className="px-5 py-3 sm:py-2.5 min-h-[44px] rounded-full bg-hall-50 hover:bg-hall-200 active:bg-hall-300 dark:bg-hall-900/40 dark:hover:bg-hall-800 dark:active:bg-hall-700 backdrop-blur-sm border border-hall-200 dark:border-hall-800/50 text-sm font-semibold text-hall-600 dark:text-hall-300 hover:text-ink transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-90 hover:scale-[1.03] hover:-translate-y-0.5 whitespace-nowrap shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-hall-950 shadow-sm hover:shadow-md"
                     >
                       {s.label}
                     </button>

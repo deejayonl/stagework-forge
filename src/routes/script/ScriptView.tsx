@@ -108,11 +108,11 @@ export default function ScriptView() {
   }
 
   return (
-    <div className="w-full min-h-full flex flex-col bg-hall-950 text-ink p-4 md:p-8 lg:p-12 relative isolate">
+    <div className="w-full min-h-full flex flex-col bg-hall-950 text-ink p-2 sm:p-4 md:p-8 lg:p-12 relative isolate">
       {/* Background ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[40vh] bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      <div className="max-w-4xl mx-auto w-full flex flex-col items-center justify-start relative z-10 pt-10 pb-24">
+      <div className="max-w-4xl mx-auto w-full flex flex-col items-center justify-start relative z-10 pt-6 pb-20 sm:pt-10 sm:pb-24">
         
         {/* Typography & Slogan Section */}
         <div className="text-center mb-12 space-y-6">
@@ -133,7 +133,7 @@ export default function ScriptView() {
                 <button
                   key={id}
                   onClick={() => toggleTarget(id)}
-                  className={`snap-center shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl border transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                  className={`snap-center shrink-0 flex items-center gap-2.5 px-4 py-3 min-h-[48px] rounded-xl border transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                     isSelected 
                       ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400 shadow-[0_0_20px_-5px_rgba(99,102,241,0.3)]' 
                       : 'bg-hall-900/50 border-hall-800/50 text-hall-500 hover:text-hall-300 hover:bg-hall-800 hover:border-hall-700'
@@ -173,7 +173,7 @@ export default function ScriptView() {
               <button
                 onClick={handleSubmit}
                 disabled={!scriptText.trim() || selectedTargets.length === 0 || isGenerating}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-indigo-500 shadow-lg shadow-indigo-500/25"
+                className="flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-indigo-500 shadow-lg shadow-indigo-500/25"
               >
                 {isGenerating ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
                 <span>{isGenerating ? 'Compacting...' : 'Compact & Generate'}</span>

@@ -88,7 +88,7 @@ const ContextualTuningChat: React.FC<ContextualTuningChatProps> = ({ node, onUpd
                 </div>
                 <button 
                     onClick={onClose}
-                    className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-hall-800 text-hall-400 transition-colors"
+                    className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-hall-800 text-hall-400 transition-colors"
                 >
                     <span className="text-sm">&times;</span>
                 </button>
@@ -131,13 +131,13 @@ const ContextualTuningChat: React.FC<ContextualTuningChatProps> = ({ node, onUpd
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleSend()}
                     placeholder="E.g., Make the sidebar collapsible..."
-                    className="flex-1 bg-hall-950 border border-hall-800 rounded-xl px-4 py-2.5 text-sm text-hall-100 focus:outline-none focus:border-indigo-500/50 transition-colors"
+                    className="flex-1 bg-hall-950 border border-hall-800 rounded-xl px-4 py-3 min-h-[44px] text-sm text-hall-100 focus:outline-none focus:border-indigo-500/50 transition-colors"
                     disabled={isTuning}
                 />
                 <button
                     onClick={handleSend}
                     disabled={!input.trim() || isTuning}
-                    className="w-10 h-10 flex shrink-0 items-center justify-center rounded-xl bg-indigo-500 hover:bg-indigo-400 disabled:opacity-50 disabled:bg-hall-800 text-white transition-colors"
+                    className="w-11 h-11 flex shrink-0 items-center justify-center rounded-xl bg-indigo-500 hover:bg-indigo-400 disabled:opacity-50 disabled:bg-hall-800 text-white transition-colors"
                 >
                     {isTuning ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                 </button>

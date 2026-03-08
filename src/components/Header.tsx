@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="pointer-events-auto bg-hall-950/80 bg-hall-900/80 backdrop-blur-xl border border-hall-200 border-hall-800 p-1.5 rounded-full shadow-lg shadow-hall-200/50 shadow-black/50 flex items-center gap-1">
           <button
             onClick={toggleSidebar}
-            className="p-2 hover:bg-hall-100 hover:bg-hall-800 rounded-full transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-hall-100 hover:bg-hall-800 rounded-full transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
             title="Projects"
           >
             <Menu className="w-5 h-5" />
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({
              <button
                onClick={onUndo}
                disabled={!canUndo}
-               className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-hall-600 text-hall-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+               className="group relative p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-hall-100 hover:bg-hall-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-hall-600 text-hall-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
                aria-label="Undo"
              >
                <Undo2 className="w-4 h-4" />
@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({
              <button
                onClick={onRedo}
                disabled={!canRedo}
-               className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-hall-600 text-hall-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+               className="group relative p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-hall-100 hover:bg-hall-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-hall-600 text-hall-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
                aria-label="Redo"
              >
                <Redo2 className="w-4 h-4" />
@@ -103,7 +103,7 @@ const Header: React.FC<HeaderProps> = ({
           {onOpenSettings && (
             <button
               onClick={onOpenSettings}
-              className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="group relative p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
               aria-label="Project Settings"
             >
               <Settings className="w-4 h-4" />
@@ -116,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({
           {onExport && (
             <button
               onClick={onExport}
-              className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="group relative p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
               aria-label="Export Project"
             >
               <Download className="w-4 h-4" />
@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({
           )}
           <button
             onClick={onOpenAssets}
-            className="group relative p-2 rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="group relative p-2 sm:p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-hall-100 hover:bg-hall-800 transition-colors text-hall-600 text-hall-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
             aria-label="Generate Assets"
           >
             <ImageIcon className="w-4 h-4" />

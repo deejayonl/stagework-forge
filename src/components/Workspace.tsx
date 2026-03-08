@@ -980,7 +980,7 @@ useEffect(() => {
         <div className="flex items-center gap-1 p-1 bg-hall-200 dark:bg-hall-800 rounded-full shadow-inner">
           <button
             onClick={() => setActiveTab('preview')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+            className={`flex items-center gap-2 px-4 py-2 sm:px-3 sm:py-1.5 min-h-[44px] sm:min-h-0 rounded-full text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
               activeTab === 'preview'
                 ? 'bg-white dark:bg-black text-hall-900 dark:text-ink shadow-sm scale-100'
                 : 'text-hall-500 dark:text-hall-400 hover:text-hall-800 dark:hover:text-hall-200 hover:scale-105 active:scale-95'
@@ -991,7 +991,7 @@ useEffect(() => {
           </button>
           <button
             onClick={() => setActiveTab('code')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+            className={`flex items-center gap-2 px-4 py-2 sm:px-3 sm:py-1.5 min-h-[44px] sm:min-h-0 rounded-full text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
               activeTab === 'code'
                 ? 'bg-white dark:bg-black text-hall-900 dark:text-ink shadow-sm scale-100'
                 : 'text-hall-500 dark:text-hall-400 hover:text-hall-800 dark:hover:text-hall-200 hover:scale-105 active:scale-95'
@@ -1006,7 +1006,7 @@ useEffect(() => {
           <div className="hidden md:flex items-center gap-1 p-1 bg-hall-200 dark:bg-hall-800 rounded-full shadow-inner animate-in fade-in zoom-in-95 duration-200">
             <button
               onClick={() => setBreakpoint('desktop')}
-              className={`group relative p-1.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+              className={`group relative p-2 sm:p-1.5 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                 breakpoint === 'desktop'
                   ? 'bg-white dark:bg-black text-hall-900 dark:text-ink shadow-sm scale-100'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-800 dark:hover:text-hall-200 hover:scale-105 active:scale-95'
@@ -1020,7 +1020,7 @@ useEffect(() => {
             </button>
             <button
               onClick={() => setBreakpoint('tablet')}
-              className={`group relative p-1.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+              className={`group relative p-2 sm:p-1.5 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                 breakpoint === 'tablet'
                   ? 'bg-white dark:bg-black text-hall-900 dark:text-ink shadow-sm scale-100'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-800 dark:hover:text-hall-200 hover:scale-105 active:scale-95'
@@ -1034,7 +1034,7 @@ useEffect(() => {
             </button>
             <button
               onClick={() => setBreakpoint('mobile')}
-              className={`group relative p-1.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+              className={`group relative p-2 sm:p-1.5 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                 breakpoint === 'mobile'
                   ? 'bg-white dark:bg-black text-hall-900 dark:text-ink shadow-sm scale-100'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-800 dark:hover:text-hall-200 hover:scale-105 active:scale-95'
@@ -1055,7 +1055,7 @@ useEffect(() => {
             <button
               onClick={handleUndo}
               disabled={!canUndo}
-              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+              className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                 !canUndo
                   ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
@@ -1070,7 +1070,7 @@ useEffect(() => {
             <button
               onClick={handleRedo}
               disabled={!canRedo}
-              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+              className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
                 !canRedo
                   ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
@@ -1087,7 +1087,7 @@ useEffect(() => {
           <div className="relative">
             <button
               onClick={() => setIsQROpen(!isQROpen)}
-              className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isQROpen ? "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+              className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isQROpen ? "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
               aria-label="Mobile Preview QR"
             >
               <QrCode className="w-4 h-4" />
@@ -1115,7 +1115,7 @@ useEffect(() => {
            
            <button
              onClick={() => setIsPagesOpen(!isPagesOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isPagesOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isPagesOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Pages Manager"
            >
              <FileCode className="w-4 h-4" />
@@ -1126,7 +1126,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsLibraryOpen(!isLibraryOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isLibraryOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isLibraryOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Component Library"
            >
              <Library className="w-4 h-4" />
@@ -1137,7 +1137,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsVariablesOpen(!isVariablesOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isVariablesOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isVariablesOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Variables"
            >
              <Database className="w-4 h-4" />
@@ -1148,7 +1148,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsCollectionsOpen(!isCollectionsOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${isCollectionsOpen ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${isCollectionsOpen ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Collections"
            >
              <List className="w-4 h-4" />
@@ -1158,7 +1158,7 @@ useEffect(() => {
            </button>
            <button
              onClick={() => setIsApisOpen(!isApisOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${isApisOpen ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${isApisOpen ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="APIs"
            >
              <Network className="w-4 h-4" />
@@ -1169,7 +1169,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsThemeOpen(!isThemeOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isThemeOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isThemeOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Theme"
            >
              <Palette className="w-4 h-4" />
@@ -1180,7 +1180,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsDeployOpen(!isDeployOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-purple-500 ${isDeployOpen ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-purple-500 ${isDeployOpen ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Deploy"
            >
              <Rocket className="w-4 h-4" />
@@ -1190,7 +1190,7 @@ useEffect(() => {
            </button>
           <button
             onClick={() => setIsMediaManagerOpen(!isMediaManagerOpen)}
-            className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isMediaManagerOpen ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+            className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isMediaManagerOpen ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
             aria-label="Media Manager"
           >
             <ImageIcon className="w-4 h-4" />
@@ -1203,7 +1203,7 @@ useEffect(() => {
            <button
              onClick={handleUndo}
              disabled={!canUndo}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canUndo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canUndo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Undo"
            >
              <Undo2 className="w-4 h-4" />
@@ -1215,7 +1215,7 @@ useEffect(() => {
            <button
              onClick={handleRedo}
              disabled={!canRedo}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canRedo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canRedo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Redo"
            >
              <Redo2 className="w-4 h-4" />
@@ -1228,7 +1228,7 @@ useEffect(() => {
 
            <button
              onClick={() => setIsHistoryOpen(!isHistoryOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isHistoryOpen ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isHistoryOpen ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="History"
            >
              <List className="w-4 h-4" />
@@ -1238,7 +1238,7 @@ useEffect(() => {
            </button>
            <button
              onClick={() => setIsTreeOpen(!isTreeOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isTreeOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isTreeOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="DOM Tree"
            >
              <AlignLeft className="w-4 h-4" />
@@ -1249,7 +1249,7 @@ useEffect(() => {
            
            <button
              onClick={() => setIsInspectorOpen(!isInspectorOpen)}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isInspectorOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isInspectorOpen ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Inspector"
            >
              <Settings2 className="w-4 h-4" />

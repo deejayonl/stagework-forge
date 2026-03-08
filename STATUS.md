@@ -471,12 +471,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 ## Phase 44.6: Mobile Layout Polish
 *Status: Complete*
 
-- [ ] **Task 44.6.1: Touch Targets**
-  - Ensure buttons, tab selectors, and interactive elements have a minimum touch area (e.g. `min-h-[44px]` or `py-3`) on mobile screens to prevent accidental misclicks.
-- [ ] **Task 44.6.2: Floating Controls Re-positioning**
-  - Ensure any floating action buttons or overlay menus on the Studio/Stage do not cover up critical input fields or block scrollable content on smaller devices.
-- [ ] **Task 44.6.3: Padding Adjustments**
-  - Reduce unnecessary padding margins on parent containers for breakpoints `< 640px` (`max-w` elements should utilize more horizontal screen real estate).
+
+- [x] **Task 44.6.1: Typography & Spacing Balance**
+  - Fine-tune text sizing and line-heights for mobile readability across Script, Studio, and Stage views.
+  - Reduce massive padding/margins on mobile (`p-2` or `p-4` instead of `p-8`) so the workspace feels spacious.
+- [x] **Task 44.6.2: Touch Targets & Floating Elements**
+  - Increase hit areas for mobile tap targets (minimum `44px` tall buttons).
+  - Reposition floating overlays, chat interfaces, and property inspectors so they slide up as bottom-sheets or full-screen modals on mobile, rather than cramped sidebars.
+- [x] **Task 44.6.3: Bottom Navigation Refinement**
+  - Ensure the bottom navigation bar is perfectly pinned, visually distinct (translucent blur), and has icons properly centered with safe-area bottom padding.
+
 ## Phase 45: Advanced Layout Controls (Flexbox/Grid GUI)
 *Status: Complete*
 

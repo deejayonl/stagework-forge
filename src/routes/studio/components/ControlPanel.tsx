@@ -66,7 +66,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             <h2 className="text-xs font-bold text-text-primary uppercase tracking-wide">Control Center</h2>
             <button 
                 onClick={onClose}
-                className="w-5 h-5 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-text-secondary transition-colors"
+                className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-text-secondary transition-colors"
             >
                 <i className="fa-solid fa-xmark text-xs"></i>
             </button>
@@ -190,7 +190,7 @@ interface ToggleRowProps {
 const ToggleRow: React.FC<ToggleRowProps> = ({ label, icon, active, onClick, activeColor = 'bg-accent-primary' }) => (
     <div 
         onClick={onClick}
-        className="flex items-center justify-between px-3 py-2.5 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group select-none"
+        className="flex items-center justify-between px-3 py-2.5 min-h-[44px] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer group select-none"
     >
         <div className="flex items-center gap-3">
             <div className={`w-6 h-6 rounded-xl flex items-center justify-center transition-colors ${active ? `${activeColor} text-white` : 'bg-text-secondary/10 text-text-secondary'}`}>
@@ -231,7 +231,7 @@ interface ActionRowProps {
 const ActionRow: React.FC<ActionRowProps> = ({ label, icon, onClick }) => (
     <button 
         onClick={onClick}
-        className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-left group"
+        className="w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-left group"
     >
         <div className="w-6 h-6 rounded-xl flex items-center justify-center bg-text-secondary/10 text-text-secondary group-hover:bg-text-primary group-hover:text-bg-main transition-colors">
             <i className={`fa-solid fa-${icon} text-xs`}></i>
