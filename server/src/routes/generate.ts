@@ -49,6 +49,12 @@ If the user asks for a complex app (e.g., Task Manager), separate into index.htm
 If the user asks for a simple bio, keep it in one index.html.
 `;
 
+
+const getClient = (c: any) => {
+  const { apiKey } = getProviderConfig(c);
+  return new GoogleGenAI({ apiKey });
+};
+
 const getProviderConfig = (c: any) => {
   const authHeader = c.req.header('Authorization');
   const apiKey = authHeader ? authHeader.replace('Bearer ', '') : '';
@@ -66,6 +72,7 @@ generateRoutes.post('/generate-code', async (c) => {
         const currentFiles = body.currentFiles || [];
         
         const { apiKey, provider } = getProviderConfig(c);
+        const ai = getClient(c);
         let finalPrompt = prompt;
 
         if (currentFiles.length > 0) {
@@ -200,6 +207,7 @@ generateRoutes.post('/generate-image', async (c) => {
         const prompt = validateString(body.prompt, 'prompt');
         const size = body.size;
         const { apiKey, provider } = getProviderConfig(c);
+        const ai = getClient(c);
         
         const response = await ai.models.generateImages({
             model: MODELS.IMAGE,
