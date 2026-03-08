@@ -400,3 +400,29 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 29.3: List Rendering (Repeater)**
   - Add a "Repeater" toggle to container nodes.
   - Allow binding the container to a collection/array, repeating its children for each item.
+
+## Phase 30: Advanced Interactions & Animations
+*Status: Complete*
+
+- [x] **Task 30.1: Event Triggers (onClick)**
+  - Add an "Interactions" tab to the Property Inspector.
+  - Allow users to define an `onClick` event trigger for any selected node.
+- [x] **Task 30.2: Action Definitions**
+  - Implement a basic action payload structure (e.g., `{ type: 'NAVIGATE', target: 'page2' }` or `{ type: 'SET_VARIABLE', key: 'isOpen', value: true }`).
+  - Wire up the `onClick` handler in `StageView.tsx` to execute these actions.
+- [x] **Task 30.3: Basic CSS Transitions**
+  - Add a "Transitions" section to the Style tab in the Property Inspector.
+  - Allow setting `transition` properties (duration, easing) on elements.
+
+## Phase 31: Theming & Global Styles
+*Status: In Progress*
+
+- [ ] **Task 31.1: Global Theme Variables**
+  - Add a "Theme" panel to manage global CSS variables (colors, fonts, spacing).
+  - Inject these variables into the canvas `<iframe>` root.
+- [ ] **Task 31.2: Typography Management**
+  - Allow adding custom Google Fonts to the project.
+  - Automatically inject `<link href="...fonts.googleapis...">` into the generated HTML `<head>`.
+- [ ] **Task 31.3: Component Library (Symbols)**
+  - Allow saving a selected node as a reusable "Component".
+  - Add a "Components" tab to drag-and-drop saved symbols back onto the canvas.

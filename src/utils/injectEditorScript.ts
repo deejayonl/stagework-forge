@@ -131,6 +131,12 @@ export const injectEditorScript = (htmlContent: string): string => {
           
           if (action === 'alert') {
             alert(args.join(':'));
+          } else if (action === 'navigate') {
+            window.parent.postMessage({
+              type: 'FORGE_EXECUTE_ACTION',
+              action,
+              target: args[0]
+            }, '*');
           } else if (action === 'setVariable' || action === 'toggleVariable') {
             window.parent.postMessage({
               type: 'FORGE_EXECUTE_ACTION',

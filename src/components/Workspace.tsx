@@ -284,8 +284,13 @@ useEffect(() => {
            element: e.data.element
          });
       } else if (e.data.type === 'FORGE_EXECUTE_ACTION') {
+         const { action, key, value, target } = e.data;
+         if (action === 'navigate') {
+            const dest = target.endsWith('.html') ? target : `${target}.html`;
+            setCurrentPage(dest);
+            return;
+         }
          if (onUpdateVariables) {
-            const { action, key, value } = e.data;
             const currentVars = variables || {};
             let newValue = value;
             
