@@ -211,8 +211,9 @@ const InfiniteCanvas: React.FC<InfiniteCanvasProps> = ({
 
     const handleFitView = () => {
         if (nodes.length === 0) {
-            setOffset({ x: 0, y: 0 });
+            transform.current = { x: 0, y: 0, scale: 1 };
             setRenderScale(1);
+            applyTransform();
             return;
         }
 
@@ -241,10 +242,12 @@ const InfiniteCanvas: React.FC<InfiniteCanvasProps> = ({
         const centerX = minX + contentWidth / 2;
         const centerY = minY + contentHeight / 2;
         
-        setOffset({
+        transform.current = {
             x: (containerWidth / 2) - (centerX * newScale),
-            y: (containerHeight / 2) - (centerY * newScale)
-        });
+            y: (containerHeight / 2) - (centerY * newScale),
+            scale: newScale
+        };
+        applyTransform();
     };
 
     // --- Zoom & Pan Logic ---
@@ -527,13 +530,12 @@ const InfiniteCanvas: React.FC<InfiniteCanvasProps> = ({
     }, [onConnect]);
 
     // Calculate Bezier Control Points and Path
-    const calculateStepPath = (x1: number, y1: number, x2: number, y2: number, side1: HandleSide, side2?: HandleSide) => {
+    const calculateStepPath = (x1: number, y1: number, x2: number, y2: number, side1: HandleSide, _side2?: HandleSide) => {
         let pathString = `M ${x1} ${y1}`;
         const midX = x1 + (x2 - x1) / 2;
         const midY = y1 + (y2 - y1) / 2;
 
         const isHorizontal1 = side1 === 'left' || side1 === 'right' || side1.startsWith('in-') || side1.startsWith('out-');
-        const isHorizontal2 = side2 ? (side2 === 'left' || side2 === 'right' || side2.startsWith('in-') || side2.startsWith('out-')) : isHorizontal1;
 
         if (isHorizontal1) {
             pathString += ` L ${midX} ${y1} L ${midX} ${y2} L ${x2} ${y2}`;

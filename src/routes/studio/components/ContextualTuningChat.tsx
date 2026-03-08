@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CanvasNode } from '../types';
-import { fetchFromBFF, streamFromBFF } from '../../../shared/api/api-client';
+import { streamFromBFF } from '../../../shared/api/api-client';
 import { Sparkles, Loader2, Send } from 'lucide-react';
 import { MarkdownRenderer } from './MarkdownRenderer';
 

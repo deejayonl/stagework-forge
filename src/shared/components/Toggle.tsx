@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 interface ToggleProps {
   checked: boolean
   onChange: (checked: boolean) => void
@@ -8,7 +6,7 @@ interface ToggleProps {
 
 export function Toggle({ checked, onChange, label }: ToggleProps) {
   return (
-    <label className="flex items-center gap-3 cursor-pointer group">
+    <label className="flex items-center gap-3 cursor-pointer group" onClick={() => onChange(!checked)}>
       {label && (
         <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
           {label}

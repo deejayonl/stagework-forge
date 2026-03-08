@@ -81,9 +81,9 @@ export const createZipDownload = async (
           needsUpdate = true;
           
           if (theme.fontFamily) {
-            let fontLink = doc.getElementById('forge-google-font');
+            let fontLink = doc.getElementById('forge-google-font') as HTMLLinkElement;
             if (!fontLink) {
-              fontLink = doc.createElement('link');
+              fontLink = doc.createElement('link') as HTMLLinkElement;
               fontLink.id = 'forge-google-font';
               fontLink.rel = 'stylesheet';
               doc.head.appendChild(fontLink);
@@ -153,7 +153,7 @@ export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: strin
       // Support for: src="assets/img.png", url('assets/img.png'), url(assets/img.png)
       const assetRegex = new RegExp(`(src|href|url|srcset)\\s*(=|\\()\\s*["']?([^"'>\\)]*${escapedName})[^"'>\\)]*["']?`, 'g');
       
-      htmlContent = htmlContent.replace(assetRegex, (match, attr, separator, path) => {
+      htmlContent = htmlContent.replace(assetRegex, (_match, attr, separator, _path) => {
         // If it's a url(), preserve the structure
         if (attr === 'url') {
            return `url("${file.content}")`;

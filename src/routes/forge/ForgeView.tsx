@@ -476,14 +476,13 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
 
       <ProjectSidebar 
         projects={projects}
-        currentProject?.id={currentProject?.id || null}
+        currentProjectId={currentProject?.id || null}
         onSelect={selectProject}
         onDelete={deleteProject}
         onNew={startNewProject}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         onLoadFromBFF={loadProjectsFromBFF}
-        
       />
       
       <ExportModal 

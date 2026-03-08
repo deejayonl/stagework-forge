@@ -1,6 +1,7 @@
 import { Smartphone, Tablet, Monitor, Globe, LayoutDashboard, Terminal, Sparkles, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fetchFromBFF } from '../../shared/api/api-client';
+import { useState, useEffect, useRef } from 'react';
 
 const TARGETS = [
   { id: 'mobile-phone', label: 'Mobile App (Phone)', icon: Smartphone },
@@ -24,7 +25,7 @@ function TerminalLoader() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setLogIndex((prev) => (prev < TERMINAL_LOGS.length - 1 ? prev + 1 : prev));
+      setLogIndex((prev: number) => (prev < TERMINAL_LOGS.length - 1 ? prev + 1 : prev));
     }, 1500);
     return () => clearInterval(interval);
   }, []);
@@ -61,8 +62,8 @@ export default function ScriptView() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const toggleTarget = (id: string) => {
-    setSelectedTargets(prev => 
-      prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
+    setSelectedTargets((prev: string[]) => 
+      prev.includes(id) ? prev.filter((t: string) => t !== id) : [...prev, id]
     );
   };
 

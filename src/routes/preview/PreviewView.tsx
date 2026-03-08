@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { flattenFilesForPreview } from '../../utils/fileUtils';
+import { useState, useRef, useEffect } from 'react';
 
 export default function PreviewView() {
   const { projectId } = useParams();

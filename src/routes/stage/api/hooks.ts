@@ -133,26 +133,7 @@ export function useChat(): ChatContext {
 }
 
 export function useOrchInfo() {
-  const [info, setInfo] = useState<OrchInfo | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const refresh = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await getOrchInfo();
-      setInfo(data);
-    } catch {
-      // non-critical
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
-
-  return { info, loading, refresh };
+  return { info: null, loading: false, refresh: () => {} };
 }
 
 export function useHistory() {

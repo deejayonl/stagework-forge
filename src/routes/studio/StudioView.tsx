@@ -14,7 +14,6 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { AI } from './services/ai';
 import { executeGraph } from './services/execution';
 import { ImageOptions, VideoOptions } from './services/ai/types';
-import { OrbCanvas } from '../stage/components/OrbCanvas';
 
 /**
  * StudioView — the full infinite-canvas experience, migrated from weaver-nest App.tsx.

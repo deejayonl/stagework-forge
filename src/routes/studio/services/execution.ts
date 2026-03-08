@@ -1,4 +1,4 @@
-import { CanvasNode, CanvasEdge, HandleSide } from '../types';
+import { CanvasNode, CanvasEdge } from '../types';
 
 export type NodeStatusCallback = (nodeId: string, status: 'idle' | 'running' | 'success' | 'error' | 'skipped', data?: any, error?: string) => void;
 
