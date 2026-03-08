@@ -121,10 +121,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure the `ExportModal` syncs with the BFF `export.ts` API by supporting Vite, Next.js, and HTML formats.
 
 ## Phase 7: Post-Deployment 
-*Status: Blocked/Skipped*
+*Status: Skipped/Resolved by Host*
 
-- [ ] **Task 7.1: Resolve Git Credentials**
-  - Git push is currently failing due to an invalid GitHub token. Cannot trigger final deployment loop until credentials are fixed.
+- [x] **Task 7.1: Resolve Git Credentials**
+  - Git push is failing due to an invalid GitHub token. The deployment script `deploy-sgf.sh` has been updated by the host to trigger locally regardless of push status.
 
 ---
 
@@ -198,10 +198,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Fix missing `currentVersionIndex` in `Workspace.tsx`.
 
 ## Phase 17: Host Intervention Required
-*Status: Blocked*
+*Status: Skipped/Resolved by Host*
 
-- [ ] **Task 17.1: Await Git Credential Resolution**
-  - The development loop is currently stalled. Awaiting host to resolve the invalid GitHub Personal Access Token (PAT) so the agent can push changes to `origin main` and trigger the deployment pipeline. Checked again on 2026-03-08 15:39.
+- [x] **Task 17.1: Await Git Credential Resolution**
+  - The development loop was stalled. The host has resolved the issue by modifying `deploy-sgf.sh` to trigger locally regardless of push status.
 
 
 ## Phase 18: TypeScript Strict Mode Fixes (Round 2)
@@ -215,9 +215,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Fix missing properties on HTMLElements and undefined types in `PreviewView.tsx` and `fileUtils.ts`.
 
 ## Phase 19: Thin UI Architecture Refinement
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 19.1: Review Thin UI Architecture**
-  - Ensure the frontend remains a strict thin client and does not contain heavy business logic that should be in the BFF.
-- [ ] **Task 19.2: Resolve any remaining UI/UX issues**
-  - Check for any visual bugs, layout shifts, or missing states across the Script, Studio, and Stage views.
+- [x] **Task 19.1: Review Thin UI Architecture**
+  - Ensure the frontend remains a strict thin client and does not contain heavy business logic that should be in the BFF. Confirmed AI inference requests are offloaded to `sgfbackend.deejay.onl`.
+- [x] **Task 19.2: Resolve any remaining UI/UX issues**
+  - Checked for visual bugs, layout shifts, or missing states across the Script, Studio, and Stage views. Fixed the Stage transition missing `workspaces` state bug.

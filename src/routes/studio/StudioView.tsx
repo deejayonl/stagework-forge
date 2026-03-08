@@ -232,7 +232,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
   const handleDeployToStage = () => {
     setIsDeploying(true);
     setTimeout(() => {
-      navigate('/stage');
+      navigate('/stage', { state: { workspaces } });
     }, 4500);
   };
 
