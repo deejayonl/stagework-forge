@@ -317,6 +317,6 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 21.2: BFF Schema Generation & Storage**
   - Create BFF endpoints (`/api/collections/:projectId`) to save and retrieve the database schemas.
   - Store the mock data for these collections in the project's state.
-- [ ] **Task 21.3: Data Binding to UI Components**
+- [x] **Task 21.3: Data Binding to UI Components**
   - Update the Property Inspector to allow binding a component (like a List or Grid) to a specific Collection.
   - Map UI element fields (e.g., Image `src`, Text `content`) to the Collection's fields.

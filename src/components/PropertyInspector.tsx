@@ -5,6 +5,7 @@ import { fixHtmlNode } from '../services/geminiService';
 interface PropertyInspectorProps {
   selectedElement: any;
   variables?: Record<string, string>;
+  collections?: Record<string, any>;
   onBindVariable?: (attribute: string, variableName: string) => void;
   onUpdateStyle: (property: string, value: string, state?: string) => void;
   onToggleClass?: (className: string, toggle: boolean) => void;
@@ -22,6 +23,7 @@ interface PropertyInspectorProps {
 export const PropertyInspector: React.FC<PropertyInspectorProps> = ({ 
   selectedElement, 
   variables = {},
+  collections = {},
   onBindVariable,
   onUpdateStyle, 
   onToggleClass,
@@ -32,10 +34,12 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onOpenImageTool,
   onAutoFix,
   onUpdateAttribute,
-  onSaveComponent
+  onSaveComponent,
+  pages = []
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isHoverMode, setIsHoverMode] = useState(false);
+  const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0;
 
   if (!selectedElement) return null;
 
@@ -153,19 +157,31 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-hall-700 dark:text-hall-300">Text Content</label>
-              {Object.keys(variables).length > 0 && onBindVariable && (
+              {hasBindings && onBindVariable && (
                 <select 
                   className="text-[10px] bg-hall-100 dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded p-1 text-hall-700 dark:text-hall-300 outline-none max-w-[100px]"
                   value={selectedElement.dataset?.bindText || ''}
                   onChange={(e) => onBindVariable('text', e.target.value)}
                 >
                   <option value="">Static Text</option>
-                  <optgroup label="List Item Bindings">
-                    <option value="item">Bind: item (string)</option>
-                    <option value="item.name">Bind: item.name</option>
-                    <option value="item.title">Bind: item.title</option>
-                    <option value="item.description">Bind: item.description</option>
-                  </optgroup>
+                  {Object.values(collections).length > 0 ? (
+                    Object.values(collections).map((c: any) => (
+                      <optgroup key={c.id} label={`Collection: ${c.name}`}>
+                        {c.fields.map((f: any) => (
+                          <option key={`${c.id}.${f.name}`} value={`item.${f.name}`}>
+                            Bind: item.{f.name}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))
+                  ) : (
+                    <optgroup label="List Item Bindings">
+                      <option value="item">Bind: item (string)</option>
+                      <option value="item.name">Bind: item.name</option>
+                      <option value="item.title">Bind: item.title</option>
+                      <option value="item.description">Bind: item.description</option>
+                    </optgroup>
+                  )}
                   <optgroup label="Global Variables">
                     {Object.keys(variables).map(key => (
                       <option key={key} value={key}>Bind: {key}</option>
@@ -188,19 +204,31 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-hall-700 dark:text-hall-300">Image Source</label>
-              {Object.keys(variables).length > 0 && onBindVariable && (
+              {hasBindings && onBindVariable && (
                 <select 
                   className="text-[10px] bg-hall-100 dark:bg-hall-900 border border-hall-200 dark:border-hall-800 rounded p-1 text-hall-700 dark:text-hall-300 outline-none max-w-[100px]"
                   value={selectedElement.dataset?.bindSrc || ''}
                   onChange={(e) => onBindVariable('src', e.target.value)}
                 >
                   <option value="">Static Image</option>
-                  <optgroup label="List Item Bindings">
-                    <option value="item">Bind: item (string URL)</option>
-                    <option value="item.image">Bind: item.image</option>
-                    <option value="item.url">Bind: item.url</option>
-                    <option value="item.src">Bind: item.src</option>
-                  </optgroup>
+                  {Object.values(collections || {}).length > 0 ? (
+                    Object.values(collections || {}).map((c: any) => (
+                      <optgroup key={c.id} label={`Collection: ${c.name}`}>
+                        {c.fields.filter((f: any) => f.type === 'image' || f.type === 'text').map((f: any) => (
+                          <option key={`${c.id}.${f.name}`} value={`item.${f.name}`}>
+                            Bind: item.{f.name}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))
+                  ) : (
+                    <optgroup label="List Item Bindings">
+                      <option value="item">Bind: item (string URL)</option>
+                      <option value="item.image">Bind: item.image</option>
+                      <option value="item.url">Bind: item.url</option>
+                      <option value="item.src">Bind: item.src</option>
+                    </optgroup>
+                  )}
                   <optgroup label="Global Variables">
                     {Object.keys(variables).map(key => (
                       <option key={key} value={key}>Bind: {key}</option>
@@ -221,7 +249,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         )}
 
         {/* Dynamic List Binding */}
-        {tagName !== 'IMG' && Object.keys(variables).length > 0 && onBindVariable && (
+        {tagName !== 'IMG' && hasBindings && onBindVariable && (
           <div className="space-y-2 bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800/30">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1">
@@ -236,9 +264,18 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               onChange={(e) => onBindVariable('list', e.target.value)}
             >
               <option value="">Static Children (No Repeat)</option>
-              {Object.keys(variables).map(key => (
-                <option key={key} value={key}>Bind Array: {key}</option>
-              ))}
+              {Object.values(collections || {}).length > 0 && (
+                <optgroup label="Collections">
+                  {Object.values(collections || {}).map((c: any) => (
+                    <option key={c.id} value={c.id}>Bind Collection: {c.name}</option>
+                  ))}
+                </optgroup>
+              )}
+              <optgroup label="Variables">
+                {Object.keys(variables).map(key => (
+                  <option key={key} value={key}>Bind Array: {key}</option>
+                ))}
+              </optgroup>
             </select>
           </div>
         )}

@@ -86,16 +86,24 @@ const Workspace: React.FC<WorkspaceProps> = ({
     }
   }, [localFiles, currentPage]);
 
-  // Sync variables to iframe
+  // Sync variables & collections to iframe
   useEffect(() => {
     const iframe = document.querySelector('iframe[title="Preview"]') as HTMLIFrameElement;
     if (iframe && iframe.contentWindow) {
+      // Merge collections data into variables so data-bind-list can read it
+      const mergedVariables = { ...variables };
+      if (collections) {
+        Object.values(collections).forEach((c: any) => {
+          mergedVariables[c.id] = JSON.stringify(c.data || []);
+        });
+      }
+      
       iframe.contentWindow.postMessage({
         type: 'FORGE_UPDATE_VARIABLES',
-        variables
+        variables: mergedVariables
       }, '*');
     }
-  }, [variables]);
+  }, [variables, collections]);
 
   // Sync theme to iframe
   useEffect(() => {
@@ -939,9 +947,15 @@ useEffect(() => {
                 setIframeLoading(false);
                 const iframe = e.target as HTMLIFrameElement;
                 if (iframe && iframe.contentWindow) {
+                  const mergedVariables = { ...variables };
+                  if (collections) {
+                    Object.values(collections).forEach((c: any) => {
+                      mergedVariables[c.id] = JSON.stringify(c.data || []);
+                    });
+                  }
                   iframe.contentWindow.postMessage({
                     type: 'FORGE_UPDATE_VARIABLES',
-                    variables
+                    variables: mergedVariables
                   }, '*');
                   iframe.contentWindow.postMessage({
                     type: 'FORGE_UPDATE_THEME',
