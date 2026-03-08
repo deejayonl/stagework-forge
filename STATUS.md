@@ -468,6 +468,15 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 44.5.3: Script Tab Typography bounds**
   - Ensure the "All great outputs" slogan uses `text-3xl sm:text-5xl` to prevent layout breaking on narrow screens.
 
+## Phase 44.6: Mobile Layout Polish
+*Status: Complete*
+
+- [ ] **Task 44.6.1: Touch Targets**
+  - Ensure buttons, tab selectors, and interactive elements have a minimum touch area (e.g. `min-h-[44px]` or `py-3`) on mobile screens to prevent accidental misclicks.
+- [ ] **Task 44.6.2: Floating Controls Re-positioning**
+  - Ensure any floating action buttons or overlay menus on the Studio/Stage do not cover up critical input fields or block scrollable content on smaller devices.
+- [ ] **Task 44.6.3: Padding Adjustments**
+  - Reduce unnecessary padding margins on parent containers for breakpoints `< 640px` (`max-w` elements should utilize more horizontal screen real estate).
 ## Phase 45: Advanced Layout Controls (Flexbox/Grid GUI)
 *Status: Complete*
 
@@ -501,11 +510,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a color picker or palette selector that maps to Tailwind text colors (e.g., `text-blue-500`).
 
 ## Phase 48: Component Library Drag & Drop Enhancements
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 48.1: Component Hover Previews**
+- [x] **Task 48.1: Component Hover Previews**
   - Add visual previews or tooltips in `ComponentLibrary.tsx` when hovering over components.
-- [ ] **Task 48.2: Drop Indicators**
+- [x] **Task 48.2: Drop Indicators**
   - Enhance the visual feedback when dragging a component from the library onto the Canvas/Stage.
 
 ## Phase 49: Advanced Export & Deployment Options

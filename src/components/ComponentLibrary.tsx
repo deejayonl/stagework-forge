@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
 
 interface ComponentLibraryProps {
@@ -134,6 +134,7 @@ const COMPONENTS = [
 
 export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComponent, savedComponents = {}, onClose }) => {
   const customItems = Object.entries(savedComponents).map(([name, html]) => ({ name, html }));
+  const [hoveredItem, setHoveredItem] = useState<{name: string, html: string} | null>(null);
 
   return (
     <div className="w-80 h-full bg-hall-50/95 dark:bg-hall-950/95 backdrop-blur-xl border-r border-hall-200 dark:border-hall-800 flex flex-col shadow-2xl z-50 overflow-hidden">
@@ -164,6 +165,8 @@ export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComp
                 <button
                   key={j}
                   draggable
+                  onMouseEnter={() => setHoveredItem(item)}
+                  onMouseLeave={() => setHoveredItem(null)}
                   onDragStart={(e) => {
                     e.dataTransfer.setData('text/html', item.html);
                     e.dataTransfer.setData('application/forge-component', item.name);
@@ -194,6 +197,8 @@ export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComp
                 <button
                   key={j}
                   draggable
+                  onMouseEnter={() => setHoveredItem(item)}
+                  onMouseLeave={() => setHoveredItem(null)}
                   onDragStart={(e) => {
                     e.dataTransfer.setData('text/html', item.html);
                     e.dataTransfer.setData('application/forge-component', item.name);
@@ -213,6 +218,20 @@ export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComp
           </div>
         ))}
       </div>
+
+      {hoveredItem && (
+        <div className="fixed left-[330px] top-24 w-[600px] bg-white dark:bg-black rounded-xl shadow-2xl border border-hall-200 dark:border-hall-800 z-[100] overflow-hidden pointer-events-none animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-hall-50 dark:bg-hall-950 border-b border-hall-200 dark:border-hall-800 px-4 py-2 flex items-center justify-between">
+            <span className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider">{hoveredItem.name} Preview</span>
+          </div>
+          <div className="p-0 bg-hall-100/50 dark:bg-hall-900/20 max-h-[500px] overflow-hidden flex justify-center items-start relative">
+            <div 
+              className="origin-top w-[200%] transform scale-50 pointer-events-none"
+              dangerouslySetInnerHTML={{ __html: hoveredItem.html }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

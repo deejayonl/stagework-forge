@@ -26,6 +26,32 @@ export const injectEditorScript = (htmlContent: string): string => {
         hoverBox.style.display = 'none';
         document.body.appendChild(hoverBox);
 
+        const dropBox = document.createElement('div');
+        dropBox.style.position = 'absolute';
+        dropBox.style.pointerEvents = 'none';
+        dropBox.style.border = '2px dashed #6366f1';
+        dropBox.style.backgroundColor = 'rgba(99, 102, 241, 0.15)';
+        dropBox.style.zIndex = '10001';
+        dropBox.style.transition = 'all 0.1s ease';
+        dropBox.style.display = 'none';
+        
+        const dropBadge = document.createElement('div');
+        dropBadge.textContent = 'Drop to Append';
+        dropBadge.style.position = 'absolute';
+        dropBadge.style.top = '-24px';
+        dropBadge.style.left = '50%';
+        dropBadge.style.transform = 'translateX(-50%)';
+        dropBadge.style.backgroundColor = '#6366f1';
+        dropBadge.style.color = 'white';
+        dropBadge.style.padding = '2px 8px';
+        dropBadge.style.borderRadius = '4px';
+        dropBadge.style.fontSize = '12px';
+        dropBadge.style.fontWeight = 'bold';
+        dropBadge.style.whiteSpace = 'nowrap';
+        dropBox.appendChild(dropBadge);
+        
+        document.body.appendChild(dropBox);
+
         // Animate on scroll logic for preview
         const scrollStyle = document.createElement('style');
         scrollStyle.id = 'forge-scroll-styles-preview';
@@ -82,7 +108,7 @@ export const injectEditorScript = (htmlContent: string): string => {
         }
         
         function buildDOMTree(el) {
-          if (!el || el === highlightBox || el === hoverBox) return null;
+          if (!el || el === highlightBox || el === hoverBox || el === dropBox || el.parentNode === dropBox) return null;
           if (el.nodeType === Node.TEXT_NODE) {
             if (!el.textContent.trim()) return null;
             return { type: 'text', content: el.textContent.trim() };
@@ -357,8 +383,15 @@ export const injectEditorScript = (htmlContent: string): string => {
           e.preventDefault();
           e.stopPropagation();
           if (e.target !== document.body && e.target !== document.documentElement) {
-            hoverElement = e.target;
-            updateBox(hoverBox, hoverElement);
+            updateBox(dropBox, e.target);
+          } else {
+            updateBox(dropBox, null);
+          }
+        });
+        
+        document.addEventListener('dragleave', (e) => {
+          if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
+             updateBox(dropBox, null);
           }
         });
 
@@ -366,8 +399,7 @@ export const injectEditorScript = (htmlContent: string): string => {
           e.preventDefault();
           e.stopPropagation();
           
-          hoverElement = null;
-          updateBox(hoverBox, null);
+          updateBox(dropBox, null);
           
           const html = e.dataTransfer.getData('text/html');
           const componentName = e.dataTransfer.getData('application/forge-component');
