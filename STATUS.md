@@ -275,12 +275,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add visible Undo and Redo buttons to the Global Header or Stage Toolbar for accessibility.
 
 ## Phase 27: Drag & Drop Element Reordering
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 27.1: Implement Drag Handles in DOM Explorer**
+- [x] **Task 27.1: Implement Drag Handles in DOM Explorer**
   - Add draggable attributes and visual handles to the nodes inside `DOMTreeExplorer.tsx`.
-- [ ] **Task 27.2: Handle Drop Events & Reorder Logic**
+- [x] **Task 27.2: Handle Drop Events & Reorder Logic**
   - Listen for drop events and calculate the new position of the element.
   - Update the `localFiles` or `workspaces` state to reflect the new DOM structure.
-- [ ] **Task 27.3: Visual Drop Indicators**
+- [x] **Task 27.3: Visual Drop Indicators**
   - Show a blue line or highlight indicating where the element will be placed when dropped.

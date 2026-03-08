@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, ChevronDown, Monitor, Type, Layout, Image as ImageIcon } from 'lucide-react';
+import { ChevronRight, ChevronDown, Monitor, Type, Layout, Image as ImageIcon, GripVertical } from 'lucide-react';
 
 interface DOMNode {
   id: string;
@@ -114,6 +114,10 @@ const TreeNode: React.FC<{
           )}
         </div>
         
+        <div className="w-3 h-3 text-hall-400 hover:text-hall-600 cursor-grab active:cursor-grabbing flex-shrink-0" title="Drag to reorder">
+          <GripVertical className="w-3 h-3" />
+        </div>
+
         {getIcon(node.tagName)}
         
         <span className="text-[11px] font-mono">{node.tagName}</span>
