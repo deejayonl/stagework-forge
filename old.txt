@@ -1,0 +1,7 @@
+          if (e.data.type === 'FORGE_UPDATE_STYLE') {
+            const { id, property, value } = e.data;
+            const el = document.querySelector(\`[data-forge-id="\${id}"]\`);
+            if (el) {
+              el.style[property] = value;
+              updateBox(highlightBox, el);
+            }
