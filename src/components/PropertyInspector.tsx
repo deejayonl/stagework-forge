@@ -3054,6 +3054,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       <optgroup label="List Item">
                         <option value="item">item</option>
                       </optgroup>
+                      {Object.values(collections || {}).length > 0 && (
+                        <optgroup label="Collections">
+                          {Object.values(collections || {}).map((c: any) => (
+                            <option key={c.id} value={c.id}>{c.name}</option>
+                          ))}
+                        </optgroup>
+                      )}
                       <optgroup label="Global Variables">
                         {Object.keys(variables).map(key => (
                           <option key={key} value={key}>{key}</option>
@@ -3102,6 +3109,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       <optgroup label="List Item">
                         <option value="item">item</option>
                       </optgroup>
+                      {Object.values(collections || {}).length > 0 && (
+                        <optgroup label="Collections">
+                          {Object.values(collections || {}).map((c: any) => (
+                            <option key={c.id} value={c.id}>{c.name}</option>
+                          ))}
+                        </optgroup>
+                      )}
                       <optgroup label="Global Variables">
                         {Object.keys(variables).map(key => (
                           <option key={key} value={key}>{key}</option>
@@ -3147,6 +3161,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       }}
                     >
                       <option value="">Static Children</option>
+                      {Object.values(collections || {}).length > 0 && (
+                        <optgroup label="Collections">
+                          {Object.values(collections || {}).map((c: any) => (
+                            <option key={c.id} value={c.id}>{c.name}</option>
+                          ))}
+                        </optgroup>
+                      )}
                       <optgroup label="Global Variables">
                         {Object.keys(variables).map(key => (
                           <option key={key} value={key}>{key}</option>
