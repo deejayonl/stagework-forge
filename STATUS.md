@@ -698,11 +698,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a small avatar stack in the `Workspace.tsx` OmniBar showing the currently connected users in the project session.
 
 ## Phase 67: Version History & Rollback UI
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 67.1: History Panel UI**
+- [x] **Task 67.1: History Panel UI**
   - Create `HistoryPanel.tsx` in `src/components/` to display a list of past snapshots (with timestamps and descriptions).
-- [ ] **Task 67.2: History State Integration**
+- [x] **Task 67.2: History State Integration**
   - Hook the `HistoryPanel` into the existing `WorkspaceContext` history stack (`past`, `present`, `future`).
-- [ ] **Task 67.3: Snapshot Restoration Logic**
+- [x] **Task 67.3: Snapshot Restoration Logic**
   - Allow users to click on a past snapshot in the `HistoryPanel` to instantly revert the `present` state to that point in time.

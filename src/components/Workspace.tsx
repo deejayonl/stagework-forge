@@ -16,8 +16,9 @@ import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
+import { HistoryPanel } from './HistoryPanel';
 import { ContextMenu, ContextMenuAction } from './ContextMenu';
-import { Moon, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component, ShieldCheck } from 'lucide-react';
+import { Moon, Clock, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component, ShieldCheck } from 'lucide-react';
 import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 import { LiveCursors } from './LiveCursors';
 
@@ -231,7 +232,11 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
       f.name === targetFile ? { ...f, content: newContent } : f
     );
     setLocalFiles(newFiles);
-    pushState({ files: newFiles });
+    pushState({ 
+      files: newFiles, 
+      description: commitDescription || `Edited ${targetFile}`, 
+      timestamp: Date.now() 
+    });
     if (onFileChange) {
       onFileChange(newFiles, commitDescription);
     }
@@ -1133,30 +1138,16 @@ useEffect(() => {
             </button>
           </div>
 
-          {/* Active Users Avatar Stack */}
-          {activeUsers && activeUsers.length > 0 && (
-            <div className="flex items-center -space-x-2 mr-4 border-r border-hall-200 dark:border-hall-800 pr-4">
-              {activeUsers.slice(0, 3).map((user, i) => (
-                <div 
-                  key={user.id || i}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white dark:border-hall-950 shadow-sm relative group cursor-default"
-                  style={{ backgroundColor: user.color || '#3b82f6', zIndex: 10 - i }}
-                >
-                  {(user.name || 'User').charAt(0).toUpperCase()}
-                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
-                    {user.name || 'Anonymous User'}
-                  </div>
-                </div>
-              ))}
-              {activeUsers.length > 3 && (
-                <div 
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold bg-hall-200 dark:bg-hall-800 text-hall-600 dark:text-hall-400 border-2 border-white dark:border-hall-950 shadow-sm z-[0]"
-                >
-                  +{activeUsers.length - 3}
-                </div>
-              )}
+          <button
+            onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+            className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 mr-2 ${isHistoryOpen ? "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400" : "text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800"}`}
+            aria-label="Version History"
+          >
+            <Clock className="w-4 h-4" />
+            <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+              Version History
             </div>
-          )}
+          </button>
 
           <div className="relative">
             <button
@@ -1333,7 +1324,7 @@ useEffect(() => {
              className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${isHistoryOpen ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="History"
            >
-             <List className="w-4 h-4" />
+             <Clock className="w-4 h-4" />
              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
                Version History
              </div>
@@ -1414,12 +1405,14 @@ useEffect(() => {
               const newFile = { name: name.endsWith('.html') ? name : `${name}.html`, content: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n  <div class="min-h-screen bg-white text-black p-8">New Page</div>\n</body>\n</html>', type: 'html' as const };
               const newFiles = [...localFiles, newFile];
               setLocalFiles(newFiles);
+              pushState({ files: newFiles, description: `Added page ${name}`, timestamp: Date.now() });
               if (onFileChange) onFileChange(newFiles, `Added page ${name}`);
             }}
             onDeletePage={(name) => {
               if (name === 'index.html') return; // Cannot delete index
               const newFiles = localFiles.filter(f => f.name !== name);
               setLocalFiles(newFiles);
+              pushState({ files: newFiles, description: `Deleted page ${name}`, timestamp: Date.now() });
               if (currentPage === name) {
                 setCurrentPage('index.html');
                 setActiveFile('index.html');
@@ -1430,6 +1423,7 @@ useEffect(() => {
               if (oldName === 'index.html') return; // Cannot rename index
               const newFiles = localFiles.map(f => f.name === oldName ? { ...f, name: newName } : f);
               setLocalFiles(newFiles);
+              pushState({ files: newFiles, description: `Renamed page ${oldName} to ${newName}`, timestamp: Date.now() });
               if (currentPage === oldName) {
                 setCurrentPage(newName);
                 setActiveFile(newName);
@@ -1484,28 +1478,7 @@ useEffect(() => {
         
         {/* History Panel */}
         <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isHistoryOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className="w-64 h-full bg-hall-50/95 dark:bg-hall-950/95 backdrop-blur-xl border-r border-hall-200 dark:border-hall-800 flex flex-col shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-hall-200 dark:border-hall-800 shrink-0">
-              <h3 className="text-sm font-bold text-hall-900 dark:text-ink flex items-center gap-2">
-                <Undo2 className="w-4 h-4" />
-                History
-              </h3>
-              <button onClick={() => setIsHistoryOpen(false)} className="text-hall-500 hover:text-hall-900 dark:hover:text-ink">✕</button>
-            </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-2">
-              {versions && versions.map((v, idx) => (
-                <div 
-                  key={v.id || idx}
-                  onClick={() => onJumpToVersion && onJumpToVersion(idx)}
-                  className={`p-3 rounded-lg cursor-pointer transition-all border ${idx === currentVersionIndex ? 'bg-amber-500/10 border-amber-500/50 text-amber-900 dark:text-amber-400' : 'bg-white dark:bg-hall-900 border-hall-200 dark:border-hall-800 text-hall-700 dark:text-hall-300 hover:border-amber-500/30 hover:shadow-md'}`}
-                >
-                  <div className="text-xs font-bold mb-1">{idx === 0 ? 'Initial Generation' : `Mutation ${idx}`}</div>
-                  <div className="text-[10px] opacity-70 truncate" title={v.prompt || 'Manual Edit'}>{v.prompt || 'Manual Edit'}</div>
-                  <div className="text-[9px] opacity-50 mt-1">{new Date(v.timestamp).toLocaleTimeString()}</div>
-                </div>
-              )).reverse()}
-            </div>
-          </div>
+          <HistoryPanel onClose={() => setIsHistoryOpen(false)} />
         </div>
 
         {/* Collections Panel */}

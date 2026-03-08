@@ -63,6 +63,8 @@ export interface ProjectState {
   files: GeneratedFile[];
   status: 'idle' | 'generating' | 'error' | 'success';
   error?: string;
+  timestamp?: number;
+  description?: string;
 }
 
 export interface ImageGenerationState {
