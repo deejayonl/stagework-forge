@@ -282,10 +282,16 @@ const InfiniteCanvas: React.FC<InfiniteCanvasProps> = ({
 
             transform.current = { x: newX, y: newY, scale: newScale };
         } else {
-            transform.current.x -= e.deltaX;
-            transform.current.y -= e.deltaY;
+            // Smoother panning logic for Infinite Canvas
+            const panSensitivity = 1.25;
+            transform.current.x -= (e.deltaX * panSensitivity);
+            transform.current.y -= (e.deltaY * panSensitivity);
         }
-        applyTransform();
+        
+        // Request animation frame for smoother transform application
+        requestAnimationFrame(() => {
+            applyTransform();
+        });
     }, [applyTransform, setInteracting]);
 
     useEffect(() => {
@@ -328,7 +334,11 @@ const InfiniteCanvas: React.FC<InfiniteCanvasProps> = ({
             transform.current.x += dx;
             transform.current.y += dy;
             lastMousePos.current = { x: e.clientX, y: e.clientY };
-            applyTransform();
+            
+            // Use requestAnimationFrame for smoother panning via mouse drag
+            requestAnimationFrame(() => {
+                applyTransform();
+            });
             return;
         }
 

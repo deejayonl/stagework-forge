@@ -267,6 +267,13 @@ const CanvasNode: React.FC<CanvasNodeProps> = memo(({ node, isSelected, scale, o
             newY = Math.round(newY / gridSize) * gridSize;
         }
 
+        // Apply boundaries to prevent nodes from getting lost in negative infinity
+        // We set a reasonable boundary of -50000 to 50000 for the infinite canvas
+        const MIN_BOUND = -50000;
+        const MAX_BOUND = 50000;
+        newX = Math.max(MIN_BOUND, Math.min(newX, MAX_BOUND));
+        newY = Math.max(MIN_BOUND, Math.min(newY, MAX_BOUND));
+
         const visualDx = newX - node.x; 
         const visualDy = newY - node.y;
 
