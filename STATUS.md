@@ -236,3 +236,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Audit `package.json` for unused dependencies and clean them up if necessary.
 - [x] **Task 21.3: Verify final build process**
   - Run `npm run build:all` to ensure both the BFF and the frontend build perfectly.
+## Phase 22: Codebase Cleanup and Component Audit
+*Status: Complete*
+
+- [x] **Task 22.1: Audit unused files**
+  - Checked for unused components, routes, and utilities. Removed `replace.go` script. `ForgeView` and `Workspace` are still used by `StageView` as the core mutation engine.
+- [x] **Task 22.2: Ensure all UI states are handled**
+  - Verified that the Stage and Studio tabs handle empty states gracefully without crashing.
