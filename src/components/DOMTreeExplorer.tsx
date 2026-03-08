@@ -15,6 +15,7 @@ interface DOMTreeExplorerProps {
   selectedNodeId: string | null;
   onSelectNode: (id: string) => void;
   onClose: () => void;
+  onMoveNode?: (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => void;
 }
 
 const TreeNode: React.FC<{
@@ -22,8 +23,10 @@ const TreeNode: React.FC<{
   depth: number;
   selectedNodeId: string | null;
   onSelectNode: (id: string) => void;
-}> = ({ node, depth, selectedNodeId, onSelectNode }) => {
+  onMoveNode?: (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => void;
+}> = ({ node, depth, selectedNodeId, onSelectNode, onMoveNode }) => {
   const [isExpanded, setIsExpanded] = useState(depth < 2);
+  const [dragOverPos, setDragOverPos] = useState<'top' | 'bottom' | 'center' | null>(null);
   
   if (node.type === 'text') {
     return (
@@ -52,7 +55,37 @@ const TreeNode: React.FC<{
   return (
     <div>
       <div 
-        className={`flex items-center gap-1 py-1 px-2 cursor-pointer transition-colors ${
+        
+      draggable={node.id ? true : false}
+      onDragStart={(e) => {
+        if (!node.id) return;
+        e.dataTransfer.setData('text/plain', node.id);
+        e.stopPropagation();
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!node.id) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const y = e.clientY - rect.top;
+        if (y < rect.height * 0.25) setDragOverPos('top');
+        else if (y > rect.height * 0.75) setDragOverPos('bottom');
+        else setDragOverPos('center');
+      }}
+      onDragLeave={(e) => {
+        e.stopPropagation();
+        setDragOverPos(null);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const sourceId = e.dataTransfer.getData('text/plain');
+        if (sourceId && sourceId !== node.id && dragOverPos && onMoveNode) {
+          onMoveNode(sourceId, node.id, dragOverPos === 'top' ? 'before' : dragOverPos === 'bottom' ? 'after' : 'inside');
+        }
+        setDragOverPos(null);
+      }}
+      className={`flex items-center gap-1 py-1 px-2 cursor-pointer transition-colors ${dragOverPos === 'top' ? 'border-t-2 border-amber-500' : dragOverPos === 'bottom' ? 'border-b-2 border-amber-500' : dragOverPos === 'center' ? 'bg-amber-500/30' : ''} ${
           isSelected 
             ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold' 
             : 'text-hall-700 dark:text-hall-300 hover:bg-hall-100 dark:hover:bg-hall-800'
@@ -96,6 +129,7 @@ const TreeNode: React.FC<{
               depth={depth + 1} 
               selectedNodeId={selectedNodeId}
               onSelectNode={onSelectNode}
+              onMoveNode={onMoveNode}
             />
           ))}
         </div>
@@ -108,6 +142,7 @@ export const DOMTreeExplorer: React.FC<DOMTreeExplorerProps> = ({
   tree, 
   selectedNodeId, 
   onSelectNode,
+  onMoveNode,
   onClose
 }) => {
   return (
@@ -129,6 +164,7 @@ export const DOMTreeExplorer: React.FC<DOMTreeExplorerProps> = ({
             depth={0} 
             selectedNodeId={selectedNodeId} 
             onSelectNode={onSelectNode} 
+            onMoveNode={onMoveNode}
           />
         ) : (
           <div className="p-4 text-xs text-hall-500 text-center">

@@ -104,7 +104,8 @@ export const injectEditorScript = (htmlContent: string): string => {
             id: el.dataset.forgeId,
             tagName: el.tagName.toLowerCase(),
             className: el.className,
-            children
+            children,
+            path: getElementPath(el)
           };
         }
 

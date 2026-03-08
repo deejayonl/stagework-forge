@@ -300,6 +300,50 @@ useEffect(() => {
     return () => window.removeEventListener('message', handleMessage);
   }, [isInspectorOpen, localFiles, variables, onUpdateVariables]); // added localFiles to dependencies
 
+  
+  const findNodePath = (node: any, id: string): number[] | null => {
+    if (node.id === id) return node.path;
+    if (node.children) {
+      for (const child of node.children) {
+        const p = findNodePath(child, id);
+        if (p) return p;
+      }
+    }
+    return null;
+  };
+
+  const handleMoveNode = (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => {
+    if (!domTree) return;
+    const sourcePath = findNodePath(domTree, sourceId);
+    const targetPath = findNodePath(domTree, targetId);
+    
+    if (!sourcePath || !targetPath) return;
+
+    updateLocalHtml([], (body) => {
+      let sourceEl: HTMLElement | null = body;
+      for (const idx of sourcePath) {
+        if (!sourceEl || !sourceEl.children[idx]) { sourceEl = null; break; }
+        sourceEl = sourceEl.children[idx] as HTMLElement;
+      }
+      
+      let targetEl: HTMLElement | null = body;
+      for (const idx of targetPath) {
+        if (!targetEl || !targetEl.children[idx]) { targetEl = null; break; }
+        targetEl = targetEl.children[idx] as HTMLElement;
+      }
+
+      if (sourceEl && targetEl && sourceEl !== targetEl) {
+        if (position === 'inside') {
+          targetEl.appendChild(sourceEl);
+        } else if (position === 'before') {
+          targetEl.parentNode?.insertBefore(sourceEl, targetEl);
+        } else if (position === 'after') {
+          targetEl.parentNode?.insertBefore(sourceEl, targetEl.nextSibling);
+        }
+      }
+    }, false, 'Move Element in DOM Tree');
+  };
+
   const handleDeleteElement = () => {
     if (!selectedElement) return;
     updateLocalHtml(selectedElement.path, (el) => {
@@ -918,6 +962,7 @@ useEffect(() => {
             tree={domTree} 
             selectedNodeId={selectedElement?.id || null} 
             onSelectNode={handleSelectNode}
+            onMoveNode={handleMoveNode}
             onClose={() => setIsTreeOpen(false)} 
           />
         </div>
