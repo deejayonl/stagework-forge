@@ -1122,6 +1122,105 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           )}
         </div>
 
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Borders</h4>
+          
+          <div className="grid grid-cols-3 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Width</label>
+              <input 
+                type="text" 
+                value={styles.borderWidth || ''} 
+                onChange={(e) => handleStyleChange('borderWidth', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="0px"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Style</label>
+              <select 
+                value={styles.borderStyle || ''} 
+                onChange={(e) => handleStyleChange('borderStyle', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">none</option>
+                <option value="solid">solid</option>
+                <option value="dashed">dashed</option>
+                <option value="dotted">dotted</option>
+                <option value="double">double</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Color</label>
+              <input 
+                type="text" 
+                value={styles.borderColor || ''} 
+                onChange={(e) => handleStyleChange('borderColor', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="#000"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-1">
+            <label className="text-[10px] text-hall-500 font-bold">Individual Borders</label>
+            <div className="grid grid-cols-4 gap-1">
+              <input type="text" value={styles.borderTopWidth || ''} onChange={(e) => handleStyleChange('borderTopWidth', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Top" />
+              <input type="text" value={styles.borderRightWidth || ''} onChange={(e) => handleStyleChange('borderRightWidth', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Right" />
+              <input type="text" value={styles.borderBottomWidth || ''} onChange={(e) => handleStyleChange('borderBottomWidth', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Bottom" />
+              <input type="text" value={styles.borderLeftWidth || ''} onChange={(e) => handleStyleChange('borderLeftWidth', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Left" />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Outline Width</label>
+              <input 
+                type="text" 
+                value={styles.outlineWidth || ''} 
+                onChange={(e) => handleStyleChange('outlineWidth', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="0px"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Outline Offset</label>
+              <input 
+                type="text" 
+                value={styles.outlineOffset || ''} 
+                onChange={(e) => handleStyleChange('outlineOffset', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="0px"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Outline Style</label>
+              <select 
+                value={styles.outlineStyle || ''} 
+                onChange={(e) => handleStyleChange('outlineStyle', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">none</option>
+                <option value="solid">solid</option>
+                <option value="dashed">dashed</option>
+                <option value="dotted">dotted</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Outline Color</label>
+              <input 
+                type="text" 
+                value={styles.outlineColor || ''} 
+                onChange={(e) => handleStyleChange('outlineColor', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="#000"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Effects & Borders */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Effects & Borders</h4>
@@ -1410,6 +1509,43 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         </div>
 
         
+        {(tagName.toLowerCase() === 'ul' || tagName.toLowerCase() === 'ol' || tagName.toLowerCase() === 'li') && (
+          <div className="space-y-3 mt-4">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">List Styling</h4>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">List Style Type</label>
+                <select 
+                  value={styles.listStyleType || ''} 
+                  onChange={(e) => handleStyleChange('listStyleType', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="">inherit</option>
+                  <option value="none">none</option>
+                  <option value="disc">disc</option>
+                  <option value="circle">circle</option>
+                  <option value="square">square</option>
+                  <option value="decimal">decimal</option>
+                  <option value="lower-alpha">lower-alpha</option>
+                  <option value="upper-alpha">upper-alpha</option>
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500">List Style Position</label>
+                <select 
+                  value={styles.listStylePosition || ''} 
+                  onChange={(e) => handleStyleChange('listStylePosition', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="">inherit</option>
+                  <option value="inside">inside</option>
+                  <option value="outside">outside</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Form Elements */}
         {['input', 'textarea', 'select', 'form', 'button'].includes(tagName.toLowerCase()) && (
           <div className="space-y-3">

@@ -608,3 +608,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 49.3: Typography Alignment & Style**
   - Added a `text-align` dropdown (left, center, right, justify) to the Typography section.
   - Added a `font-style` dropdown (normal, italic, oblique).
+
+## Phase 50: Advanced Layout & Forms
+*Status: Complete*
+
+- [x] **Task 50.1: Advanced Borders**
+  - Added inputs for `border-width`, `border-style`, and `border-color`.
+  - Added individual inputs for top, right, bottom, and left border widths.
+- [x] **Task 50.2: Outline Controls**
+  - Added inputs for `outline-width`, `outline-style`, `outline-color`, and `outline-offset` to handle focus and accessibility states.
+- [x] **Task 50.3: List Styling**
+  - Added conditional rendering for list elements (`<ul>`, `<ol>`, `<li>`) to control `list-style-type` and `list-style-position`.
