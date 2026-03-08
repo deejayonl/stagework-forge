@@ -43,13 +43,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isRewriting, setIsRewriting] = useState(false);
-  const [isHoverMode, setIsHoverMode] = useState(false);
+  const [activeState, setActiveState] = useState<string>('none');
   const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
   if (!selectedElement) return null;
 
   const handleStyleChange = (property: string, value: string) => {
-    onUpdateStyle(property, value, isHoverMode ? 'hover' : undefined);
+    onUpdateStyle(property, value, activeState !== 'none' ? activeState : undefined);
   };
 
   const handleRewrite = async (tone: string) => {
@@ -157,17 +157,19 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         </div>
 
         {/* State Toggles */}
-        <div className="flex items-center justify-between bg-hall-100 dark:bg-hall-900 p-3 rounded-xl">
-          <label className="text-xs font-bold text-hall-700 dark:text-hall-300 flex items-center gap-2">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
-            Hover State
-          </label>
-          <button
-            onClick={() => setIsHoverMode(!isHoverMode)}
-            className={`w-8 h-4 rounded-full transition-colors relative ${isHoverMode ? 'bg-amber-500' : 'bg-hall-300 dark:bg-hall-700'}`}
-          >
-            <div className={`w-3 h-3 rounded-full bg-white absolute top-0.5 transition-all ${isHoverMode ? 'left-[18px]' : 'left-0.5'}`} />
-          </button>
+        <div className="bg-hall-100 dark:bg-hall-900 p-2 rounded-xl">
+          <label className="text-[10px] font-bold text-hall-700 dark:text-hall-300 mb-1.5 block px-1 uppercase tracking-wider">Style State</label>
+          <div className="flex gap-1">
+            {['none', 'hover', 'focus', 'active'].map(state => (
+              <button
+                key={state}
+                onClick={() => setActiveState(state)}
+                className={`flex-1 text-[10px] py-1 rounded-md font-medium capitalize transition-all ${activeState === state ? 'bg-amber-500 text-white shadow-sm' : 'text-hall-500 hover:text-hall-700 dark:hover:text-hall-300 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+              >
+                {state}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Content */}
@@ -893,6 +895,34 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               />
             </div>
             
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Text Align</label>
+              <select 
+                value={styles.textAlign || ''} 
+                onChange={(e) => handleStyleChange('textAlign', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">inherit</option>
+                <option value="left">left</option>
+                <option value="center">center</option>
+                <option value="right">right</option>
+                <option value="justify">justify</option>
+              </select>
+            </div>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Font Style</label>
+              <select 
+                value={styles.fontStyle || ''} 
+                onChange={(e) => handleStyleChange('fontStyle', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">normal</option>
+                <option value="italic">italic</option>
+                <option value="oblique">oblique</option>
+              </select>
+            </div>
+            
             <div className="space-y-1 col-span-2">
               <label className="text-[10px] text-hall-500">Text Shadow</label>
               <input 
@@ -1025,6 +1055,27 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
               placeholder="linear-gradient(...)"
             />
+          </div>
+
+          <div className="space-y-1 mt-2">
+            <label className="text-[10px] text-hall-500">Background Clip</label>
+            <select
+              value={styles.backgroundClip || 'border-box'}
+              onChange={(e) => {
+                handleStyleChange('backgroundClip', e.target.value);
+                if (e.target.value === 'text') {
+                  handleStyleChange('-webkit-text-fill-color', 'transparent');
+                } else {
+                  handleStyleChange('-webkit-text-fill-color', '');
+                }
+              }}
+              className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+            >
+              <option value="border-box">border-box</option>
+              <option value="padding-box">padding-box</option>
+              <option value="content-box">content-box</option>
+              <option value="text">text (gradient text)</option>
+            </select>
           </div>
 
           {styles.backgroundImage && (

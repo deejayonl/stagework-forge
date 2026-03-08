@@ -662,22 +662,22 @@ useEffect(() => {
     updateLocalHtml(selectedElement.path, (el) => {
        const kebabProp = property.replace(/[A-Z]/g, m => '-' + m.toLowerCase());
        
-       if (state === 'hover') {
-         let uniqueClass = Array.from(el.classList).find(c => c.startsWith('forge-hover-'));
+       if (state && ['hover', 'focus', 'active'].includes(state)) {
+         let uniqueClass = Array.from(el.classList).find(c => c.startsWith(`forge-${state}-`));
          if (!uniqueClass) {
-           uniqueClass = 'forge-hover-' + Math.random().toString(36).substring(2, 9);
+           uniqueClass = `forge-${state}-` + Math.random().toString(36).substring(2, 9);
            el.classList.add(uniqueClass);
          }
          
          const doc = el.ownerDocument;
-         let styleBlock = doc.getElementById('forge-hover-styles');
+         let styleBlock = doc.getElementById(`forge-${state}-styles`);
          if (!styleBlock) {
            styleBlock = doc.createElement('style');
-           styleBlock.id = 'forge-hover-styles';
+           styleBlock.id = `forge-${state}-styles`;
            doc.head.appendChild(styleBlock);
          }
          
-         styleBlock.textContent += `\n.${uniqueClass}:hover { ${kebabProp}: ${value} !important; }`;
+         styleBlock.textContent += `\n.${uniqueClass}:${state} { ${kebabProp}: ${value} !important; }`;
        } else if (breakpoint === 'desktop') {
          el.style.setProperty(kebabProp, value);
        } else {

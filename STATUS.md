@@ -596,3 +596,15 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add inputs for `padding-top`, `padding-right`, `padding-bottom`, and `padding-left` alongside the shorthand `padding`.
 - [x] **Task 48.3: Min/Max Sizing**
   - Add inputs for `min-width`, `max-width`, `min-height`, and `max-height` in the Sizing section.
+
+## Phase 49: Advanced State & Typography Styling
+*Status: Complete*
+
+- [x] **Task 49.1: Element State Toggles**
+  - Expanded the Hover mode toggle into a full "Style State" selector supporting `hover`, `focus`, and `active` states.
+  - Updated the `Workspace.tsx` style injection logic to dynamically generate pseudo-class CSS rules for any active state.
+- [x] **Task 49.2: Advanced Background Gradients**
+  - Added a `background-clip` dropdown to the Background section, allowing users to select `text` to easily create gradient text effects.
+- [x] **Task 49.3: Typography Alignment & Style**
+  - Added a `text-align` dropdown (left, center, right, justify) to the Typography section.
+  - Added a `font-style` dropdown (normal, italic, oblique).
