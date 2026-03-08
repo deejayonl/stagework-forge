@@ -103,7 +103,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 ## Phase 5: End-to-End Verification
 *Status: Pending*
 
-- [ ] **Task 5.1: Verify API Routes**
+- [x] **Task 5.1: Verify API Routes**
   - Ensure that the application correctly hits `https://sgfbackend.deejay.onl/api/generate` and `https://sgfbackend.deejay.onl/api/mutate`.
   - Validate that the responses are correctly parsed and rendered in the Studio and Stage tabs.
 - [ ] **Task 5.2: Verify State Transitions**
