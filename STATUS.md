@@ -668,3 +668,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 63.1: Delete Custom Components**
   - Add a delete button to custom components in `ComponentLibrary.tsx`.
   - Update `Workspace.tsx` to pass `onDeleteComponent` which removes the component from the `components` record.
+
+## Phase 64: Responsive Viewport Controls
+*Status: Complete*
+
+- [x] **Task 64.1: Viewport State in Workspace**
+  - Add `viewport` state (`'desktop' | 'tablet' | 'mobile'`) to `Workspace.tsx`.
+- [x] **Task 64.2: Viewport Toggle UI**
+  - Add Mobile, Tablet, and Desktop icon buttons to the OmniBar in `Workspace.tsx`.
+- [x] **Task 64.3: Iframe Scaling Logic**
+  - Wrap the `iframe` preview in a container that scales and resizes based on the selected viewport (e.g., `w-[375px]` for mobile, `w-[768px]` for tablet, `w-full` for desktop) and centers it on the screen with a nice drop shadow when not full width.
