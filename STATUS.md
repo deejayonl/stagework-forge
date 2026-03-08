@@ -115,6 +115,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 6.1: Finalize Build & Trigger Deploy**
   - Ensure all prior phases are committed and push to trigger the final deployment loop.
+- [x] **Task 6.2: Configure Remote Upstream**
+  - Run `git push --set-upstream origin main` to resolve missing upstream tracking.
+- [x] **Task 6.3: Export to Code**
+  - Ensure the `ExportModal` syncs with the BFF `export.ts` API by supporting Vite, Next.js, and HTML formats.
 
 ## Phase 7: Post-Deployment 
 *Status: Blocked/Skipped*
