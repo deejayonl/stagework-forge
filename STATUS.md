@@ -160,3 +160,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 11.1: Refactor Export Modal UI**
   - Update `ExportModal.tsx` to include a proper body with framework selection (React/Vite, HTML/Tailwind, Vue) instead of cramming buttons into the header.
   - Separate the "Download ZIP" and "Deploy" actions into distinct, visually appealing sections.
+
+## Phase 12: Application State Cleanups
+*Status: Complete*
+
+- [x] **Task 12.1: Types definitions fix**
+  - Fix duplicate `apis` property in `src/types.ts`.
