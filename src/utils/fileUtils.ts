@@ -10,7 +10,8 @@ export const createZipDownload = async (
   files: GeneratedFile[], 
   projectName: string = 'gemini-project',
   theme?: Record<string, string>,
-  seo?: Record<string, string>
+  seo?: Record<string, string>,
+  customFonts?: string[]
 ) => {
   const zip = new JSZip();
 
@@ -88,7 +89,7 @@ export const createZipDownload = async (
           `;
           needsUpdate = true;
           
-          if (theme.fontFamily || theme.headingFontFamily) {
+          if (theme.fontFamily || theme.headingFontFamily || (customFonts && customFonts.length > 0)) {
             let fontLink = doc.getElementById("forge-google-font") as HTMLLinkElement;
             if (!fontLink) {
               fontLink = doc.createElement("link") as HTMLLinkElement;
@@ -99,9 +100,13 @@ export const createZipDownload = async (
             const fontsToLoad = new Set<string>();
             if (theme.fontFamily) fontsToLoad.add(theme.fontFamily);
             if (theme.headingFontFamily) fontsToLoad.add(theme.headingFontFamily);
-            const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
-            
-            fontLink.setAttribute("href", `https://fonts.googleapis.com/css2?family=${families}&display=swap`);
+            if (customFonts) {
+              customFonts.forEach(f => fontsToLoad.add(f));
+            }
+            if (fontsToLoad.size > 0) {
+              const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
+              fontLink.setAttribute("href", `https://fonts.googleapis.com/css2?family=${families}&display=swap`);
+            }
             if (theme.fontFamily) {
               doc.body.style.fontFamily = `"${theme.fontFamily}", sans-serif`;
             }
@@ -133,7 +138,13 @@ export const createZipDownload = async (
  * Flattens multiple files into a single HTML string for previewing in an iframe.
  * Handles CSS/JS injection and local asset (image) replacement.
  */
-export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: string = 'index.html', seo?: Record<string, string>): string => {
+export const flattenFilesForPreview = (
+  files: GeneratedFile[], 
+  targetPage: string = 'index.html', 
+  seo?: Record<string, string>,
+  theme?: Record<string, string>,
+  customFonts?: string[]
+): string => {
   const indexFile = files.find(f => f.name === targetPage) || files.find(f => f.name.endsWith('.html') || f.name === 'index.html');
   
   if (!indexFile) return '<h1>Error: No index.html found</h1>';
@@ -179,42 +190,94 @@ export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: strin
   });
 
   // Inject SEO and Custom Code
-  if (seo) {
+  if (seo || theme) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
     let needsUpdate = false;
 
-    if (seo.title) {
-      doc.title = seo.title;
-      needsUpdate = true;
-    }
-    if (seo.description) {
-      let metaDesc = doc.querySelector('meta[name="description"]');
-      if (!metaDesc) {
-        metaDesc = doc.createElement('meta');
-        metaDesc.setAttribute('name', 'description');
-        doc.head.appendChild(metaDesc);
+    if (seo) {
+      if (seo.title) {
+        doc.title = seo.title;
+        needsUpdate = true;
       }
-      metaDesc.setAttribute('content', seo.description);
-      needsUpdate = true;
-    }
-    if (seo.ogImage) {
-      let metaOgImage = doc.querySelector('meta[property="og:image"]');
-      if (!metaOgImage) {
-        metaOgImage = doc.createElement('meta');
-        metaOgImage.setAttribute('property', 'og:image');
-        doc.head.appendChild(metaOgImage);
+      if (seo.description) {
+        let metaDesc = doc.querySelector('meta[name="description"]');
+        if (!metaDesc) {
+          metaDesc = doc.createElement('meta');
+          metaDesc.setAttribute('name', 'description');
+          doc.head.appendChild(metaDesc);
+        }
+        metaDesc.setAttribute('content', seo.description);
+        needsUpdate = true;
       }
-      metaOgImage.setAttribute('content', seo.ogImage);
-      needsUpdate = true;
+      if (seo.ogImage) {
+        let metaOgImage = doc.querySelector('meta[property="og:image"]');
+        if (!metaOgImage) {
+          metaOgImage = doc.createElement('meta');
+          metaOgImage.setAttribute('property', 'og:image');
+          doc.head.appendChild(metaOgImage);
+        }
+        metaOgImage.setAttribute('content', seo.ogImage);
+        needsUpdate = true;
+      }
+      if (seo.customHead) {
+        doc.head.insertAdjacentHTML('beforeend', seo.customHead);
+        needsUpdate = true;
+      }
+      if (seo.customBody) {
+        doc.body.insertAdjacentHTML('beforeend', seo.customBody);
+        needsUpdate = true;
+      }
     }
-    if (seo.customHead) {
-      doc.head.insertAdjacentHTML('beforeend', seo.customHead);
+
+    if (theme) {
+      let twConfigScript = doc.getElementById('forge-tw-config');
+      if (!twConfigScript) {
+        twConfigScript = doc.createElement('script');
+        twConfigScript.id = 'forge-tw-config';
+        doc.head.appendChild(twConfigScript);
+      }
+      twConfigScript.textContent = `
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: '${theme.primary || '#3b82f6'}',
+                secondary: '${theme.secondary || '#64748b'}',
+                accent: '${theme.accent || '#8b5cf6'}'
+              },
+              fontFamily: {
+                sans: ['"${theme.fontFamily || 'Inter'}"', 'sans-serif'],
+                heading: ['"${theme.headingFontFamily || theme.fontFamily || 'Inter'}"', 'sans-serif']
+              }
+            }
+          }
+        }
+      `;
       needsUpdate = true;
-    }
-    if (seo.customBody) {
-      doc.body.insertAdjacentHTML('beforeend', seo.customBody);
-      needsUpdate = true;
+      
+      if (theme.fontFamily || theme.headingFontFamily || (customFonts && customFonts.length > 0)) {
+        let fontLink = doc.getElementById("forge-google-font") as HTMLLinkElement;
+        if (!fontLink) {
+          fontLink = doc.createElement("link") as HTMLLinkElement;
+          fontLink.id = "forge-google-font";
+          fontLink.rel = "stylesheet";
+          doc.head.appendChild(fontLink);
+        }
+        const fontsToLoad = new Set<string>();
+        if (theme.fontFamily) fontsToLoad.add(theme.fontFamily);
+        if (theme.headingFontFamily) fontsToLoad.add(theme.headingFontFamily);
+        if (customFonts) {
+          customFonts.forEach(f => fontsToLoad.add(f));
+        }
+        if (fontsToLoad.size > 0) {
+          const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
+          fontLink.setAttribute("href", `https://fonts.googleapis.com/css2?family=${families}&display=swap`);
+        }
+        if (theme.fontFamily) {
+          doc.body.style.fontFamily = `"${theme.fontFamily}", sans-serif`;
+        }
+      }
     }
 
     if (needsUpdate) {

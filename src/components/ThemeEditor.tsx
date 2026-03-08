@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { generatePalette } from '../utils/colors';
+import { FontManager } from './FontManager';
 
 interface ThemeEditorProps {
   theme?: Record<string, string>;
+  customFonts?: string[];
   onUpdateTheme: (theme: Record<string, string>) => void;
+  onUpdateFonts?: (fonts: string[]) => void;
   onClose: () => void;
 }
 
@@ -25,7 +28,8 @@ const FONT_PRESETS = [
   { name: "Bold & Clean", heading: "Montserrat", body: "Roboto" },
 ];
 
-export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, onUpdateTheme, onClose }) => {
+export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, customFonts = [], onUpdateTheme, onUpdateFonts, onClose }) => {
+  const [isFontManagerOpen, setIsFontManagerOpen] = useState(false);
   const [localTheme, setLocalTheme] = useState<Record<string, string>>({
     primary: theme.primary || '#3b82f6',
     secondary: theme.secondary || '#64748b',
@@ -144,7 +148,19 @@ export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, onUpdateTh
         </div>
 
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Typography</h4>
+          <div className="flex items-center justify-between border-b border-hall-200 dark:border-hall-800 pb-1">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider">Typography</h4>
+            <button 
+              onClick={() => setIsFontManagerOpen(true)}
+              className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+              title="Manage Custom Fonts"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add Fonts
+            </button>
+          </div>
           
           <div className="space-y-3">
             <div className="flex flex-col gap-2">
@@ -154,7 +170,7 @@ export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, onUpdateTh
                 onChange={(e) => handleChange('headingFontFamily', e.target.value)}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 outline-none"
               >
-                {FONTS.map(font => (
+                {[...new Set([...FONTS, ...customFonts])].sort().map(font => (
                   <option key={font} value={font}>{font}</option>
                 ))}
               </select>
@@ -167,7 +183,7 @@ export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, onUpdateTh
                 onChange={(e) => handleChange('fontFamily', e.target.value)}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-ink focus:ring-2 focus:ring-indigo-500 outline-none"
               >
-                {FONTS.map(font => (
+                {[...new Set([...FONTS, ...customFonts])].sort().map(font => (
                   <option key={font} value={font}>{font}</option>
                 ))}
               </select>
@@ -201,6 +217,16 @@ export const ThemeEditor: React.FC<ThemeEditorProps> = ({ theme = {}, onUpdateTh
           Apply Theme
         </button>
       </div>
+
+      {isFontManagerOpen && (
+        <FontManager
+          customFonts={customFonts}
+          onUpdateFonts={(fonts) => {
+            if (onUpdateFonts) onUpdateFonts(fonts);
+          }}
+          onClose={() => setIsFontManagerOpen(false)}
+        />
+      )}
     </div>
   );
 };

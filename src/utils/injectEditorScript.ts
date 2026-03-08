@@ -466,21 +466,25 @@ export const injectEditorScript = (htmlContent: string): string => {
             \`;
 
             // Inject Google Font
-            if (theme.fontFamily || theme.headingFontFamily) {
+            const customFonts = e.data.customFonts || [];
+            if (theme.fontFamily || theme.headingFontFamily || customFonts.length > 0) {
               const fontsToLoad = new Set();
               if (theme.fontFamily) fontsToLoad.add(theme.fontFamily);
               if (theme.headingFontFamily) fontsToLoad.add(theme.headingFontFamily);
+              customFonts.forEach(f => fontsToLoad.add(f));
               
-              const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
-              
-              let fontLink = document.getElementById("forge-google-font");
-              if (!fontLink) {
-                fontLink = document.createElement("link");
-                fontLink.id = "forge-google-font";
-                fontLink.rel = "stylesheet";
-                document.head.appendChild(fontLink);
+              if (fontsToLoad.size > 0) {
+                const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
+                
+                let fontLink = document.getElementById("forge-google-font");
+                if (!fontLink) {
+                  fontLink = document.createElement("link");
+                  fontLink.id = "forge-google-font";
+                  fontLink.rel = "stylesheet";
+                  document.head.appendChild(fontLink);
+                }
+                fontLink.href = \`https://fonts.googleapis.com/css2?family=\${families}&display=swap\`;
               }
-              fontLink.href = \`https://fonts.googleapis.com/css2?family=\${families}&display=swap\`;
               
               // Apply globally
               if (theme.fontFamily) {

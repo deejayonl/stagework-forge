@@ -372,7 +372,7 @@ deployRoutes.get('/github/:id', async (c) => {
           document.getElementById('error').style.display = 'none';
           
           try {
-            const res = await fetch(\`/api/deploy/github/\${id}?framework=\${framework}\`, {
+            const res = await fetch(\`/api/deploy/github/${id}?framework=${framework}\`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ token })

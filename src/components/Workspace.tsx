@@ -27,6 +27,7 @@ interface WorkspaceProps {
   variables?: Record<string, string>;
   components?: Record<string, string>;
   theme?: Record<string, string>;
+  customFonts?: string[];
   seo?: Record<string, string>;
   collections?: Record<string, any>;
   apis?: Record<string, any>;
@@ -34,6 +35,7 @@ interface WorkspaceProps {
   onUpdateVariables?: (variables: Record<string, string>) => void;
   onUpdateComponents?: (components: Record<string, string>) => void;
   onUpdateTheme?: (theme: Record<string, string>) => void;
+  onUpdateFonts?: (fonts: string[]) => void;
   onUpdateSEO?: (seo: Record<string, string>) => void;
   onUpdateCollections?: (collections: Record<string, any>) => void;
   onUpdateApis?: (apis: Record<string, any>) => void;
@@ -51,6 +53,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   variables = {}, 
   components = {},
   theme = {},
+  customFonts = [],
   seo = {},
   collections = {},
   apis = {},
@@ -58,6 +61,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   onUpdateVariables, 
   onUpdateComponents,
   onUpdateTheme,
+  onUpdateFonts,
   onUpdateCollections,
   onUpdateApis,
   onUpdateAssets,
@@ -107,11 +111,11 @@ const Workspace: React.FC<WorkspaceProps> = ({
         skipIframeReload.current = false;
         return;
       }
-      const flattened = flattenFilesForPreview(localFiles, currentPage, seo);
+      const flattened = flattenFilesForPreview(localFiles, currentPage, seo, theme, customFonts);
       setIframeLoading(true);
       setPreviewSrc(flattened);
     }
-  }, [localFiles, currentPage, seo]);
+  }, [localFiles, currentPage, seo, theme, customFonts]);
 
   // Sync variables & collections to iframe
   useEffect(() => {
@@ -147,10 +151,11 @@ const Workspace: React.FC<WorkspaceProps> = ({
     if (iframe && iframe.contentWindow) {
       iframe.contentWindow.postMessage({
         type: 'FORGE_UPDATE_THEME',
-        theme
+        theme,
+        customFonts
       }, '*');
     }
-  }, [theme]);
+  }, [theme, customFonts]);
 
   // Sync SEO to iframe
   useEffect(() => {
@@ -1429,9 +1434,15 @@ useEffect(() => {
         <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isThemeOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
           <ThemeEditor 
             theme={theme}
+            customFonts={customFonts}
             onUpdateTheme={(newTheme) => {
               if (onUpdateTheme) {
                 onUpdateTheme(newTheme);
+              }
+            }}
+            onUpdateFonts={(fonts) => {
+              if (onUpdateFonts) {
+                onUpdateFonts(fonts);
               }
             }}
             onClose={() => setIsThemeOpen(false)} 
@@ -1523,6 +1534,7 @@ useEffect(() => {
             variables={variables}
             collections={collections}
             apis={apis}
+            customFonts={customFonts}
             pages={localFiles.filter(f => f.name.endsWith('.html') || f.name === 'index.html').map(f => f.name)}
             onBindVariable={handleBindVariable}
             onUpdateStyle={handleUpdateStyle}
@@ -1596,7 +1608,8 @@ useEffect(() => {
                   }, '*');
                   iframe.contentWindow.postMessage({
                     type: 'FORGE_UPDATE_THEME',
-                    theme
+                    theme,
+                    customFonts
                   }, '*');
                   iframe.contentWindow.postMessage({
         type: 'FORGE_UPDATE_SEO',

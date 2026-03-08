@@ -399,11 +399,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update `PropertyInspector.tsx` to apply Tailwind classes with the correct prefix (e.g., `md:`, `sm:`) based on the active breakpoint.
 
 ## Phase 40: Custom Fonts & Typography Management
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 40.1: Font Manager UI**
+- [x] **Task 40.1: Font Manager UI**
   - Create a modal or sidebar panel to browse and select from a curated list of Google Fonts.
-- [ ] **Task 40.2: Font Injection Logic**
+- [x] **Task 40.2: Font Injection Logic**
   - Inject selected Google Fonts `<link>` tags into the project's `<head>` configuration so they render in the Stage preview.
-- [ ] **Task 40.3: Property Inspector Integration**
+- [x] **Task 40.3: Property Inspector Integration**
   - Update `PropertyInspector.tsx` typography section to populate the `font-family` dropdown with the user's selected custom fonts.

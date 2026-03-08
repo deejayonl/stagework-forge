@@ -45,6 +45,7 @@ export interface Project {
   variables?: Record<string, string>;
   components?: Record<string, string>;
   theme?: Record<string, string>;
+  customFonts?: string[];
   seo?: Record<string, string>;
   collections?: Record<string, Collection>;
   assets?: Record<string, string>;

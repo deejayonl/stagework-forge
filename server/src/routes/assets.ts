@@ -22,7 +22,7 @@ assetsRoutes.post('/upload/:projectId', async (c) => {
     const uploadedUrls: string[] = [];
     const entries = Object.entries(body);
     
-    for (const [key, value] of entries) {
+    for (const [_, value] of entries) {
       if (value instanceof File) {
         // Generate a unique filename
         const ext = path.extname(value.name) || '';

@@ -7,6 +7,7 @@ interface PropertyInspectorProps {
   variables?: Record<string, string>;
   collections?: Record<string, any>;
   apis?: Record<string, any>;
+  customFonts?: string[];
   onBindVariable?: (attribute: string, variableName: string) => void;
   onUpdateStyle: (property: string, value: string, state?: string) => void;
   onToggleClass?: (className: string, toggle: boolean) => void;
@@ -25,7 +26,7 @@ interface PropertyInspectorProps {
   onAddTableColumn?: () => void;
   pages?: string[];
   activeBreakpoint?: 'desktop' | 'tablet' | 'mobile';
-
+  theme?: Record<string, string>;
 }
 
 export const PropertyInspector: React.FC<PropertyInspectorProps> = ({ 
@@ -50,7 +51,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onAddTableRow,
   onAddTableColumn,
   pages = [],
-  activeBreakpoint = 'desktop'
+  activeBreakpoint = 'desktop',
+  theme = {}
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isRewriting, setIsRewriting] = useState(false);
@@ -923,13 +925,16 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             </div>
             <div className="space-y-1">
               <label className="text-[10px] text-hall-500">Font Family</label>
-              <input 
-                type="text" 
-                value={styles.fontFamily || ''} 
-                onChange={(e) => handleStyleChange('fontFamily', e.target.value)}
+              <select 
+                value={styles.fontFamily ? styles.fontFamily.split(',')[0].replace(/['"]/g, '').trim() : ''} 
+                onChange={(e) => handleStyleChange('fontFamily', e.target.value ? `'${e.target.value}', sans-serif` : '')}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
-                placeholder="inherit"
-              />
+              >
+                <option value="">Default (Theme)</option>
+                {customFonts && customFonts.map(font => (
+                  <option key={font} value={font}>{font}</option>
+                ))}
+              </select>
             </div>
             <div className="space-y-1">
               <label className="text-[10px] text-hall-500">Font Weight</label>

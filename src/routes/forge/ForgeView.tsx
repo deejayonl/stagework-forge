@@ -64,6 +64,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectVariables,
     updateProjectComponents,
     updateProjectTheme,
+    updateProjectFonts,
     updateProjectSEO,
     updateProjectCollections,
     updateProjectApis,
