@@ -1,47 +1,18 @@
 const fs = require('fs');
-const path = './src/routes/forge/ForgeView.tsx';
 
+const path = './src/routes/forge/ForgeView.tsx';
 let content = fs.readFileSync(path, 'utf8');
 
-const target = `      {isSettingsOpen && currentProject && (
-        <ProjectSettingsModal 
-          seo={currentProject.seo || {}}
-          onUpdateSEO={updateProjectSEO}
-          onClose={() => setIsSettingsOpen(false)} 
-        />
-      )}`;
+// Hide the carousel when hasProject is true
+content = content.replace(
+  /\{\/\* Carousel immediately above the input prompt \*\/\}\n             <div className="w-full pointer-events-auto overflow-x-auto scrollbar-hide md:mask-gradient md:overflow-hidden pb-4">/,
+  "{!hasProject && (\n               <>\n                 {/* Carousel immediately above the input prompt */}\n                 <div className=\"w-full pointer-events-auto overflow-x-auto scrollbar-hide md:mask-gradient md:overflow-hidden pb-4\">"
+);
 
-const replacement = `      {isSettingsOpen && currentProject && (
-        <ProjectSettingsModal 
-          seo={currentProject.seo || {}}
-          onUpdateSEO={updateProjectSEO}
-          auth={currentProject.auth || {}}
-          onUpdateAuth={updateProjectAuth}
-          onClose={() => setIsSettingsOpen(false)} 
-        />
-      )}`;
+content = content.replace(
+  /                  \}\)\}\n                <\/div>\n             <\/div>/,
+  "                  })}\n                </div>\n             </div>\n               </>\n             )}"
+);
 
-if (content.includes(target)) {
-  content = content.replace(target, replacement);
-  fs.writeFileSync(path, content);
-  console.log("Successfully patched ForgeView.tsx (ProjectSettingsModal props)");
-} else {
-  console.log("Could not find the target in ForgeView.tsx");
-}
-
-// We also need to extract updateProjectAuth from useProjects
-const hooksTarget = `    updateProjectSEO,
-    addVersionToProject,`;
-
-const hooksReplacement = `    updateProjectSEO,
-    updateProjectAuth,
-    addVersionToProject,`;
-
-if (content.includes(hooksTarget)) {
-  content = content.replace(hooksTarget, hooksReplacement);
-  fs.writeFileSync(path, content);
-  console.log("Successfully patched ForgeView.tsx (useProjects extraction)");
-} else {
-  console.log("Could not find the hooks target in ForgeView.tsx");
-}
-
+fs.writeFileSync(path, content);
+console.log('ForgeView.tsx patched');

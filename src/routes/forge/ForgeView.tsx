@@ -660,8 +660,10 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
         >
           <div className={`w-full transition-all duration-700 ease-out pointer-events-auto ${hasProject ? 'max-w-2xl' : 'max-w-3xl'}`}>
              
-             {/* Carousel immediately above the input prompt */}
-             <div className="w-full pointer-events-auto overflow-x-auto scrollbar-hide md:mask-gradient md:overflow-hidden pb-4">
+             {!hasProject && (
+               <>
+                 {/* Carousel immediately above the input prompt */}
+                 <div className="w-full pointer-events-auto overflow-x-auto scrollbar-hide md:mask-gradient md:overflow-hidden pb-4">
                 <div className="flex gap-2 md:gap-3 md:animate-marquee md:hover:[animation-play-state:paused] md:w-max px-1">
                   {[...SUGGESTIONS, ...SUGGESTIONS].map((s, i) => (
                     <button 
@@ -674,6 +676,9 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                   ))}
                 </div>
              </div>
+
+               </>
+             )}
 
              <PromptInput 
                onGenerate={handleGenerate}

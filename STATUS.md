@@ -637,3 +637,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - The `InfiniteCanvas` component needs smoother panning logic, ensuring users can navigate the WWDC-style mind map effectively without jitter.
 - [x] **Task 59.2: Implement Node Dragging Boundaries**
   - Ensure that when users drag nodes around the `InfiniteCanvas`, they don't get lost in negative infinity. Implement visual grid snapping or boundaries if necessary.
+
+## Phase 60: Stage View Global Input Polish
+*Status: Complete*
+
+- [x] **Task 60.1: Fix Global Input Chat UI**
+  - The Global Input Prompt in `StageView` (the bottom chat bar) needs a UI pass. It should look like an elegant, floating pill that expands slightly on focus, similar to modern AI chat interfaces.
+- [x] **Task 60.2: Implement Global Input Loading States**
+  - When the user submits a prompt to the BFF (`/api/mutate`), the Global Input should show a clear, non-blocking loading state (e.g., a subtle pulsing glow or a spinning icon inside the input) while the DOM mutation streams in.

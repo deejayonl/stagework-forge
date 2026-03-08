@@ -177,10 +177,10 @@ const PromptInput: React.FC<PromptInputProps> = ({
       containerClasses += "border-indigo-500/50 bg-black/95 dark:bg-black/95 shadow-[0_0_80px_-20px_rgba(99,102,241,0.5)] scale-[1.02] rounded-3xl ring-1 ring-indigo-500/30";
   } else if (isCompactGenerating) {
       // Compact Progress Mode (Follow-up)
-      containerClasses += "border-indigo-500/50 bg-hall-50/95 dark:bg-hall-900/95 shadow-xl shadow-indigo-500/10 rounded-[32px] ring-1 ring-indigo-500/20 scale-100 hover:scale-[1.02]";
+      containerClasses += "border-indigo-500/50 bg-hall-50/95 dark:bg-hall-900/95 shadow-xl shadow-[0_0_15px_rgba(99,102,241,0.5)] rounded-[32px] sm:rounded-full mx-4 sm:mx-0 sm:max-w-2xl sm:ml-auto sm:mr-auto ring-1 ring-indigo-500/30 animate-pulse scale-100 hover:scale-[1.02]";
   } else {
       // Standard Input Mode
-      containerClasses += `border-hall-200 dark:border-hall-800 bg-white/90 dark:bg-hall-900/90 shadow-2xl shadow-hall-200/50 dark:shadow-black/50 hover:scale-[1.01] hover:shadow-indigo-500/10 focus-within:scale-[1.02] focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 focus-within:shadow-[0_0_20px_-3px_rgba(99,102,241,0.3)] ${compact ? 'rounded-[32px]' : 'rounded-[32px]'}`;
+      containerClasses += `border-hall-200 dark:border-hall-800 bg-white/90 dark:bg-hall-900/90 shadow-2xl shadow-hall-200/50 dark:shadow-black/50 hover:scale-[1.01] hover:shadow-indigo-500/10 focus-within:scale-[1.02] focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 focus-within:shadow-[0_0_20px_-3px_rgba(99,102,241,0.3)] ${compact ? 'rounded-[32px] sm:rounded-full mx-4 sm:mx-0 sm:max-w-2xl sm:ml-auto sm:mr-auto' : 'rounded-[32px]'}`;
   }
 
   return (
@@ -380,7 +380,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
                         handleSubmit(e);
                       }
                     }}
-                    placeholder={compact ? "How can we improve this?" : "Describe the app you want to build..."}
+                    placeholder={compact ? (isGenerating ? "Forging changes..." : "How can we improve this?") : "Describe the app you want to build..."}
                     rows={1}
                     className={`bg-transparent resize-none focus:outline-none text-hall-950 dark:text-hall-100 placeholder-hall-400 dark:placeholder-hall-500 w-full transition-all ${
                         compact 
