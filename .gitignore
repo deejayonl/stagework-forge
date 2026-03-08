@@ -6,4 +6,4 @@ src-tauri/target
 *.tmp
 .DS_Store
 
-sessions/
+sessions/sessions/
