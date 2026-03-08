@@ -157,8 +157,7 @@ export default function ScriptView() {
           </div>
         )}
         
-        <textarea
-          value={scriptText}
+        <textarea id="script-textarea" value={scriptText}
           onChange={(e) => setScriptText(e.target.value)}
           placeholder="Start typing your vision here... e.g., 'I want a dark-mode SaaS dashboard for managing fitness clients. It needs a sidebar, a main metrics area with charts, and a recent activity feed...'"
           className="w-full h-full bg-transparent text-hall-100 placeholder:text-hall-700 resize-none outline-none text-xl leading-relaxed focus:ring-0 scrollbar-hide py-4"
