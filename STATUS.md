@@ -712,13 +712,22 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Wire up the drop event to update the underlying `files` state, moving the dragged node to the new position in the HTML tree.
 
 ## Phase 60: Keyboard Accessibility & Focus Outlines
-*Status: BLOCKED (Git Push Failure)*
+*Status: Complete*
 
-- [ ] **Task 60.1: Focus Ring Customization** (ACTIVE - BLOCKED)
+- [x] **Task 60.1: Focus Ring Customization**
   - Add inputs to control `outline-color`, `outline-width`, and `outline-offset` specifically for the `:focus-visible` pseudo-class.
-  - *Blocker:* Git push is failing due to invalid credentials. Cannot trigger the 5-commit auto-deploy cycle. Waiting for operator to manually push.
-- [ ] **Task 60.2: Outline Style Toggles**
+- [x] **Task 60.2: Outline Style Toggles**
   - Add a dropdown to set `outline-style` (solid, dashed, dotted, none).
-- [ ] **Task 60.3: Skip Links Support**
+- [x] **Task 60.3: Skip Links Support**
   - Allow users to easily add a "Skip to Main Content" visually hidden link that becomes visible on focus, managing `tabindex` and absolute positioning dynamically.
 
+
+## Phase 61: Advanced Animation & Keyframes
+*Status: Pending*
+
+- [ ] **Task 61.1: Animation Duration & Delay**
+  - Add specific inputs for `animation-duration` and `animation-delay` in the Property Inspector.
+- [ ] **Task 61.2: Keyframe Builder UI**
+  - Allow users to define custom CSS keyframes (from/to or percentages) and bind them to the selected element via `animation-name`.
+- [ ] **Task 61.3: Easing Curves (Cubic Bezier)**
+  - Add a dropdown for standard easing curves and an input for custom `cubic-bezier` values for `animation-timing-function`.

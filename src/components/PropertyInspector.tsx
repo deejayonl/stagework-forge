@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Library } from 'lucide-react';
 import { fixHtmlNode, rewriteText } from '../services/geminiService';
 
 interface PropertyInspectorProps {
@@ -17,6 +17,7 @@ interface PropertyInspectorProps {
   onOpenImageTool?: () => void;
   onOpenMediaManager?: () => void;
   onAutoFix?: (html: string) => void;
+  onInsertSkipLink?: () => void;
   onUpdateAttribute?: (attr: string, value: string) => void;
   onChangeTag?: (tag: string) => void;
   onSaveComponent?: (html: string) => void;
@@ -38,6 +39,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onOpenImageTool,
   onOpenMediaManager,
   onAutoFix,
+  onInsertSkipLink,
   onUpdateAttribute,
   onChangeTag,
   onSaveComponent,
@@ -162,7 +164,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         <div className="bg-hall-100 dark:bg-hall-900 p-2 rounded-xl">
           <label className="text-[10px] font-bold text-hall-700 dark:text-hall-300 mb-1.5 block px-1 uppercase tracking-wider">Style State</label>
           <div className="flex gap-1">
-            {['none', 'hover', 'focus', 'active'].map(state => (
+            {['none', 'hover', 'focus', 'focus-visible', 'active'].map(state => (
               <button
                 key={state}
                 onClick={() => setActiveState(state)}
@@ -505,7 +507,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       onChange={(e) => handleStyleChange('gridTemplateColumns', e.target.value)}
                       className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
                       placeholder="e.g. 1fr 1fr or repeat(3, 1fr)"
-
+                    />
                     <div className="flex gap-1 mt-1">
                       <button 
                         onClick={() => handleStyleChange('gridTemplateColumns', 'repeat(auto-fit, minmax(200px, 1fr))')}
@@ -520,7 +522,6 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                         Auto-Fill
                       </button>
                     </div>
-                    />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] text-hall-500 flex justify-between">
@@ -620,7 +621,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                   <span>Gap</span>
                   <span className="text-hall-900 dark:text-ink font-mono text-[9px]">{styles.gap || '0px'}</span>
                 </label>
-                <div className="flex items-center gap-2">
+      
+          <div className="flex items-center gap-2">
                   <input 
                     type="range" 
                     min="0" 
@@ -2046,6 +2048,17 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               onChange={(e) => onUpdateAttribute?.('aria-label', e.target.value)}
             />
           </div>
+          <div className="mt-4 border-t border-hall-200 dark:border-hall-800 pt-3">
+            <button
+              onClick={onInsertSkipLink}
+              className="w-full bg-hall-100 hover:bg-hall-200 dark:bg-hall-900 dark:hover:bg-hall-800 text-hall-900 dark:text-ink text-xs font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 border border-hall-200 dark:border-hall-800"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+              Insert Skip Link
+            </button>
+            <p className="text-[9px] text-hall-500 mt-1.5 text-center">Injects a visually hidden skip link at the top of the page.</p>
+          </div>
+
 
           <div className="flex items-center gap-2">
             <input

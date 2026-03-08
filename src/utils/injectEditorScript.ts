@@ -371,19 +371,19 @@ export const injectEditorScript = (htmlContent: string): string => {
             const el = document.querySelector(\`[data-forge-id="\${id}"]\`);
             if (el) {
               const kebabProp = property.replace(/[A-Z]/g, m => '-' + m.toLowerCase());
-              if (state === 'hover') {
-                let uniqueClass = Array.from(el.classList).find(c => c.startsWith('forge-hover-'));
+              if (state && ['hover', 'focus', 'active', 'focus-visible'].includes(state)) {
+                let uniqueClass = Array.from(el.classList).find(c => c.startsWith('forge-' + state + '-'));
                 if (!uniqueClass) {
-                  uniqueClass = 'forge-hover-' + Math.random().toString(36).substring(2, 9);
+                  uniqueClass = 'forge-' + state + '-' + Math.random().toString(36).substring(2, 9);
                   el.classList.add(uniqueClass);
                 }
-                let styleBlock = document.getElementById('forge-hover-styles');
+                let styleBlock = document.getElementById('forge-' + state + '-styles');
                 if (!styleBlock) {
                   styleBlock = document.createElement('style');
-                  styleBlock.id = 'forge-hover-styles';
+                  styleBlock.id = 'forge-' + state + '-styles';
                   document.head.appendChild(styleBlock);
                 }
-                styleBlock.textContent += '\n.' + uniqueClass + ':hover { ' + kebabProp + ': ' + value + ' !important; }';
+                styleBlock.textContent += '\n.' + uniqueClass + ':' + state + ' { ' + kebabProp + ': ' + value + ' !important; }';
               } else if (!breakpoint || breakpoint === 'desktop') {
                 el.style[property] = value;
               } else {
