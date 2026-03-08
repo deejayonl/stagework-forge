@@ -710,3 +710,15 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add visual cues (lines or highlights) in the DOM Tree to indicate where an element will be placed when dropped.
 - [x] **Task 59.3: Tree Mutation Logic**
   - Wire up the drop event to update the underlying `files` state, moving the dragged node to the new position in the HTML tree.
+
+## Phase 60: Keyboard Accessibility & Focus Outlines
+*Status: BLOCKED (Git Push Failure)*
+
+- [ ] **Task 60.1: Focus Ring Customization** (ACTIVE - BLOCKED)
+  - Add inputs to control `outline-color`, `outline-width`, and `outline-offset` specifically for the `:focus-visible` pseudo-class.
+  - *Blocker:* Git push is failing due to invalid credentials. Cannot trigger the 5-commit auto-deploy cycle. Waiting for operator to manually push.
+- [ ] **Task 60.2: Outline Style Toggles**
+  - Add a dropdown to set `outline-style` (solid, dashed, dotted, none).
+- [ ] **Task 60.3: Skip Links Support**
+  - Allow users to easily add a "Skip to Main Content" visually hidden link that becomes visible on focus, managing `tabindex` and absolute positioning dynamically.
+
