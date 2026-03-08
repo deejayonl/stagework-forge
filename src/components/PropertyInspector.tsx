@@ -386,6 +386,37 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                   </div>
                 </div>
               )}
+
+              {styles.display === 'grid' && (
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 flex justify-between">
+                      <span>Columns</span>
+                      <span className="text-hall-900 dark:text-ink font-mono text-[9px] truncate max-w-[80px]">{styles.gridTemplateColumns || 'none'}</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={styles.gridTemplateColumns || ''}
+                      onChange={(e) => handleStyleChange('gridTemplateColumns', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="e.g. 1fr 1fr or repeat(3, 1fr)"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500 flex justify-between">
+                      <span>Rows</span>
+                      <span className="text-hall-900 dark:text-ink font-mono text-[9px] truncate max-w-[80px]">{styles.gridTemplateRows || 'none'}</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={styles.gridTemplateRows || ''}
+                      onChange={(e) => handleStyleChange('gridTemplateRows', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="e.g. auto 1fr auto"
+                    />
+                  </div>
+                </div>
+              )}
               
               <div className="space-y-1">
                 <label className="text-[10px] text-hall-500 flex justify-between">
