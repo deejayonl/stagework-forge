@@ -172,3 +172,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 13.1: Live Cursors prop fix**
   - Fix unused `provider` prop in `src/components/LiveCursors.tsx` and ensure it's properly typed and integrated or removed if unnecessary.
+
+## Phase 14: Unused Imports Cleanup
+*Status: Complete*
+
+- [x] **Task 14.1: Clean up unused react imports**
+  - Fix unused `isComponentsOpen` in `Workspace.tsx`.
+  - Fix unused `bootstrapProgress` in `ForgeView.tsx`.

@@ -75,7 +75,6 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const [isApisOpen, setIsApisOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
-  const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isQROpen, setIsQROpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);

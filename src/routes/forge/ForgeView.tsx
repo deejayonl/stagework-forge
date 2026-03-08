@@ -84,7 +84,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
   // Theme State
   
   const [isBootstrapping, setIsBootstrapping] = useState(false);
-  const [bootstrapProgress, setBootstrapProgress] = useState('');
+  
   const [globalMode, setGlobalMode] = useState(true);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     setIsBootstrapping(true);
     setGlobalMode(true);
     for (const node of nodes) {
-       setBootstrapProgress(`Generating ${node.title}...`);
+       
        try {
            const prompt = `Generate a complete frontend for this blueprint:\n${node.title}\n\n${node.content}`;
            const finalFiles = await generateCode(prompt, false, [], []);
