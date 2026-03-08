@@ -22,7 +22,7 @@ export default function PreviewView() {
         if (data && data.project && data.project.mutations && data.project.mutations.length > 0) {
           const latestMutation = data.project.mutations[data.project.mutations.length - 1];
           if (latestMutation.files) {
-            const flattenedHtml = flattenFilesForPreview(latestMutation.files);
+            const flattenedHtml = flattenFilesForPreview(latestMutation.files, 'index.html', data.project.seo);
             setHtml(flattenedHtml);
           }
         }
@@ -49,7 +49,7 @@ export default function PreviewView() {
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'SYNC_FILES' && data.files) {
-          const newHtml = flattenFilesForPreview(data.files);
+          const newHtml = flattenFilesForPreview(data.files, 'index.html', data.seo);
           setHtml(newHtml);
         }
       } catch (err) {

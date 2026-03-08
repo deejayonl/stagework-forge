@@ -12,9 +12,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
   const [description, setDescription] = useState(seo.description || '');
   const [ogImage, setOgImage] = useState(seo.ogImage || '');
   const [faviconUrl, setFaviconUrl] = useState(seo.faviconUrl || '');
-  const [metaTags,
-      customHead,
-      customBody, setMetaTags] = useState(seo.metaTags || '');
+  const [metaTags, setMetaTags] = useState(seo.metaTags || '');
   const [customHead, setCustomHead] = useState(seo.customHead || '');
   const [customBody, setCustomBody] = useState(seo.customBody || '');
   const [activeTab, setActiveTab] = useState('seo');
@@ -26,7 +24,9 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
       description,
       ogImage,
       faviconUrl,
-      metaTags
+      metaTags,
+      customHead,
+      customBody
     });
     onClose();
   };

@@ -220,10 +220,11 @@ export const useProjects = (storageToken: string | null) => {
     if (liveSyncWsRef.current && liveSyncWsRef.current.readyState === WebSocket.OPEN && currentFiles.length > 0) {
       liveSyncWsRef.current.send(JSON.stringify({
         type: 'SYNC_FILES',
-        files: currentFiles
+        files: currentFiles,
+        seo: currentProject?.seo
       }));
     }
-  }, [currentFiles]);
+  }, [currentFiles, currentProject?.seo]);
 
   
   const createProject = useCallback(async (files: GeneratedFile[], prompt: string) => {

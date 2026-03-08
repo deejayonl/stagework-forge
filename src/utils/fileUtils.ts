@@ -52,6 +52,14 @@ export const createZipDownload = async (
             metaOgImage.setAttribute('content', seo.ogImage);
             needsUpdate = true;
           }
+          if (seo.customHead) {
+            doc.head.insertAdjacentHTML('beforeend', seo.customHead);
+            needsUpdate = true;
+          }
+          if (seo.customBody) {
+            doc.body.insertAdjacentHTML('beforeend', seo.customBody);
+            needsUpdate = true;
+          }
         }
 
         if (theme) {

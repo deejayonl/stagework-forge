@@ -108,11 +108,11 @@ const Workspace: React.FC<WorkspaceProps> = ({
         skipIframeReload.current = false;
         return;
       }
-      const flattened = flattenFilesForPreview(localFiles, currentPage);
+      const flattened = flattenFilesForPreview(localFiles, currentPage, seo);
       setIframeLoading(true);
       setPreviewSrc(flattened);
     }
-  }, [localFiles, currentPage]);
+  }, [localFiles, currentPage, seo]);
 
   // Sync variables & collections to iframe
   useEffect(() => {

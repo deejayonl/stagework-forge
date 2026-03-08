@@ -494,6 +494,26 @@ export const injectEditorScript = (htmlContent: string): string => {
               }
               metaOgImage.setAttribute('content', seo.ogImage);
             }
+            
+            if (seo.customHead) {
+              let customHeadEl = document.getElementById('forge-custom-head-dyn');
+              if (!customHeadEl) {
+                customHeadEl = document.createElement('div');
+                customHeadEl.id = 'forge-custom-head-dyn';
+                document.head.appendChild(customHeadEl);
+              }
+              customHeadEl.innerHTML = seo.customHead;
+            }
+            
+            if (seo.customBody) {
+              let customBodyEl = document.getElementById('forge-custom-body-dyn');
+              if (!customBodyEl) {
+                customBodyEl = document.createElement('div');
+                customBodyEl.id = 'forge-custom-body-dyn';
+                document.body.appendChild(customBodyEl);
+              }
+              customBodyEl.innerHTML = seo.customBody;
+            }
           } else if (e.data.type === 'FORGE_UPDATE_VARIABLES') {
             const variables = e.data.variables;
             

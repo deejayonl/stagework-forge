@@ -338,11 +338,21 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Support configuring animation type (fade, slide, scale), duration, and delay.
 
 ## Phase 34: Global Custom Code Injection
-*Status: In Progress*
+*Status: Complete*
 
-- [ ] **Task 34.1: Custom Code Modal UI**
+- [x] **Task 34.1: Custom Code Modal UI**
   - Extend `ProjectSettingsModal.tsx` to include an "Advanced" tab or section for Custom Head Code and Custom Body Code.
   - Add textareas for injecting raw `<style>` and `<script>` tags.
-- [ ] **Task 34.2: Code Injection Logic**
+- [x] **Task 34.2: Code Injection Logic**
   - Update `seo` state to include `customHead` and `customBody` fields.
   - Inject these fields into the `PreviewView` iframe HTML generation.
+
+## Phase 35: Multi-page Architecture & Routing
+*Status: Pending*
+
+- [ ] **Task 35.1: File Explorer UI**
+  - Create a new sidebar panel for managing multiple HTML pages (e.g., `index.html`, `about.html`, `contact.html`).
+  - Allow users to create, rename, and delete pages within the project.
+- [ ] **Task 35.2: Page Routing Logic**
+  - Update `Workspace.tsx` to switch between active pages.
+  - Ensure the Stage preview updates to reflect the currently selected HTML file.
