@@ -351,3 +351,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add drag-and-drop support to the `DOMTreeExplorer` to allow reordering elements and changing parent-child relationships visually.
 - [x] **Task 24.3: History Visualizer**
   - Add a "History" tab to the left sidebar to display the stack of mutations (Undo/Redo steps), allowing users to jump back to a specific state.
+
+## Phase 25: Form Builder & Input Elements
+*Status: Complete*
+
+- [x] **Task 25.1: Form Element Support in Editor**
+  - Add support for specific form elements in the property inspector (Input, Textarea, Select, Checkbox, Radio, Button).
+  - Add properties for `placeholder`, `required`, `name`, `value`, and `type` (text, email, password, etc.).
+- [x] **Task 25.2: Form Submission Handling**
+  - Add a "Form Action" property to Form containers to define submission behavior (e.g., API call, Email, Custom Logic).
+- [x] **Task 25.3: Input Validation UI**
+  - Add visual cues for validation states (e.g., required fields, pattern matching) in the editor and properties for custom error messages.

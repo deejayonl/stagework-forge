@@ -181,6 +181,10 @@ export const injectEditorScript = (htmlContent: string): string => {
               tagName: selectedElement.tagName.toLowerCase(),
               className: selectedElement.className,
               path: getElementPath(selectedElement),
+              attributes: Array.from(selectedElement.attributes).reduce((acc, attr) => {
+                acc[attr.name] = attr.value;
+                return acc;
+              }, {}),
               dataset: Object.keys(selectedElement.dataset).reduce((acc, key) => {
                 acc[key] = selectedElement.dataset[key];
                 return acc;
@@ -231,6 +235,10 @@ export const injectEditorScript = (htmlContent: string): string => {
               tagName: selectedElement.tagName.toLowerCase(),
               className: selectedElement.className,
               path: getElementPath(selectedElement),
+              attributes: Array.from(selectedElement.attributes).reduce((acc, attr) => {
+                acc[attr.name] = attr.value;
+                return acc;
+              }, {}),
               dataset: Object.keys(selectedElement.dataset).reduce((acc, key) => {
                 acc[key] = selectedElement.dataset[key];
                 return acc;
