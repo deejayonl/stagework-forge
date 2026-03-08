@@ -690,3 +690,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add toggles for `required`, `disabled`, and `readonly` attributes on form inputs.
 - [x] **Task 57.3: Min, Max, and Step Attributes**
   - Add inputs for `min`, `max`, and `step` specifically when the input type is set to `number` or `range`.
+
+## Phase 58: Component Architecture & Slots
+*Status: Complete*
+
+- [x] **Task 58.1: Component Slots (Children Injection)**
+  - Implement a mechanism to define a node as a "Slot" within a saved Component, allowing users to drop custom elements inside instances of that component.
+- [x] **Task 58.2: Slot UI Indicator**
+  - Add a visual indicator in the DOM Tree and on the canvas to clearly distinguish Slot zones from standard containers.
+- [x] **Task 58.3: Component Props Binding**
+  - Expand the Variables panel to allow mapping Component Props to nested text or attribute values within a component instance.

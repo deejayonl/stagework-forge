@@ -2098,6 +2098,39 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             </p>
           </div>
         </div>
+
+        {/* Component Architecture */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 flex items-center gap-1">
+            <Library size={12} /> Component Architecture
+          </h4>
+          <div className="space-y-2 bg-purple-50 dark:bg-purple-900/20 p-3 rounded-xl border border-purple-100 dark:border-purple-800/30">
+            <label className="flex items-center gap-2 text-xs font-medium text-purple-900 dark:text-purple-100">
+              <input
+                type="checkbox"
+                checked={selectedElement.dataset?.slot === 'true'}
+                onChange={(e) => onUpdateAttribute?.('data-slot', e.target.checked ? 'true' : '')}
+                className="accent-purple-500"
+              />
+              Define as Slot Zone
+            </label>
+            <p className="text-[9px] text-purple-600 dark:text-purple-300 leading-tight">
+              Marking this container as a slot allows child elements to be dynamically injected into it when used as a component instance.
+            </p>
+            {selectedElement.dataset?.slot === 'true' && (
+              <div className="mt-2 space-y-1">
+                 <label className="text-[10px] text-purple-700 dark:text-purple-300 font-bold">Slot Name</label>
+                 <input 
+                   type="text"
+                   className="w-full bg-white dark:bg-black border border-purple-200 dark:border-purple-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink focus:ring-1 focus:ring-purple-500 outline-none"
+                   placeholder="e.g. header, content, footer"
+                   value={selectedElement.dataset?.slotName || ''}
+                   onChange={(e) => onUpdateAttribute?.('data-slot-name', e.target.value)}
+                 />
+              </div>
+            )}
+          </div>
+        </div>
         {/* Advanced Customizations */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Advanced</h4>
