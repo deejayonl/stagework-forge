@@ -227,3 +227,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 20.1: Fix missing types and unused variables in BFF**
   - Resolve TS errors in `server/src/routes/autofix.ts`, `generate.ts`, `mutate.ts`, and `rewrite.ts`.
+## Phase 21: Final Codebase Polish and Deployment Stabilization
+*Status: Complete*
+
+- [x] **Task 21.1: Fix missing upstream branch tracking**
+  - Ensure the repository can push to `origin main` to keep the deployment script functional.
+- [x] **Task 21.2: Remove unused dependencies**
+  - Audit `package.json` for unused dependencies and clean them up if necessary.
+- [x] **Task 21.3: Verify final build process**
+  - Run `npm run build:all` to ensure both the BFF and the frontend build perfectly.
