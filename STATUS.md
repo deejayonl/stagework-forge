@@ -367,8 +367,8 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 
 ## Phase 37: Cloud Integrations & Deployments (GitHub)
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 37.1: GitHub Integration BFF Route**
+- [x] **Task 37.1: GitHub Integration BFF Route**
   - Implement `/api/deploy/github/:projectId` in the Node.js BFF to receive a GitHub Personal Access Token, create a new repository using the GitHub REST API (`/user/repos`), and push the packaged project files.
   - Update `ExportModal.tsx` and `ForgeView.tsx` to handle the GitHub deployment flow correctly.
