@@ -329,3 +329,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 32.2: Frontend Inference Migration Cleanup**
   - Removed all `throw new Error` blocks in `src/services/geminiService.ts` that strictly enforced API key presence on the client side.
   - The frontend now conditionally appends the `Authorization` header only if the user has provided a custom key, otherwise delegating authentication to the BFF backend.
+
+## Phase 33: Visual Animation Builder
+*Status: In Progress*
+
+- [ ] **Task 33.1: Animation UI Panel**
+  - Add a new section in `PropertyInspector.tsx` for Animations (Entrance, Hover, Scroll).
+  - Support configuring animation type (fade, slide, scale), duration, and delay.
