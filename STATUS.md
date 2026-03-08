@@ -613,7 +613,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Allow users to upload or link `.json` Lottie files and `.riv` files as native components in the Component Library.
 
 ## Phase 57: E-Commerce & Payment Integrations
-*Status: In Progress*
+*Status: Complete*
 
 - [x] **Task 57.1: E-Commerce Components in Library**
   - Expand `ComponentLibrary.tsx` to include an "E-Commerce" category with Product Card, Product Grid, and Checkout Button.
@@ -621,3 +621,11 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a "Payments" tab in `ProjectSettingsModal.tsx` to configure Stripe Publishable Key and Secret Key.
 - [x] **Task 57.3: Payment Action Logic**
   - Update `LogicGeneratorModal.tsx` to recognize "Trigger Stripe Checkout" or "Process Payment" intents, injecting Stripe.js initialization logic.
+
+## Phase 58: Script Tab Template Modal Polish
+*Status: Complete*
+
+- [x] **Task 58.1: Implement showTemplates Modal**
+  - Remove static SaaS and Portfolio Template buttons in `ScriptView.tsx`.
+  - Add a single "Templates" button that opens a blurred background overlay modal.
+  - Map over `SCRIPT_TEMPLATES` array and display titles and descriptions as clickable cards.
