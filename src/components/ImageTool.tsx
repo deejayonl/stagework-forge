@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Download, Plus, CircleAlert, X, Sparkles, FolderInput, ArrowRight, Bot, WandSparkles, Image as ImageIcon, RefreshCw, ChevronLeft, Check, SquareCheck, Square, LoaderCircle } from 'lucide-react';
+import { Plus, CircleAlert, X, FolderInput, ArrowRight, Bot, WandSparkles, Image as ImageIcon, RefreshCw, ChevronLeft, Check, SquareCheck, Square, LoaderCircle } from 'lucide-react';
 import { generateImage, planImageReplacements } from '../services/geminiService';
 import { ImageSize, GeneratedFile, DetectedAsset, BatchImageGeneration } from '../types';
 import { findAssets } from '../utils/fileUtils';

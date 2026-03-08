@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Menu, Undo2, Redo2, Image as ImageIcon, Download, Users } from 'lucide-react';
+import { Menu, Undo2, Redo2, Image as ImageIcon, Download } from 'lucide-react';
 
 interface HeaderProps {
   isDark: boolean;

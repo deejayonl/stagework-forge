@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Plus, Trash2, Database, List } from 'lucide-react';
+import { X, Plus, Trash2, List } from 'lucide-react';
 import { Collection, CollectionField } from '../types';
 
 interface CollectionsPanelProps {

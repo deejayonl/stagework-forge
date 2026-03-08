@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Cloud, Check, X, ShieldCheck, AlertCircle, LogOut, UserCircle, Key, UploadCloud, Loader2, ExternalLink, Settings, Globe } from 'lucide-react';
-import { User, GeneratedFile } from '../types';
+import { Cloud, Check, ShieldCheck, AlertCircle, Key, UploadCloud, Loader2, ExternalLink, Settings, Globe } from 'lucide-react';
+import { GeneratedFile } from '../types';
 import { cloudService } from '../services/cloudService';
 
 interface CloudConfigProps {

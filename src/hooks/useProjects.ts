@@ -1,11 +1,10 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Project, GeneratedFile, ProjectVersion, User } from '../types';
+import { Project, GeneratedFile, ProjectVersion } from '../types';
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 
 const STORAGE_KEY = 'forge-projects-v1';
-const ROOT_FOLDER_NAME = 'Forge Builds';
 
 
 export const useProjects = (storageToken: string | null) => {

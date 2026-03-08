@@ -59,7 +59,7 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
         headers: editingApi.headers,
       };
       
-      if (editingApi.method !== 'GET' && editingApi.method !== 'HEAD' && editingApi.body) {
+      if (editingApi.method !== 'GET' && editingApi.body) {
         options.body = editingApi.body;
       }
 

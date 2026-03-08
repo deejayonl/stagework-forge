@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Download, X, Code2, FileJson, Globe, Github, Zap } from 'lucide-react';
+import { Download, X, Code2, FileJson, Globe, Github } from 'lucide-react';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -16,7 +16,7 @@ const FRAMEWORKS = [
   { id: 'nextjs', name: 'Next.js', icon: <FileJson className="w-5 h-5" />, desc: 'Full-stack Next.js app router setup with Tailwind CSS.' },
 ];
 
-export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, onExport, onDeploy, projectName }) => {
+export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, onExport, onDeploy }) => {
   const [framework, setFramework] = useState('vite');
 
   if (!isOpen) return null;

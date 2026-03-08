@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, BrainCircuit, Zap, Paperclip, X, Loader2, Terminal, Cpu, Sparkles, ChevronDown } from 'lucide-react';
+import { ArrowRight, BrainCircuit, Zap, Paperclip, X, Loader2, Cpu, ChevronDown } from 'lucide-react';
 import { Attachment } from '../types';
 
 interface PromptInputProps {

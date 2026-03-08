@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { X, Upload, Image as ImageIcon, Trash2, Check } from 'lucide-react';
+import { X, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
 
 export interface MediaAsset {
   id: string;

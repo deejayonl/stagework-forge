@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutTemplate, Type, Image as ImageIcon, CheckSquare, MessageSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
+import { LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
 
 interface ComponentLibraryProps {
   onInsertComponent: (html: string) => void;
