@@ -3,6 +3,7 @@ import { Sparkles, Library, Database } from 'lucide-react';
 import { fixHtmlNode, rewriteText, generateImage } from '../services/geminiService';
 import { ImageSize } from '../types';
 import { LogicGeneratorModal } from './LogicGeneratorModal';
+import { KeyframeTimelineBuilder } from './KeyframeTimelineBuilder';
 
 interface PropertyInspectorProps {
   selectedElement: any;
@@ -63,6 +64,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [activeState, setActiveState] = useState<string>('none');
   const [isLogicModalOpen, setIsLogicModalOpen] = useState(false);
+  const [isTimelineBuilderOpen, setIsTimelineBuilderOpen] = useState(false);
   const [activeLogicEvent, setActiveLogicEvent] = useState<string | null>(null);
   const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
@@ -1657,16 +1659,18 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
         
-        {/* Animations & Interactions */}
+                {/* Animations & Interactions */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             Animations
           </h4>
+          
+          {/* Scroll Reveal */}
           <div className="flex items-center justify-between bg-hall-100 dark:bg-hall-900 p-3 rounded-xl mb-3">
             <label className="text-xs font-bold text-hall-700 dark:text-hall-300 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              Animate on Scroll
+              Animate on Scroll (AOS)
             </label>
             <button
               onClick={() => onToggleClass && onToggleClass('animate-on-scroll', !selectedElement.className?.includes('animate-on-scroll'))}
@@ -1675,22 +1679,89 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
               <div className={`w-3 h-3 rounded-full bg-white absolute top-0.5 transition-all ${selectedElement.className?.includes('animate-on-scroll') ? 'left-[18px]' : 'left-0.5'}`} />
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            {['animate-pulse', 'animate-bounce', 'animate-spin', 'animate-ping'].map(anim => {
-              const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
-              const prefixedAnim = prefix + anim;
-              const isActive = selectedElement.className?.includes(prefixedAnim);
-              return (
-                <button
-                  key={anim}
-                  onClick={() => onToggleClass && onToggleClass(prefixedAnim, !isActive)}
-                  className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
-                >
-                  {anim.replace('animate-', '')}
-                  {isActive && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
-                </button>
-              );
-            })}
+
+          {/* Entrance Presets */}
+          <div className="space-y-2 mt-2 border-t border-hall-200 dark:border-hall-800 pt-2">
+            <label className="text-[10px] text-hall-500 font-bold">Entrance Animations</label>
+            <div className="grid grid-cols-2 gap-2">
+              {['animate-fade-in', 'animate-fade-in-up', 'animate-zoom-in', 'animate-slide-in-right'].map(anim => {
+                const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+                const prefixedAnim = prefix + anim;
+                const isActive = selectedElement.className?.includes(prefixedAnim);
+                return (
+                  <button
+                    key={anim}
+                    onClick={() => {
+                      if (onToggleClass) {
+                        ['animate-fade-in', 'animate-fade-in-up', 'animate-zoom-in', 'animate-slide-in-right', 'animate-pulse', 'animate-bounce', 'animate-spin', 'animate-ping'].forEach(a => {
+                          if (a !== anim && selectedElement.className?.includes(prefix + a)) {
+                            onToggleClass(prefix + a, false);
+                          }
+                        });
+                        onToggleClass(prefixedAnim, !isActive);
+                      }
+                    }}
+                    className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+                  >
+                    {anim.replace('animate-', '').replace(/-/g, ' ')}
+                    {isActive && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Continuous Presets */}
+          <div className="space-y-2 mt-2">
+            <label className="text-[10px] text-hall-500 font-bold">Continuous Animations</label>
+            <div className="grid grid-cols-2 gap-2">
+              {['animate-pulse', 'animate-bounce', 'animate-spin', 'animate-ping'].map(anim => {
+                const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+                const prefixedAnim = prefix + anim;
+                const isActive = selectedElement.className?.includes(prefixedAnim);
+                return (
+                  <button
+                    key={anim}
+                    onClick={() => {
+                      if (onToggleClass) {
+                        ['animate-fade-in', 'animate-fade-in-up', 'animate-zoom-in', 'animate-slide-in-right', 'animate-pulse', 'animate-bounce', 'animate-spin', 'animate-ping'].forEach(a => {
+                          if (a !== anim && selectedElement.className?.includes(prefix + a)) {
+                            onToggleClass(prefix + a, false);
+                          }
+                        });
+                        onToggleClass(prefixedAnim, !isActive);
+                      }
+                    }}
+                    className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+                  >
+                    {anim.replace('animate-', '')}
+                    {isActive && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Hover Effects */}
+          <div className="space-y-2 mt-2 border-t border-hall-200 dark:border-hall-800 pt-2">
+            <label className="text-[10px] text-hall-500 font-bold">Hover Effects</label>
+            <div className="grid grid-cols-2 gap-2">
+              {['hover:scale-105', 'hover:scale-110', 'hover:-translate-y-1', 'hover:-translate-y-2', 'hover:shadow-lg', 'hover:shadow-xl', 'hover:shadow-indigo-500/50', 'hover:opacity-80'].map(effect => {
+                const prefix = activeBreakpoint === 'mobile' ? 'max-md:' : activeBreakpoint === 'tablet' ? 'md:' : '';
+                const prefixedEffect = prefix + effect;
+                const isActive = selectedElement.className?.includes(prefixedEffect);
+                return (
+                  <button
+                    key={effect}
+                    onClick={() => onToggleClass && onToggleClass(prefixedEffect, !isActive)}
+                    className={`w-full py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all flex items-center justify-between ${isActive ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : 'bg-hall-100 dark:bg-hall-900 text-hall-600 dark:text-hall-400 hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+                  >
+                    {effect.replace('hover:', '')}
+                    {isActive && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
           
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Transitions</h4>
@@ -1760,7 +1831,15 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
 
           <div className="space-y-1 mt-3 pt-3 border-t border-hall-200 dark:border-hall-800">
-            <label className="text-[10px] text-hall-500 font-bold">Custom Animation</label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-[10px] text-hall-500 font-bold">Custom Animation</label>
+              <button 
+                onClick={() => setIsTimelineBuilderOpen(true)}
+                className="text-[9px] bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 px-2 py-1 rounded hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors font-bold"
+              >
+                Timeline Builder
+              </button>
+            </div>
             <div className="space-y-2">
               <input 
                 type="text" 
@@ -1779,7 +1858,6 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 className="w-full h-20 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink font-mono"
                 placeholder="@keyframes slideIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}"
               />
-              <p className="text-[8px] text-hall-500">Define keyframes here and they will be injected automatically.</p>
             </div>
           </div>
 
@@ -1803,7 +1881,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
-        {/* Background */}
+{/* Background */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Background</h4>
           
@@ -2296,55 +2374,6 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         </div>
 
         
-        {/* Animations */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Animations</h4>
-          <div className="space-y-2">
-            <div className="space-y-1">
-              <label className="text-[10px] text-hall-500">Preset Animation</label>
-              <select
-                value={styles.animation || ''}
-                onChange={(e) => handleStyleChange('animation', e.target.value)}
-                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
-              >
-                <option value="">None</option>
-                <option value="spin 1s linear infinite">Spin</option>
-                <option value="ping 1s cubic-bezier(0, 0, 0.2, 1) infinite">Ping</option>
-                <option value="pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite">Pulse</option>
-                <option value="bounce 1s infinite">Bounce</option>
-                <option value="fade-in 0.5s ease-in-out">Fade In</option>
-                <option value="fade-in-up 0.5s ease-out">Slide Up</option>
-              </select>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="space-y-1">
-                <label className="text-[10px] text-hall-500">Duration (s)</label>
-                <input 
-                  type="number" 
-                  step="0.1"
-                  min="0"
-                  value={styles.animationDuration ? parseFloat(styles.animationDuration) : ''} 
-                  onChange={(e) => handleStyleChange('animationDuration', e.target.value ? `${e.target.value}s` : '')}
-                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
-                  placeholder="e.g. 1"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] text-hall-500">Delay (s)</label>
-                <input 
-                  type="number" 
-                  step="0.1"
-                  min="0"
-                  value={styles.animationDelay ? parseFloat(styles.animationDelay) : ''} 
-                  onChange={(e) => handleStyleChange('animationDelay', e.target.value ? `${e.target.value}s` : '')}
-                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
-                  placeholder="e.g. 0.5"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Media & Interactions */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1 mt-4">Media & Interactions</h4>
@@ -3260,6 +3289,22 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           }
         }}
       />
+      {isTimelineBuilderOpen && (
+        <KeyframeTimelineBuilder
+          initialKeyframes={selectedElement.dataset?.keyframes}
+          onSave={(css) => {
+            if (onUpdateAttribute) {
+              onUpdateAttribute('data-keyframes', css);
+              
+              const match = css.match(/@keyframes\s+([a-zA-Z0-9_-]+)/);
+              if (match) {
+                handleStyleChange('animationName', match[1]);
+              }
+            }
+          }}
+          onClose={() => setIsTimelineBuilderOpen(false)}
+        />
+      )}
     </div>
   );
 };

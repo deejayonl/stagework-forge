@@ -602,12 +602,22 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update `PropertyInspector.tsx` to allow binding element text/images to collection data.
 
 ## Phase 56: Advanced Animation & Interaction Engine
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 56.1: Animation Panel in Property Inspector**
+- [x] **Task 56.1: Animation Panel in Property Inspector**
   - Add a dedicated "Animations" section in `PropertyInspector.tsx`.
   - Include presets for Entrance (Fade, Slide, Zoom), Hover (Scale, Glow), and Scroll Reveal (AOS-style).
-- [ ] **Task 56.2: Keyframe Timeline Builder**
+- [x] **Task 56.2: Keyframe Timeline Builder**
   - Create a visual timeline for complex multi-step animations on selected elements.
-- [ ] **Task 56.3: Lottie & Rive Integration**
+- [x] **Task 56.3: Lottie & Rive Integration**
   - Allow users to upload or link `.json` Lottie files and `.riv` files as native components in the Component Library.
+
+## Phase 57: E-Commerce & Payment Integrations
+*Status: In Progress*
+
+- [x] **Task 57.1: E-Commerce Components in Library**
+  - Expand `ComponentLibrary.tsx` to include an "E-Commerce" category with Product Card, Product Grid, and Checkout Button.
+- [ ] **Task 57.2: Stripe Settings UI**
+  - Add a "Payments" tab in `ProjectSettingsModal.tsx` to configure Stripe Publishable Key and Secret Key.
+- [ ] **Task 57.3: Payment Action Logic**
+  - Update `LogicGeneratorModal.tsx` to recognize "Trigger Stripe Checkout" or "Process Payment" intents, injecting Stripe.js initialization logic.

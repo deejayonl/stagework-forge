@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
+import { ShoppingCart, LayoutTemplate, CheckSquare, CreditCard, LayoutGrid, MousePointerClick, Table, Settings2, X } from 'lucide-react';
 
 interface ComponentLibraryProps {
   onInsertComponent: (html: string) => void;
@@ -8,6 +8,20 @@ interface ComponentLibraryProps {
 }
 
 const COMPONENTS = [
+  {
+    category: 'Animations',
+    icon: <LayoutGrid className="w-4 h-4" />,
+    items: [
+      {
+        name: 'Lottie Animation',
+        html: `<div class="w-64 h-64 mx-auto"><script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://assets2.lottiefiles.com/packages/lf20_UJNc2t.json" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></lottie-player></div>`
+      },
+      {
+        name: 'Rive Animation',
+        html: `<div class="w-64 h-64 mx-auto"><canvas id="rive-canvas" width="500" height="500" style="width: 100%; height: 100%;"></canvas><script src="https://unpkg.com/@rive-app/canvas@2.7.0"></script><script>new rive.Rive({ src: 'https://cdn.rive.app/animations/vehicles.riv', canvas: document.getElementById('rive-canvas'), autoplay: true });</script></div>`
+      }
+    ]
+  },
   {
     category: 'Layout',
     icon: <LayoutTemplate className="w-4 h-4" />,
