@@ -15,7 +15,7 @@ import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
-import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network, Undo2, Redo2 } from 'lucide-react';
+import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2 } from 'lucide-react';
 
 
 interface WorkspaceProps {
@@ -58,7 +58,6 @@ const Workspace: React.FC<WorkspaceProps> = ({
   onUpdateVariables, 
   onUpdateComponents,
   onUpdateTheme,
-  onUpdateSEO,
   onUpdateCollections,
   onUpdateApis,
   onUpdateAssets,

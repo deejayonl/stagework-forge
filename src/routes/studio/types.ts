@@ -1,12 +1,12 @@
 
 export enum AgentId {
-  NEST = 'nest',
-  CODE = 'code_nest',
-  CREATIVE = 'creative_nest',
-  IMAGE = 'image_nest',
-  VIDEO = 'video_nest',
-  LIVE = 'live_nest',
-  PRO = 'pro_nest'
+  FORGE = 'forge',
+  CODE = 'code_forge',
+  CREATIVE = 'creative_forge',
+  IMAGE = 'image_forge',
+  VIDEO = 'video_forge',
+  LIVE = 'live_forge',
+  PRO = 'pro_forge'
 }
 
 export interface Agent {

@@ -19,7 +19,7 @@ export interface CloudFileEntry {
 
 export const cloudService = {
     /**
-     * Find or create a nested folder path.
+     * Find or create a forgeed folder path.
      * Returns the final folder's ID, or null on failure.
      */
     async ensureDirectory(path: string[]): Promise<number | null> {

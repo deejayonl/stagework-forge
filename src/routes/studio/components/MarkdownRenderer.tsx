@@ -292,7 +292,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, onN
                 continue;
             }
 
-            // 4. Lists (including nested and tasks)
+            // 4. Lists (including forgeed and tasks)
             if (line.match(/^(\s*)([-*]|\d+\.)\s/)) {
                 if (currentBlock?.type !== 'list') {
                     if (currentBlock) blocks.push(currentBlock);

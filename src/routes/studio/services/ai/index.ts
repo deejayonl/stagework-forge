@@ -84,7 +84,7 @@ class AIOrchestrator {
                  4. Do NOT write conversational text before the first file marker.
                  5. Output the COMPLETE content for every file. No placeholders.
                  `;
-             } else if (agentId === AgentId.CREATIVE || agentId === AgentId.NEST) {
+             } else if (agentId === AgentId.CREATIVE || agentId === AgentId.FORGE) {
                  systemInstruction += `\n\nIMPORTANT ARTIFACT INSTRUCTIONS:
                  1. You are creating or updating a live document node on a canvas.
                  2. Output the FULL CONTENT of the document.

@@ -1,0 +1,16 @@
+              }
+            \`;
+
+            // Inject Google Font
+            if (theme.fontFamily) {
+              let fontLink = document.getElementById('forge-google-font');
+              if (!fontLink) {
+                fontLink = document.createElement('link');
+                fontLink.id = 'forge-google-font';
+                fontLink.rel = 'stylesheet';
+                document.head.appendChild(fontLink);
+              }
+              const formattedName = theme.fontFamily.replace(/ /g, '+');
+              fontLink.href = \`https://fonts.googleapis.com/css2?family=\${formattedName}:wght@300;400;500;600;700&display=swap\`;
+              
+              // Apply globally

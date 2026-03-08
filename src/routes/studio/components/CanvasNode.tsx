@@ -485,7 +485,7 @@ const CanvasNode: React.FC<CanvasNodeProps> = memo(({ node, isSelected, scale, o
          setTimeout(() => {
             if (textareaRef.current) {
                 textareaRef.current.focus();
-                // Position cursor inside valid insertion point if template implies it, othernest at end
+                // Position cursor inside valid insertion point if template implies it, otherforge at end
                 const offset = (needsNewlineBefore ? 2 : 0) + template.length;
                 textareaRef.current.setSelectionRange(start + offset, start + offset);
             }

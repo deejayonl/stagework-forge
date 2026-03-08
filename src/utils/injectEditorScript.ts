@@ -466,19 +466,26 @@ export const injectEditorScript = (htmlContent: string): string => {
             \`;
 
             // Inject Google Font
-            if (theme.fontFamily) {
-              let fontLink = document.getElementById('forge-google-font');
+            if (theme.fontFamily || theme.headingFontFamily) {
+              const fontsToLoad = new Set();
+              if (theme.fontFamily) fontsToLoad.add(theme.fontFamily);
+              if (theme.headingFontFamily) fontsToLoad.add(theme.headingFontFamily);
+              
+              const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
+              
+              let fontLink = document.getElementById("forge-google-font");
               if (!fontLink) {
-                fontLink = document.createElement('link');
-                fontLink.id = 'forge-google-font';
-                fontLink.rel = 'stylesheet';
+                fontLink = document.createElement("link");
+                fontLink.id = "forge-google-font";
+                fontLink.rel = "stylesheet";
                 document.head.appendChild(fontLink);
               }
-              const formattedName = theme.fontFamily.replace(/ /g, '+');
-              fontLink.href = \`https://fonts.googleapis.com/css2?family=\${formattedName}:wght@300;400;500;600;700&display=swap\`;
+              fontLink.href = \`https://fonts.googleapis.com/css2?family=\${families}&display=swap\`;
               
               // Apply globally
-              document.body.style.fontFamily = \`"\${theme.fontFamily}", sans-serif\`;
+              if (theme.fontFamily) {
+                document.body.style.fontFamily = \`"\${theme.fontFamily}", sans-serif\`;
+              }
             }
           } else if (e.data.type === 'FORGE_UPDATE_SEO') {
             const seo = e.data.seo;

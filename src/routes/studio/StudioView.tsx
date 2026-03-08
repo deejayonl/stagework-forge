@@ -16,7 +16,7 @@ import { executeGraph } from './services/execution';
 import { ImageOptions, VideoOptions } from './services/ai/types';
 
 /**
- * StudioView — the full infinite-canvas experience, migrated from weaver-nest App.tsx.
+ * StudioView — the full infinite-canvas experience, migrated from weaver-forge App.tsx.
  *
  * This component contains ALL state management, effects, handlers, and rendering
  * from the original App.tsx. The auth/login wrapper and HTML/CSS CDN imports have
@@ -124,7 +124,7 @@ export default function StudioView() {
 
       // 1. Try to load from LocalStorage
       try {
-          const saved = localStorage.getItem('NEST_STUDIO_WORKSPACES');
+          const saved = localStorage.getItem('FORGE_STUDIO_WORKSPACES');
           if (saved) {
               const parsed = JSON.parse(saved);
               if (Array.isArray(parsed) && parsed.length > 0) {
@@ -162,7 +162,7 @@ export default function StudioView() {
 
 This is your **Infinite Canvas** for intelligent collaboration.
 
-**Try asking Nest for:**
+**Try asking Forge for:**
 
 - [ ] "Tic tac toe game in the style of Herge"
 - [ ] "An image of a futuristic city on mars"
@@ -189,7 +189,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
 
   const [activeWorkspaceId, setActiveWorkspaceId] = useState(() => {
       if (plan) return 'generated-plan';
-      const savedId = localStorage.getItem('NEST_STUDIO_ACTIVE_ID');
+      const savedId = localStorage.getItem('FORGE_STUDIO_ACTIVE_ID');
       return savedId || 'default';
   });
 
@@ -210,7 +210,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
   // Ensure we find the active workspace safely
   const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId) || workspaces[0];
 
-  const [activeAgent, setActiveAgent] = useState<AgentId>(AgentId.NEST);
+  const [activeAgent, setActiveAgent] = useState<AgentId>(AgentId.FORGE);
   const [nodes, setNodes] = useState<CanvasNode[]>(activeWorkspace.nodes);
   const [edges, setEdges] = useState<CanvasEdge[]>(activeWorkspace.edges);
   const [messages, setMessages] = useState<Message[]>(activeWorkspace.messages || []);
@@ -384,8 +384,8 @@ This is your **Infinite Canvas** for intelligent collaboration.
   // Persistence to LocalStorage (Whenever workspaces update)
   useEffect(() => {
       try {
-          localStorage.setItem('NEST_STUDIO_WORKSPACES', JSON.stringify(workspaces));
-          localStorage.setItem('NEST_STUDIO_ACTIVE_ID', activeWorkspaceId);
+          localStorage.setItem('FORGE_STUDIO_WORKSPACES', JSON.stringify(workspaces));
+          localStorage.setItem('FORGE_STUDIO_ACTIVE_ID', activeWorkspaceId);
       } catch (e) {
           console.error("Failed to save to localStorage:", e);
       }
@@ -1244,7 +1244,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
 
           setStatusState('working');
           const actionMap: Record<string, string> = {
-              [AgentId.NEST]: "Thinking...",
+              [AgentId.FORGE]: "Thinking...",
               [AgentId.CODE]: "Coding...",
               [AgentId.CREATIVE]: "Writing...",
               [AgentId.IMAGE]: "Dreaming...",
@@ -1640,7 +1640,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
       setStatusMessage('Live Session');
     } else {
       setIsLiveMode(false);
-      setActiveAgent(AgentId.NEST);
+      setActiveAgent(AgentId.FORGE);
       setStatusState('idle');
       setStatusMessage('');
     }

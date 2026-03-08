@@ -9,7 +9,7 @@ export class BFFProvider implements AIProvider {
 
     constructor() {}
 
-    private async callBFF(message: string, sessionKey: string = "nest:default", mediaConfig?: any): Promise<any> {
+    private async callBFF(message: string, sessionKey: string = "forge:default", mediaConfig?: any): Promise<any> {
         
         const apiBase = getApiBase();
         const response = await fetch(`${apiBase}/chat`, {
@@ -60,7 +60,7 @@ export class BFFProvider implements AIProvider {
     }
 
     async generateImage(prompt: string, options?: ImageOptions): Promise<string> {
-        const response = await this.callBFF(prompt, "nest:images", {
+        const response = await this.callBFF(prompt, "forge:images", {
             type: 'image',
             aspect_ratio: options?.aspectRatio || '1:1',
             size: options?.size || '1K'
@@ -69,7 +69,7 @@ export class BFFProvider implements AIProvider {
     }
 
     async generateVideo(prompt: string, options?: VideoOptions, _imageInputBase64?: string): Promise<string> {
-        const response = await this.callBFF(prompt, "nest:videos", {
+        const response = await this.callBFF(prompt, "forge:videos", {
             type: 'video',
             aspect_ratio: options?.aspectRatio || '16:9',
             resolution: options?.resolution || '720p'
@@ -79,7 +79,7 @@ export class BFFProvider implements AIProvider {
 
     async routeRequest(_prompt: string, _history: any[], _models: { fast: string }, _imageContext?: string): Promise<RouterResult> {
         return {
-            targetAgentId: AgentId.NEST,
+            targetAgentId: AgentId.FORGE,
             reasoning: "Routed through BFF Bridge"
         };
     }

@@ -9,8 +9,13 @@ interface ThemeEditorProps {
 
 const FONTS = [
   "Inter", "Roboto", "Open Sans", "Lato", "Montserrat", 
-  "Poppins", "Playfair Display", "Merriweather", "Fira Code"
-];
+  "Poppins", "Playfair Display", "Merriweather", "Fira Code",
+  "Nunito", "Raleway", "Ubuntu", "Oswald", "Outfit",
+  "Plus Jakarta Sans", "Work Sans", "Rubik", "Quicksand",
+  "Lora", "PT Serif", "Noto Serif", "Crimson Pro", "Space Grotesk",
+  "Space Mono", "JetBrains Mono", "DM Sans", "Manrope", "Syne",
+  "Bebas Neue", "Anton", "Josefin Sans", "Cabin", "Karla"
+].sort();
 
 const FONT_PRESETS = [
   { name: "Modern Tech", heading: "Inter", body: "Inter" },

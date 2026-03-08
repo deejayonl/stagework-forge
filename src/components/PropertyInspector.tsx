@@ -25,6 +25,7 @@ interface PropertyInspectorProps {
   onAddTableColumn?: () => void;
   pages?: string[];
   activeBreakpoint?: 'desktop' | 'tablet' | 'mobile';
+
 }
 
 export const PropertyInspector: React.FC<PropertyInspectorProps> = ({ 

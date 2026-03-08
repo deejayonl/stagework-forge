@@ -168,7 +168,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
         
         {/* Footer */}
         <div className="px-4 py-2 bg-bg-surface/30 border-t border-border-subtle/50 flex items-center justify-between text-[10px] text-text-muted">
-            <span>Nest Studio</span>
+            <span>Forge Studio</span>
             <span className="font-mono opacity-50">v0.9.2</span>
         </div>
     </div>

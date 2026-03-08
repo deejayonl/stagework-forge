@@ -88,17 +88,23 @@ export const createZipDownload = async (
           `;
           needsUpdate = true;
           
-          if (theme.fontFamily) {
-            let fontLink = doc.getElementById('forge-google-font') as HTMLLinkElement;
+          if (theme.fontFamily || theme.headingFontFamily) {
+            let fontLink = doc.getElementById("forge-google-font") as HTMLLinkElement;
             if (!fontLink) {
-              fontLink = doc.createElement('link') as HTMLLinkElement;
-              fontLink.id = 'forge-google-font';
-              fontLink.rel = 'stylesheet';
+              fontLink = doc.createElement("link") as HTMLLinkElement;
+              fontLink.id = "forge-google-font";
+              fontLink.rel = "stylesheet";
               doc.head.appendChild(fontLink);
             }
-            const formattedName = theme.fontFamily.replace(/ /g, '+');
-            fontLink.setAttribute('href', `https://fonts.googleapis.com/css2?family=${formattedName}:wght@300;400;500;600;700&display=swap`);
-            doc.body.style.fontFamily = `"${theme.fontFamily}", sans-serif`;
+            const fontsToLoad = new Set<string>();
+            if (theme.fontFamily) fontsToLoad.add(theme.fontFamily);
+            if (theme.headingFontFamily) fontsToLoad.add(theme.headingFontFamily);
+            const families = Array.from(fontsToLoad).map(f => f.replace(/ /g, "+") + ":wght@300;400;500;600;700").join("&family=");
+            
+            fontLink.setAttribute("href", `https://fonts.googleapis.com/css2?family=${families}&display=swap`);
+            if (theme.fontFamily) {
+              doc.body.style.fontFamily = `"${theme.fontFamily}", sans-serif`;
+            }
           }
         }
 
