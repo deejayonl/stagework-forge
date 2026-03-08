@@ -407,3 +407,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Inject selected Google Fonts `<link>` tags into the project's `<head>` configuration so they render in the Stage preview.
 - [x] **Task 40.3: Property Inspector Integration**
   - Update `PropertyInspector.tsx` typography section to populate the `font-family` dropdown with the user's selected custom fonts.
+
+## Phase 41: Native Version Control & Undo/Redo Engine
+*Status: Complete*
+
+- [x] **Task 41.1: History Store Structure**
+  - Implement a `history` state inside `WorkspaceContext` containing `past: ProjectState[]`, `present: ProjectState`, and `future: ProjectState[]`.
+- [x] **Task 41.2: Snapshot Logic**
+  - Whenever a successful mutation, script generation, or property edit occurs, push the current `present` state into `past` before updating it. Cap the history size at 50 to prevent memory leaks.
+- [x] **Task 41.3: Undo/Redo Controls**
+  - Add Undo (Cmd+Z) and Redo (Cmd+Shift+Z) keyboard listeners to the global window.
+  - Implement the `undo()` and `redo()` dispatcher functions to shift states between past/present/future.
+- [x] **Task 41.4: UI Buttons**
+  - Add visible Undo/Redo icon buttons to the OmniBar in `Workspace.tsx`. Disable them when history buffers are empty.

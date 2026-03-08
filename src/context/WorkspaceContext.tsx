@@ -10,6 +10,7 @@ interface HistoryState {
 interface WorkspaceContextType {
   history: HistoryState;
   pushState: (newState: Partial<ProjectState>) => void;
+  replaceState: (newState: Partial<ProjectState>) => void;
   undo: () => void;
   redo: () => void;
   canUndo: boolean;
@@ -55,6 +56,18 @@ export const WorkspaceProvider: React.FC<{
     });
   }, [onStateChange]);
 
+  const replaceState = useCallback((newState: Partial<ProjectState>) => {
+    setHistory(current => {
+      const updatedPresent = { ...current.present, ...newState };
+      const nextState = {
+        ...current,
+        present: updatedPresent
+      };
+      if (onStateChange) onStateChange(nextState.present);
+      return nextState;
+    });
+  }, [onStateChange]);
+
   const undo = useCallback(() => {
     setHistory(current => {
       if (current.past.length === 0) return current;
@@ -94,7 +107,6 @@ export const WorkspaceProvider: React.FC<{
   // Keyboard listeners for Undo/Redo
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if user is typing in an input or textarea
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
@@ -122,6 +134,7 @@ export const WorkspaceProvider: React.FC<{
   const value = {
     history,
     pushState,
+    replaceState,
     undo,
     redo,
     canUndo: history.past.length > 0,

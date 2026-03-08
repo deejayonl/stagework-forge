@@ -16,7 +16,6 @@ import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2 } from 'lucide-react';
-import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 
 
 interface WorkspaceProps {
@@ -45,7 +44,7 @@ interface WorkspaceProps {
   onOpenImageTool?: (onPick: (url: string) => void) => void;
 }
 
-const WorkspaceInner: React.FC<WorkspaceProps> = ({ 
+const Workspace: React.FC<WorkspaceProps> = ({ 
   projectId,
   versions,
   currentVersionIndex,
@@ -87,19 +86,13 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
   const [mediaPickCallback, setMediaPickCallback] = useState<((url: string) => void) | null>(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
-  const { history, pushState, undo, redo, canUndo, canRedo } = useWorkspaceContext();
   
   // History Stack for Undo/Redo
+  const [undoStack, setUndoStack] = useState<GeneratedFile[][]>([]);
+  const [redoStack, setRedoStack] = useState<GeneratedFile[][]>([]);
 
   // Local state for files allows editing within the workspace session
   const [localFiles, setLocalFiles] = useState<GeneratedFile[]>(files);
-
-  // Sync localFiles when history changes via undo/redo
-  useEffect(() => {
-    if (history.present.files && history.present.files.length > 0) {
-      setLocalFiles(history.present.files);
-    }
-  }, [history.present.files]);
 
   // Sync local files when the project/generation changes from parent
   useEffect(() => {
@@ -205,24 +198,36 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
     }
   };
 
-  
+  const pushUndoState = (prevFiles: GeneratedFile[]) => {
+    setUndoStack(prev => [...prev, prevFiles]);
+    setRedoStack([]); // Clear redo stack on new action
+  };
+
   const handleUndo = () => {
-    if (!canUndo) return;
-    undo();
+    if (undoStack.length === 0) return;
+    const prevFiles = undoStack[undoStack.length - 1];
+    setUndoStack(prev => prev.slice(0, -1));
+    setRedoStack(prev => [...prev, localFiles]);
+    setLocalFiles(prevFiles);
+    if (onFileChange) onFileChange(prevFiles, 'Undo');
   };
 
   const handleRedo = () => {
-    if (!canRedo) return;
-    redo();
+    if (redoStack.length === 0) return;
+    const nextFiles = redoStack[redoStack.length - 1];
+    setRedoStack(prev => prev.slice(0, -1));
+    setUndoStack(prev => [...prev, localFiles]);
+    setLocalFiles(nextFiles);
+    if (onFileChange) onFileChange(nextFiles, 'Redo');
   };
 
   const handleFileChange = (newContent: string, fileName?: string, commitDescription?: string) => {
+    pushUndoState(localFiles);
     const targetFile = fileName || activeFile;
     const newFiles = localFiles.map(f => 
       f.name === targetFile ? { ...f, content: newContent } : f
     );
     setLocalFiles(newFiles);
-    pushState({ files: newFiles });
     if (onFileChange) {
       onFileChange(newFiles, commitDescription);
     }
@@ -524,7 +529,7 @@ useEffect(() => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [canUndo, canRedo, localFiles, selectedElement]);
+  }, [undoStack, redoStack, localFiles, selectedElement]);
 
   const handleSaveAsComponent = () => {
     if (!selectedElement || !onUpdateComponents) return;
@@ -1053,9 +1058,9 @@ useEffect(() => {
           <div className="flex items-center mr-2 border-r border-hall-200 dark:border-hall-800 pr-2">
             <button
               onClick={handleUndo}
-              disabled={!canUndo}
+              disabled={undoStack.length === 0}
               className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
-                !canUndo
+                undoStack.length === 0
                   ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
               }`}
@@ -1068,9 +1073,9 @@ useEffect(() => {
             </button>
             <button
               onClick={handleRedo}
-              disabled={!canRedo}
+              disabled={redoStack.length === 0}
               className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] focus:outline-none focus:ring-2 focus:ring-amber-500 ${
-                !canRedo
+                redoStack.length === 0
                   ? 'text-hall-300 dark:text-hall-700 cursor-not-allowed'
                   : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800 active:scale-90 hover:scale-110'
               }`}
@@ -1201,8 +1206,8 @@ useEffect(() => {
 
            <button
              onClick={handleUndo}
-             disabled={!canUndo}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canUndo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             disabled={undoStack.length === 0}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${undoStack.length === 0 ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Undo"
            >
              <Undo2 className="w-4 h-4" />
@@ -1213,8 +1218,8 @@ useEffect(() => {
            
            <button
              onClick={handleRedo}
-             disabled={!canRedo}
-             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${!canRedo ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             disabled={redoStack.length === 0}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-blue-500 ${redoStack.length === 0 ? 'opacity-50 cursor-not-allowed text-hall-400 dark:text-hall-600' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Redo"
            >
              <Redo2 className="w-4 h-4" />
@@ -1728,21 +1733,6 @@ useEffect(() => {
           </div>
         )}
 </div>
-  );
-};
-
-const Workspace = (props: WorkspaceProps) => {
-  return (
-    <WorkspaceProvider 
-      initialState={{ files: props.files, status: "idle" }} 
-      onStateChange={(state) => {
-        if (props.onFileChange && state.files && state.files.length > 0) {
-          props.onFileChange(state.files, 'History Change');
-        }
-      }}
-    >
-      <WorkspaceInner {...props} />
-    </WorkspaceProvider>
   );
 };
 
