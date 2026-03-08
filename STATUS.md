@@ -631,7 +631,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Map over `SCRIPT_TEMPLATES` array and display titles and descriptions as clickable cards.
 
 ## Phase 59: Studio Canvas Drag & Drop and Pan Polish
-*Status: In Progress*
+*Status: Complete*
 
 - [x] **Task 59.1: Fix Infinite Canvas Panning**
   - The `InfiniteCanvas` component needs smoother panning logic, ensuring users can navigate the WWDC-style mind map effectively without jitter.
