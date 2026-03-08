@@ -745,6 +745,24 @@ useEffect(() => {
     }, false, `Bind ${attribute} to ${variableName}`);
   };
 
+  const handleChangeTag = (newTag: string) => {
+    if (!selectedElement) return;
+    setSelectedElement((prev: any) => ({
+      ...prev,
+      tagName: newTag.toLowerCase()
+    }));
+    updateLocalHtml(selectedElement.path, (el) => {
+      const newEl = el.ownerDocument.createElement(newTag);
+      while (el.firstChild) {
+        newEl.appendChild(el.firstChild);
+      }
+      Array.from(el.attributes).forEach(attr => {
+        newEl.setAttribute(attr.name, attr.value);
+      });
+      el.replaceWith(newEl);
+    }, false, `Change tag to ${newTag}`);
+  };
+
   const handleUpdateAttribute = (attr: string, value: string) => {
     if (!selectedElement) return;
 
@@ -1313,6 +1331,7 @@ useEffect(() => {
             onToggleClass={handleToggleClass}
             onUpdateText={handleUpdateText}
             onUpdateAttribute={handleUpdateAttribute}
+            onChangeTag={handleChangeTag}
             onDelete={handleDeleteElement}
             onDuplicate={handleDuplicateElement}
             onAutoFix={handleAutoFix}
