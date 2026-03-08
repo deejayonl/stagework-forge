@@ -362,3 +362,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a "Form Action" property to Form containers to define submission behavior (e.g., API call, Email, Custom Logic).
 - [x] **Task 25.3: Input Validation UI**
   - Add visual cues for validation states (e.g., required fields, pattern matching) in the editor and properties for custom error messages.
+
+## Phase 26: Final Polish & Deployment Trigger
+*Status: Complete*
+
+- [x] **Task 26.1: Trigger Final Deploy**
+  - Update STATUS.md to indicate all phases are complete and trigger the final deployment script.
