@@ -254,3 +254,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 24.1: Remove stray console.logs**
   - Clean up debug console.log statements across frontend and BFF codebase to ensure production readiness.
+## Phase 25: Performance & Bundle Size Optimizations
+*Status: Complete*
+
+- [x] **Task 25.1: Dynamic Imports for heavy components**
+  - Ensure heavy elements like Monaco Editor are lazily loaded. (Removed unused `@monaco-editor/react` dependency instead as it was no longer used).
+- [x] **Task 25.2: CSS Purging and Optimization**
+  - Verify Tailwind CSS is properly minified and purging unused styles in production build.

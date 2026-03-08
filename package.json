@@ -17,7 +17,6 @@
     "clean": "rm -rf server/dist dist src-tauri/target"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.6.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.572.0",
     "partial-json": "^0.1.7",
