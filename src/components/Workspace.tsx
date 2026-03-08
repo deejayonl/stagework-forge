@@ -972,11 +972,11 @@ useEffect(() => {
       className={`flex flex-col shadow-sm transition-all duration-500 ease-in-out h-full ${
         isFullScreen 
           ? 'absolute inset-0 z-[100]' 
-          : 'w-full rounded-[32px] border border-hall-200 dark:border-hall-800'
+          : 'w-full rounded-2xl md:rounded-[32px] border-x-0 md:border-x border-y border-hall-200 dark:border-hall-800'
       }`}
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-3 md:px-4 py-3 border-b border-hall-200 dark:border-hall-800 bg-hall-50 dark:bg-hall-900/50 rounded-t-2xl md:rounded-t-3xl shrink-0">
+      <div className="flex items-center justify-between px-3 md:px-4 py-3 border-b border-hall-200 dark:border-hall-800 bg-hall-50 dark:bg-hall-900/50 rounded-t-2xl md:rounded-t-[32px] shrink-0">
         <div className="flex items-center gap-1 p-1 bg-hall-200 dark:bg-hall-800 rounded-full shadow-inner">
           <button
             onClick={() => setActiveTab('preview')}
@@ -1523,7 +1523,7 @@ useEffect(() => {
         />
 
         {/* Property Inspector */}
-        <div className={`absolute top-0 bottom-0 right-0 z-30 transition-transform duration-300 ${isInspectorOpen && activeTab === 'preview' ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`fixed md:absolute bottom-0 md:top-0 md:bottom-0 left-0 right-0 md:left-auto z-[100] md:z-30 h-[70vh] md:h-full transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${isInspectorOpen && activeTab === 'preview' ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'}`}>
           <PropertyInspector 
             activeBreakpoint={breakpoint}
             selectedElement={selectedElement} 

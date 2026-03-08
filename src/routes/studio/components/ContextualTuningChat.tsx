@@ -80,7 +80,7 @@ const ContextualTuningChat: React.FC<ContextualTuningChatProps> = ({ node, onUpd
     };
 
     return (
-        <div className="absolute right-4 top-24 w-[calc(100vw-2rem)] md:w-96 max-h-[calc(100vh-12rem)] md:max-h-[calc(100vh-8rem)] bg-hall-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-hall-700/50 z-[60] flex flex-col animate-fade-in">
+        <div className="fixed bottom-0 right-0 left-0 md:absolute md:top-24 md:bottom-auto md:left-auto md:right-4 w-full md:w-96 max-h-[85vh] md:max-h-[calc(100vh-8rem)] bg-hall-900/90 backdrop-blur-xl rounded-t-3xl md:rounded-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] md:shadow-2xl border-t md:border border-hall-700/50 z-[100] md:z-[60] flex flex-col animate-slide-up md:animate-fade-in">
             <div className="px-4 py-3 border-b border-hall-800/50 flex items-center justify-between sticky top-0 z-10">
                 <div className="flex items-center gap-2">
                     <Sparkles size={16} className="text-indigo-400" />

@@ -513,7 +513,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
       <main className="flex-1 relative w-full h-full">
         
         <div 
-          className={`absolute left-0 right-0 bottom-0 top-[64px] z-10 px-2 pb-24 md:px-4 md:pb-32 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+          className={`absolute left-0 right-0 bottom-0 top-[64px] z-10 px-1 sm:px-2 pb-24 md:px-4 md:pb-32 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
             hasProject 
               ? 'opacity-100 translate-y-0 scale-100' 
               : 'opacity-0 translate-y-[20px] scale-95 pointer-events-none'

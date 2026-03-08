@@ -27,12 +27,12 @@ const ChatOverlay: React.FC<ChatOverlayProps> = ({ messages, isOpen, onToggle, o
 
     return (
         <div className={`
-            absolute top-20 right-4 bottom-32 z-[80] 
-            w-[calc(100%-2rem)] md:w-[340px]
-            transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) 
-            ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-[20px] opacity-0 pointer-events-none'}
+            fixed md:absolute top-auto md:top-20 bottom-0 md:bottom-32 left-0 md:left-auto right-0 md:right-4 z-[100] md:z-[80] 
+            w-full md:w-[340px] h-[75vh] md:h-auto
+            transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+            ${isOpen ? 'translate-y-0 md:translate-y-0 md:translate-x-0 opacity-100' : 'translate-y-full md:translate-y-0 md:translate-x-[20px] opacity-0 pointer-events-none'}
         `}>
-            <div className="glass-panel h-full rounded-3xl flex flex-col shadow-2xl overflow-hidden border border-white/20 dark:border-white/10 bg-bg-panel/95 backdrop-blur-xl">
+            <div className="glass-panel h-full rounded-t-3xl md:rounded-3xl border-b-0 md:border-b flex flex-col shadow-2xl overflow-hidden border border-white/20 dark:border-white/10 bg-bg-panel/95 backdrop-blur-xl">
                 {/* Header */}
                 <div className="h-14 shrink-0 flex items-center justify-between px-5 border-b border-border-subtle/50 bg-bg-surface/30">
                     <div className="flex items-center gap-2">
@@ -43,7 +43,7 @@ const ChatOverlay: React.FC<ChatOverlayProps> = ({ messages, isOpen, onToggle, o
                         {canRetry && (
                             <button
                                 onClick={onRetry}
-                                className="w-8 h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
+                                className="w-11 h-11 md:w-8 md:h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
                                 title="Retry last response"
                             >
                                 <i className="fa-solid fa-rotate-right text-xs"></i>
@@ -51,14 +51,14 @@ const ChatOverlay: React.FC<ChatOverlayProps> = ({ messages, isOpen, onToggle, o
                         )}
                         <button 
                             onClick={() => { if(confirm("Clear chat history?")) onClear(); }}
-                            className="w-8 h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
+                            className="w-11 h-11 md:w-8 md:h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
                             title="Clear History"
                         >
                             <i className="fa-solid fa-trash-can text-xs"></i>
                         </button>
                         <button 
                             onClick={onToggle} 
-                            className="w-8 h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
+                            className="w-11 h-11 md:w-8 md:h-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-text-secondary transition-colors"
                         >
                             <i className="fa-solid fa-xmark text-sm"></i>
                         </button>
