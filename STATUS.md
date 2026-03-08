@@ -582,3 +582,7 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a dropdown for `cursor` (auto, pointer, not-allowed, grab, etc.).
 - [x] **Task 47.3: Pointer Events**
   - Add a toggle for `pointer-events` (auto, none) to control interaction flow.
+## BLOCKED
+*Status: Blocked*
+- [ ] **Git Push Failure**
+  - Git push is failing due to expired token/invalid credentials. Waiting for operator to manually push the commits to trigger the deploy cycle.
