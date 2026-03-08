@@ -322,14 +322,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Map UI element fields (e.g., Image `src`, Text `content`) to the Collection's fields.
 
 ## Phase 22: External API Integration
-*Status: In Progress*
+*Status: Complete*
 
 - [x] **Task 22.1: API Integrations Sidebar Panel**
   - Create a new "APIs" tab in the left sidebar.
   - Allow users to define external REST endpoints (URL, Method, Headers, Body).
-- [ ] **Task 22.2: BFF Proxy Endpoints**
+- [x] **Task 22.2: BFF Proxy Endpoints**
   - Create a secure proxy in the BFF (`/api/proxy/:projectId`) to forward requests and avoid CORS issues for the generated app.
-- [ ] **Task 22.3: API Data Binding**
+- [x] **Task 22.3: API Data Binding**
   - Update the Property Inspector and Data Binding UI to allow mapping API responses to UI elements (Lists, Text, Images).
 
 ## Phase 23: Application Deployment

@@ -71,12 +71,24 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
 
       const res = await fetch(targetUrl, options);
       const data = await res.text();
+      let parsedResponse = data;
       try {
         const json = JSON.parse(data);
+        parsedResponse = json;
         setTestResponse(JSON.stringify(json, null, 2));
       } catch {
         setTestResponse(data);
       }
+      
+      // Save last response to state
+      onUpdate({
+        ...apis,
+        [editingApi.id]: {
+           ...editingApi,
+           lastResponse: parsedResponse
+        }
+      });
+      
     } catch (err: any) {
       setTestResponse('Error: ' + err.message);
     } finally {

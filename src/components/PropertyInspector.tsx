@@ -6,6 +6,7 @@ interface PropertyInspectorProps {
   selectedElement: any;
   variables?: Record<string, string>;
   collections?: Record<string, any>;
+  apis?: Record<string, any>;
   onBindVariable?: (attribute: string, variableName: string) => void;
   onUpdateStyle: (property: string, value: string, state?: string) => void;
   onToggleClass?: (className: string, toggle: boolean) => void;
@@ -24,6 +25,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   selectedElement, 
   variables = {},
   collections = {},
+  apis = {},
   onBindVariable,
   onUpdateStyle, 
   onToggleClass,
@@ -39,7 +41,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isHoverMode, setIsHoverMode] = useState(false);
-  const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0;
+  const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
   if (!selectedElement) return null;
 
@@ -187,6 +189,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       <option key={key} value={key}>Bind: {key}</option>
                     ))}
                   </optgroup>
+                  {Object.values(apis || {}).length > 0 && (
+                    <optgroup label="API Responses">
+                      {Object.values(apis || {}).map((api: any) => (
+                        <option key={api.id} value={`api.${api.id}.response`}>Bind: {api.name} Response</option>
+                      ))}
+                    </optgroup>
+                  )}
                 </select>
               )}
             </div>
@@ -234,6 +243,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                       <option key={key} value={key}>Bind: {key}</option>
                     ))}
                   </optgroup>
+                  {Object.values(apis || {}).length > 0 && (
+                    <optgroup label="API Responses">
+                      {Object.values(apis || {}).map((api: any) => (
+                        <option key={api.id} value={`api.${api.id}.response`}>Bind: {api.name} Response</option>
+                      ))}
+                    </optgroup>
+                  )}
                 </select>
               )}
             </div>
@@ -276,6 +292,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                   <option key={key} value={key}>Bind Array: {key}</option>
                 ))}
               </optgroup>
+              {Object.values(apis || {}).length > 0 && (
+                <optgroup label="API Responses">
+                  {Object.values(apis || {}).map((api: any) => (
+                    <option key={api.id} value={`api.${api.id}.response`}>Bind API Array: {api.name}</option>
+                  ))}
+                </optgroup>
+              )}
             </select>
           </div>
         )}

@@ -106,12 +106,21 @@ const Workspace: React.FC<WorkspaceProps> = ({
         });
       }
       
+      // Also inject API state into variables for binding
+      if (apis) {
+        Object.values(apis).forEach((api: any) => {
+          if (api.lastResponse) {
+             mergedVariables[`api.${api.id}.response`] = JSON.stringify(api.lastResponse);
+          }
+        });
+      }
+
       iframe.contentWindow.postMessage({
         type: 'FORGE_UPDATE_VARIABLES',
         variables: mergedVariables
       }, '*');
     }
-  }, [variables, collections]);
+  }, [variables, collections, apis]);
 
   // Sync theme to iframe
   useEffect(() => {
@@ -928,6 +937,8 @@ useEffect(() => {
           <PropertyInspector 
             selectedElement={selectedElement} 
             variables={variables}
+            collections={collections}
+            apis={apis}
             pages={localFiles.filter(f => f.name.endsWith('.html') || f.name === 'index.html').map(f => f.name)}
             onBindVariable={handleBindVariable}
             onUpdateStyle={handleUpdateStyle}
@@ -978,6 +989,15 @@ useEffect(() => {
                       mergedVariables[c.id] = JSON.stringify(c.data || []);
                     });
                   }
+                  
+                  if (apis) {
+                    Object.values(apis).forEach((api: any) => {
+                      if (api.lastResponse) {
+                         mergedVariables[`api.${api.id}.response`] = JSON.stringify(api.lastResponse);
+                      }
+                    });
+                  }
+
                   iframe.contentWindow.postMessage({
                     type: 'FORGE_UPDATE_VARIABLES',
                     variables: mergedVariables

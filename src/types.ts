@@ -26,6 +26,7 @@ export interface ApiEndpoint {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   headers: Record<string, string>;
   body?: string;
+  lastResponse?: any;
 }
 
 export interface ProjectVersion {
