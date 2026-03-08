@@ -51,10 +51,58 @@ export default function ScriptView() {
   const [showTemplates, setShowTemplates] = useState(false);
 
   const SCRIPT_TEMPLATES = [
-    { title: "SaaS Dashboard", icon: LayoutTemplate, desc: "A sleek dark-mode dashboard for managing clients and metrics.", text: "I want a sleek dark-mode SaaS dashboard for managing fitness clients. It needs a sidebar, a main metrics area with charts, and a recent activity feed." },
-    { title: "Minimalist Portfolio", icon: FileCode2, desc: "Full-screen masonry grid with subtle animations.", text: "A minimalist portfolio for a photographer. Full-screen masonry grid, subtle fade-in animations, and a sleek contact modal." },
-    { title: "E-Commerce Store", icon: ShoppingBag, desc: "Modern storefront with product grid and cart.", text: "A modern e-commerce storefront for an apparel brand. Needs a hero section, a product grid with hover effects, and a slide-out shopping cart." },
-    { title: "Link-in-Bio Page", icon: TerminalSquare, desc: "Mobile-first social links page with gradients.", text: "A mobile-first link-in-bio page for a creator. It should have a glassy blurred background, a profile avatar, social icon row, and large rounded buttons for links." }
+    { title: "SaaS Dashboard", icon: LayoutTemplate, desc: "A sleek dark-mode dashboard for managing clients and metrics.", text: `SaaS Dashboard Blueprint
+
+1. What is the primary purpose of this dashboard?
+[ e.g., Manage fitness clients, track financial metrics, monitor server health... ]
+
+2. What key metrics need to be visible on the main overview?
+[ e.g., MRR, Active Users, Churn Rate... ]
+
+3. What navigation links should be in the sidebar?
+[ e.g., Overview, Users, Settings, Billing... ]
+
+4. Any specific styling preferences?
+[ e.g., Dark mode, neon green accents, glassmorphism... ]` },
+    { title: "Minimalist Portfolio", icon: FileCode2, desc: "Full-screen masonry grid with subtle animations.", text: `Minimalist Portfolio Blueprint
+
+1. Who is this portfolio for?
+[ e.g., Photographer, 3D Artist, Copywriter... ]
+
+2. How should the work be displayed?
+[ e.g., Full-screen masonry grid, horizontal scroll, single column... ]
+
+3. What sections are required?
+[ e.g., Hero introduction, Selected Works, About Me, Contact Form... ]
+
+4. What is the desired vibe or animation style?
+[ e.g., Monospaced fonts, subtle fade-ins, stark black and white... ]` },
+    { title: "E-Commerce Store", icon: ShoppingBag, desc: "Modern storefront with product grid and cart.", text: `E-Commerce Store Blueprint
+
+1. What type of products are being sold?
+[ e.g., Luxury apparel, digital courses, handmade ceramics... ]
+
+2. What are the key features of the product grid?
+[ e.g., Hover to see alternate image, quick add-to-cart, filter sidebar... ]
+
+3. Do you need specific components like a promotional banner or newsletter signup?
+[ e.g., Yes, a scrolling marquee at the top and a footer signup... ]
+
+4. What is the brand's primary color palette?
+[ e.g., Earth tones, bold primary colors, pastel minimalism... ]` },
+    { title: "Link-in-Bio Page", icon: TerminalSquare, desc: "Mobile-first social links page with gradients.", text: `Link-in-Bio Blueprint
+
+1. Who is the creator or brand?
+[ e.g., Twitch Streamer, Indie Musician, Local Bakery... ]
+
+2. What are the top 3-5 links that need to be featured?
+[ e.g., Latest YouTube video, Merch Store, Discord server, Spotify... ]
+
+3. What social icons should be included at the bottom?
+[ e.g., Instagram, TikTok, X (Twitter)... ]
+
+4. Describe the background visual.
+[ e.g., Animated gradient, blurred photo, solid dark color... ]` }
   ];
 
   const handleSubmit = async () => {
