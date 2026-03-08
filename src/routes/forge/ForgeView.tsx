@@ -66,6 +66,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectTheme,
     updateProjectFonts,
     updateProjectSEO,
+    updateProjectAuth,
     updateProjectCollections,
     updateProjectApis,
     updateProjectAssets,
@@ -500,6 +501,8 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
         <ProjectSettingsModal 
           seo={currentProject.seo || {}}
           onUpdateSEO={updateProjectSEO}
+          auth={currentProject.auth || {}}
+          onUpdateAuth={updateProjectAuth}
           onClose={() => setIsSettingsOpen(false)} 
         />
       )}

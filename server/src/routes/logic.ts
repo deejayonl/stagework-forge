@@ -30,7 +30,17 @@ Assume this code will be executed in the global scope or directly inside an even
 Use modern ES6+ syntax. Keep it concise.
 If it involves fetching data, use \`fetch\` and \`async/await\` (using an IIFE if necessary, or just promises).
 Example input: "Fetch weather for London and alert it"
-Example output: fetch('https://wttr.in/London?format=3').then(r => r.text()).then(t => alert(t));`;
+Example output: fetch('https://wttr.in/London?format=3').then(r => r.text()).then(t => alert(t));
+
+You have access to a global authentication object: `window.forgeAuth`.
+It has properties:
+- `window.forgeAuth.currentUser` (object or null)
+- `window.forgeAuth.login(userObj)`
+- `window.forgeAuth.logout()`
+
+If the prompt mentions logging in, use `window.forgeAuth.login({ email: 'user@example.com', name: 'User' })` (or extract details from the prompt).
+If it mentions logging out, use `window.forgeAuth.logout()`.
+If it mentions showing/hiding elements based on auth, check `window.forgeAuth.currentUser`.`;
 
     const { text } = await generateText({
       model,

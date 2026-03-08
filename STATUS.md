@@ -582,11 +582,21 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update `fileUtils.ts` and `Workspace.tsx` to safely inject the generated JavaScript into the project's global `<script>` execution context.
 
 ## Phase 54: Authentication Integrations (Supabase/Firebase)
+*Status: Completed*
+
+- [x] **Task 54.1: Auth Integrations UI**
+  - Create an "Authentication" panel in the global settings to configure Supabase URL/Key or Firebase Config.
+- [x] **Task 54.2: Auth State Management**
+  - Inject a global \`window.forgeAuth\` object into the iframe preview to manage \`currentUser\` state.
+- [x] **Task 54.3: Auth AI Logic Actions**
+  - Update the Logic Generator to understand auth context (e.g., "Log in user with email and password", "Sign out", "Show element only if logged in").
+
+## Phase 55: Native Database & Collections (CMS)
 *Status: Pending*
 
-- [ ] **Task 54.1: Auth Integrations UI**
-  - Create an "Authentication" panel in the global settings to configure Supabase URL/Key or Firebase Config.
-- [ ] **Task 54.2: Auth State Management**
-  - Inject a global \`window.forgeAuth\` object into the iframe preview to manage \`currentUser\` state.
-- [ ] **Task 54.3: Auth AI Logic Actions**
-  - Update the Logic Generator to understand auth context (e.g., "Log in user with email and password", "Sign out", "Show element only if logged in").
+- [ ] **Task 55.1: Collections UI Panel**
+  - Create a "Database" tab in the sidebar to define data collections (e.g., "Posts", "Products", "Users").
+- [ ] **Task 55.2: Collection Schema Builder**
+  - Allow users to define fields (Text, Number, Boolean, Image) for each collection.
+- [ ] **Task 55.3: Dynamic Data Binding**
+  - Update `PropertyInspector.tsx` to allow binding element text/images to collection data.

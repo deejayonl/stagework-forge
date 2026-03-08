@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { X, Globe, Save } from 'lucide-react';
 
 interface ProjectSettingsModalProps {
+  auth: Record<string, string>;
+  onUpdateAuth: (auth: Record<string, string>) => void;
   seo: Record<string, string>;
   onUpdateSEO: (seo: Record<string, string>) => void;
   onClose: () => void;
 }
 
-export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo, onUpdateSEO, onClose }) => {
+export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo, onUpdateSEO, auth, onUpdateAuth, onClose }) => {
   const [title, setTitle] = useState(seo.title || '');
   const [description, setDescription] = useState(seo.description || '');
   const [ogImage, setOgImage] = useState(seo.ogImage || '');
@@ -15,6 +17,10 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
   const [metaTags, setMetaTags] = useState(seo.metaTags || '');
   const [customHead, setCustomHead] = useState(seo.customHead || '');
   const [customBody, setCustomBody] = useState(seo.customBody || '');
+  const [authProvider, setAuthProvider] = useState(auth?.provider || 'none');
+  const [supabaseUrl, setSupabaseUrl] = useState(auth?.supabaseUrl || '');
+  const [supabaseKey, setSupabaseKey] = useState(auth?.supabaseKey || '');
+  const [firebaseConfig, setFirebaseConfig] = useState(auth?.firebaseConfig || '');
   const [activeTab, setActiveTab] = useState('seo');
 
   const handleSave = () => {
@@ -27,6 +33,13 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
       metaTags,
       customHead,
       customBody
+    });
+    onUpdateAuth({
+      ...auth,
+      provider: authProvider,
+      supabaseUrl,
+      supabaseKey,
+      firebaseConfig
     });
     onClose();
   };
@@ -62,6 +75,12 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'code' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
           >
             Custom Code
+          </button>
+          <button 
+            onClick={() => setActiveTab('auth')}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'auth' ? 'border-amber-500 text-amber-500' : 'border-transparent text-hall-500 hover:text-hall-900 dark:hover:text-white'}`}
+          >
+            Authentication
           </button>
         </div>
 
@@ -141,7 +160,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
             </div>
           
             </div>
-          ) : (
+          ) : activeTab === 'code' ? (
             <div>
               <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">Custom Code Injection</h3>
               <p className="text-xs text-hall-500 mb-4">Inject raw HTML, CSS, or JavaScript into your project. Code will be executed in the preview and exported files.</p>
@@ -178,6 +197,81 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({ seo,
                     className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-amber-500 resize-y"
                   />
                 </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h3 className="text-sm font-medium text-hall-900 dark:text-white mb-4">Authentication Configuration</h3>
+              <p className="text-xs text-hall-500 mb-4">Integrate Supabase or Firebase to enable authentication and database capabilities in your app.</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                    Provider
+                  </label>
+                  <select
+                    value={authProvider}
+                    onChange={(e) => setAuthProvider(e.target.value)}
+                    className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    <option value="none">None</option>
+                    <option value="supabase">Supabase</option>
+                    <option value="firebase">Firebase</option>
+                  </select>
+                </div>
+
+                {authProvider === 'supabase' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2">
+                    <div>
+                      <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                        Supabase URL
+                      </label>
+                      <input 
+                        type="text"
+                        value={supabaseUrl}
+                        onChange={(e) => setSupabaseUrl(e.target.value)}
+                        placeholder="https://your-project.supabase.co"
+                        className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                        Supabase Anon Key
+                      </label>
+                      <input 
+                        type="password"
+                        value={supabaseKey}
+                        onChange={(e) => setSupabaseKey(e.target.value)}
+                        placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {authProvider === 'firebase' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2">
+                    <div>
+                      <label className="block text-xs font-medium text-hall-600 dark:text-hall-400 mb-1">
+                        Firebase Config (JSON)
+                      </label>
+                      <textarea 
+                        value={firebaseConfig}
+                        onChange={(e) => setFirebaseConfig(e.target.value)}
+                        placeholder='{
+  "apiKey": "...",
+  "authDomain": "...",
+  "projectId": "...",
+  "storageBucket": "...",
+  "messagingSenderId": "...",
+  "appId": "..."
+}'
+                        rows={8}
+                        className="w-full bg-hall-50 dark:bg-black border border-hall-200 dark:border-hall-800 rounded-lg px-3 py-2 text-sm text-hall-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-amber-500 resize-y"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}

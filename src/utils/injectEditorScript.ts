@@ -2,6 +2,22 @@ export const injectEditorScript = (htmlContent: string): string => {
   const script = `
     <script>
       (function() {
+        // Global Auth State
+        window.forgeAuth = {
+          currentUser: null,
+          provider: 'none',
+          login: function(user) {
+            this.currentUser = user;
+            window.parent.postMessage({ type: 'FORGE_AUTH_STATE_CHANGED', user: this.currentUser }, '*');
+            document.dispatchEvent(new CustomEvent('forgeAuthChanged', { detail: { user: this.currentUser } }));
+          },
+          logout: function() {
+            this.currentUser = null;
+            window.parent.postMessage({ type: 'FORGE_AUTH_STATE_CHANGED', user: null }, '*');
+            document.dispatchEvent(new CustomEvent('forgeAuthChanged', { detail: { user: null } }));
+          }
+        };
+
         let selectedElement = null;
         let hoverElement = null;
         

@@ -470,6 +470,18 @@ export const useProjects = (storageToken: string | null) => {
     if (updatedProject) syncProjectToBFF(updatedProject);
   }, [currentProjectId, storageToken]);
 
+  const updateProjectAuth = useCallback((auth: Record<string, string>) => {
+    if (!currentProjectId) return;
+    let updatedProject: Project | null = null;
+    setProjects(prev => {
+      const p = prev.find(proj => proj.id === currentProjectId);
+      if (!p) return prev;
+      updatedProject = { ...p, auth };
+      return prev.map(proj => proj.id === currentProjectId ? updatedProject! : proj);
+    });
+    if (updatedProject) syncProjectToBFF(updatedProject);
+  }, [currentProjectId, storageToken]);
+
   const startNewProject = useCallback(() => {
     setCurrentProjectId(null);
   }, []);
@@ -486,6 +498,7 @@ export const useProjects = (storageToken: string | null) => {
     updateProjectTheme,
     updateProjectFonts,
     updateProjectSEO,
+    updateProjectAuth,
     updateProjectCollections,
     updateProjectApis,
     updateProjectAssets,

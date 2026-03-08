@@ -47,6 +47,7 @@ export interface Project {
   theme?: Record<string, string>;
   customFonts?: string[];
   seo?: Record<string, string>;
+  auth?: Record<string, string>;
   collections?: Record<string, Collection>;
   assets?: Record<string, string>;
   apis?: Record<string, ApiEndpoint>;
