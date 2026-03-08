@@ -17,7 +17,7 @@ const COLORS = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4'
 
 export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName }) => {
   const [cursors, setCursors] = useState<Map<number, Cursor>>(new Map());
-  const [provider, setProvider] = useState<WebsocketProvider | null>(null);
+  
 
   useEffect(() => {
     const ydoc = new Y.Doc();
@@ -64,7 +64,7 @@ export const LiveCursors: React.FC<LiveCursorsProps> = ({ roomName }) => {
       setCursors(newCursors);
     });
 
-    setProvider(wsProvider);
+    
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);

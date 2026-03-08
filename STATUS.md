@@ -166,3 +166,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 12.1: Types definitions fix**
   - Fix duplicate `apis` property in `src/types.ts`.
+
+## Phase 13: Live Cursors & Collaboration Fixes
+*Status: Complete*
+
+- [x] **Task 13.1: Live Cursors prop fix**
+  - Fix unused `provider` prop in `src/components/LiveCursors.tsx` and ensure it's properly typed and integrated or removed if unnecessary.
