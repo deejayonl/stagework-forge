@@ -152,7 +152,7 @@ export const useProjects = (storageToken: string | null) => {
     setIsSyncing(true);
     setSyncError(null);
     try {
-      const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/projects' : '/api/projects';
+      const API_BASE = 'https://sgfbackend.deejay.onl/api/projects';
       await fetch(API_BASE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -179,7 +179,7 @@ export const useProjects = (storageToken: string | null) => {
 
   const loadProjectsFromBFF = useCallback(async () => {
     try {
-      const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/projects' : '/api/projects';
+      const API_BASE = 'https://sgfbackend.deejay.onl/api/projects';
       const res = await fetch(API_BASE);
       if (res.ok) {
         const data = await res.json();

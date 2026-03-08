@@ -516,6 +516,62 @@ useEffect(() => {
     setContextMenu(null);
   };
 
+  const handleAddTableRow = () => {
+    if (!selectedElement) return;
+    updateLocalHtml(selectedElement.path, (el) => {
+      let target: HTMLElement | null = el;
+      if (['TD', 'TH', 'TR'].includes(el.tagName)) {
+        target = (el.closest('tbody, thead, tfoot') || el.closest('table') || el) as HTMLElement;
+      }
+      if (!target) return;
+      
+      if (target.tagName === 'TABLE') {
+        const tbody = target.querySelector('tbody');
+        if (tbody) target = tbody;
+      }
+
+      const firstRow = target.querySelector('tr');
+      const colCount = firstRow ? firstRow.children.length : 1;
+
+      const newRow = document.createElement('tr');
+      if (firstRow) newRow.className = firstRow.className;
+      
+      for (let i = 0; i < colCount; i++) {
+        const cell = document.createElement(target.tagName === 'THEAD' ? 'th' : 'td');
+        const refCell = firstRow?.children[i] as HTMLElement;
+        if (refCell) cell.className = refCell.className;
+        cell.textContent = `New Cell`;
+        if (!refCell?.className) cell.style.padding = '1rem 1.5rem';
+        newRow.appendChild(cell);
+      }
+
+      target.appendChild(newRow);
+    }, false, 'Add Table Row');
+  };
+
+  const handleAddTableColumn = () => {
+    if (!selectedElement) return;
+    updateLocalHtml(selectedElement.path, (el) => {
+      let table = el.closest('table') as HTMLTableElement | null;
+      if (!table && el.tagName === 'TABLE') table = el as HTMLTableElement;
+      if (!table) return;
+
+      const rows = table.querySelectorAll('tr');
+      rows.forEach(row => {
+        const isHeader = row.closest('thead') !== null;
+        const cell = document.createElement(isHeader ? 'th' : 'td');
+        
+        const lastCell = row.lastElementChild as HTMLElement;
+        if (lastCell) cell.className = lastCell.className;
+        
+        cell.textContent = isHeader ? 'New Header' : 'New Data';
+        if (!lastCell?.className) cell.style.padding = '1rem 1.5rem';
+        
+        row.appendChild(cell);
+      });
+    }, false, 'Add Table Column');
+  };
+
   const handleInsertComponent = (html: string) => {
     if (selectedElement) {
       updateLocalHtml(selectedElement.path, (el) => {
@@ -1377,6 +1433,8 @@ useEffect(() => {
             onChangeTag={handleChangeTag}
             onDelete={handleDeleteElement}
             onDuplicate={handleDuplicateElement}
+            onAddTableRow={handleAddTableRow}
+            onAddTableColumn={handleAddTableColumn}
             onAutoFix={handleAutoFix}
             onInsertSkipLink={handleInsertSkipLink}
             onClose={() => setIsInspectorOpen(false)} 

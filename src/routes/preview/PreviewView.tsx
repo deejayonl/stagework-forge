@@ -13,7 +13,7 @@ export default function PreviewView() {
     if (!projectId) return;
 
     // Fetch initial state via API
-    const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/projects' : '/api/projects';
+    const API_BASE = 'https://sgfbackend.deejay.onl/api/projects';
     fetch(`${API_BASE}/${projectId}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to load project');

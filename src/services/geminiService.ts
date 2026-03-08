@@ -31,7 +31,7 @@ const getAiConfig = () => {
 
 
 // Use proxy in dev, or relative in prod
-const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/generate' : 'https://sgfbackend.deejay.onl/api/generate';
+const API_BASE = 'https://sgfbackend.deejay.onl/api/generate';
 
 /**
  * Generates web artifact code based on a text prompt and optional attachments.
@@ -51,7 +51,7 @@ export const generateCode = async (
         throw new Error(`${provider.toUpperCase()} API Key is missing. Please add it to your settings.`);
     }
 
-    const MUTATE_URL = import.meta.env?.DEV ? 'http://localhost:3001/api/mutate' : 'https://sgfbackend.deejay.onl/api/mutate';
+    const MUTATE_URL = 'https://sgfbackend.deejay.onl/api/mutate';
     const response = await fetch(MUTATE_URL, {
         method: 'POST',
         headers: {
@@ -219,7 +219,7 @@ export const fixHtmlNode = async (html: string): Promise<string> => {
         throw new Error("Gemini API Key is missing.");
     }
 
-    const AUTOFIX_URL = import.meta.env?.DEV ? 'http://localhost:3001/api/autofix' : 'https://sgfbackend.deejay.onl/api/autofix';
+    const AUTOFIX_URL = 'https://sgfbackend.deejay.onl/api/autofix';
     const response = await fetch(AUTOFIX_URL, {
         method: 'POST',
         headers: {
@@ -249,7 +249,7 @@ export const rewriteText = async (text: string, tone: string): Promise<string> =
         throw new Error("Gemini API Key is missing.");
     }
 
-    const REWRITE_URL = import.meta.env?.DEV ? 'http://localhost:3001/api/rewrite' : 'https://sgfbackend.deejay.onl/api/rewrite';
+    const REWRITE_URL = 'https://sgfbackend.deejay.onl/api/rewrite';
     const response = await fetch(REWRITE_URL, {
         method: 'POST',
         headers: {

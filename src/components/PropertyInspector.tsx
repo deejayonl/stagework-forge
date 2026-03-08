@@ -21,6 +21,8 @@ interface PropertyInspectorProps {
   onUpdateAttribute?: (attr: string, value: string) => void;
   onChangeTag?: (tag: string) => void;
   onSaveComponent?: (html: string) => void;
+  onAddTableRow?: () => void;
+  onAddTableColumn?: () => void;
   pages?: string[];
 }
 
@@ -43,6 +45,8 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onUpdateAttribute,
   onChangeTag,
   onSaveComponent,
+  onAddTableRow,
+  onAddTableColumn,
   pages = []
 }) => {
   const [isFixing, setIsFixing] = useState(false);
@@ -770,6 +774,86 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         </div>
 
         
+        {/* Table Properties */}
+        {['table', 'thead', 'tbody', 'tr', 'th', 'td', 'tfoot'].includes(tagName.toLowerCase()) && (
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Table Properties</h4>
+            
+            <div className="flex gap-2 mt-2">
+              {onAddTableRow && (
+                <button 
+                  onClick={onAddTableRow}
+                  className="flex-1 bg-hall-100 dark:bg-hall-900 text-hall-700 dark:text-hall-300 text-[10px] py-1.5 rounded hover:bg-hall-200 dark:hover:bg-hall-800 transition-colors"
+                >
+                  + Add Row
+                </button>
+              )}
+              {onAddTableColumn && (
+                <button 
+                  onClick={onAddTableColumn}
+                  className="flex-1 bg-hall-100 dark:bg-hall-900 text-hall-700 dark:text-hall-300 text-[10px] py-1.5 rounded hover:bg-hall-200 dark:hover:bg-hall-800 transition-colors"
+                >
+                  + Add Column
+                </button>
+              )}
+            </div>
+
+            {tagName.toLowerCase() === 'table' && (
+              <>
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500">Table Layout</label>
+                    <select
+                      value={styles.tableLayout || 'auto'}
+                      onChange={(e) => handleStyleChange('tableLayout', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    >
+                      <option value="auto">auto</option>
+                      <option value="fixed">fixed</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500">Border Collapse</label>
+                    <select
+                      value={styles.borderCollapse || 'separate'}
+                      onChange={(e) => handleStyleChange('borderCollapse', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    >
+                      <option value="separate">separate</option>
+                      <option value="collapse">collapse</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-1 mt-2">
+                  <label className="text-[10px] text-hall-500">Border Spacing</label>
+                  <input 
+                    type="text" 
+                    value={styles.borderSpacing || ''} 
+                    onChange={(e) => handleStyleChange('borderSpacing', e.target.value)}
+                    className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    placeholder="e.g. 10px 5px"
+                  />
+                </div>
+              </>
+            )}
+
+            {['th', 'td'].includes(tagName.toLowerCase()) && (
+              <div className="space-y-1 mt-2">
+                <label className="text-[10px] text-hall-500">Empty Cells</label>
+                <select
+                  value={styles.emptyCells || 'show'}
+                  onChange={(e) => handleStyleChange('emptyCells', e.target.value)}
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                >
+                  <option value="show">show</option>
+                  <option value="hide">hide</option>
+                </select>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Sizing */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Sizing</h4>

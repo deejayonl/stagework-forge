@@ -36,7 +36,7 @@ export function DeployPanel({ projectId, onClose }: DeployPanelProps) {
     setIsDeploying(true);
     
     // Open the deployment UI in a new tab
-    const PROXY_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/deploy' : '/api/deploy';
+    const PROXY_BASE = 'https://sgfbackend.deejay.onl/api/deploy';
     const deployUrl = `${PROXY_BASE}/${provider}/${projectId}?framework=react`;
     
     window.open(deployUrl, '_blank');

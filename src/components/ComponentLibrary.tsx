@@ -38,6 +38,10 @@ const COMPONENTS = [
       {
         name: 'Badge',
         html: `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400">Badge</span>`
+      },
+      {
+        name: 'Table',
+        html: `<div class="w-full overflow-x-auto border border-hall-200 dark:border-hall-800 rounded-lg"><table class="w-full text-sm text-left text-hall-500 dark:text-hall-400"><thead class="text-xs text-hall-700 uppercase bg-hall-50 dark:bg-hall-900 dark:text-hall-400 border-b border-hall-200 dark:border-hall-800"><tr><th scope="col" class="px-6 py-3">Header 1</th><th scope="col" class="px-6 py-3">Header 2</th><th scope="col" class="px-6 py-3">Header 3</th></tr></thead><tbody><tr class="bg-white border-b dark:bg-black dark:border-hall-800"><td class="px-6 py-4">Data A1</td><td class="px-6 py-4">Data B1</td><td class="px-6 py-4">Data C1</td></tr><tr class="bg-white dark:bg-black"><td class="px-6 py-4">Data A2</td><td class="px-6 py-4">Data B2</td><td class="px-6 py-4">Data C2</td></tr></tbody></table></div>`
       }
     ]
   }

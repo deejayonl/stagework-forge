@@ -181,7 +181,7 @@ const [isDark, setIsDark] = useState(true);
   
   const handleDeployConfirm = async (framework: string, provider: string) => {
     if (!currentProject) return;
-    const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/deploy' : '/api/deploy';
+    const API_BASE = 'https://sgfbackend.deejay.onl/api/deploy';
     setIsExportModalOpen(false);
     
     try {
@@ -195,7 +195,7 @@ const [isDark, setIsDark] = useState(true);
 
   const handleExportConfirm = (framework: string) => {
     if (!currentProject) return;
-    const API_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/export' : '/api/export';
+    const API_BASE = 'https://sgfbackend.deejay.onl/api/export';
     window.open(`${API_BASE}/${currentProject.id}?framework=${framework}`, '_blank');
     setIsExportModalOpen(false);
   };

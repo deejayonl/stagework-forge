@@ -65,7 +65,7 @@ export function ApiIntegrationsPanel({ apis, projectId, onUpdate, onClose }: Api
 
       // Use the BFF proxy if projectId is available
       if (projectId) {
-        const PROXY_BASE = import.meta.env?.DEV ? 'http://localhost:3001/api/proxy' : '/api/proxy';
+        const PROXY_BASE = 'https://sgfbackend.deejay.onl/api/proxy';
         targetUrl = `${PROXY_BASE}/${projectId}/${editingApi.id}`;
       }
 
