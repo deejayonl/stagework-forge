@@ -36,7 +36,7 @@ rewriteRoutes.post('/', async (c) => {
             }
         });
 
-        const rewrittenText = response.text || text;
+        const rewrittenText = (response.text || text) as string;
         const cleanText = rewrittenText.trim();
 
         return c.json({ text: cleanText });

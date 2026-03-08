@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { stream } from 'hono/streaming';
 import { GoogleGenAI } from "@google/genai";
-import { validateString, validateArray, ValidationError } from '../utils/validate.js';
+import { validateString, ValidationError } from '../utils/validate.js';
 import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
 

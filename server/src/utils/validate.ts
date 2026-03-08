@@ -5,6 +5,8 @@ export class ValidationError extends Error {
   }
 }
 
+export function validateString(value: any, fieldName: string, required?: true): string;
+export function validateString(value: any, fieldName: string, required: false): string | undefined;
 export function validateString(value: any, fieldName: string, required = true): string | undefined {
   if (value === undefined || value === null || value === '') {
     if (required) throw new ValidationError(`Field '${fieldName}' is required and cannot be empty.`);
@@ -16,6 +18,8 @@ export function validateString(value: any, fieldName: string, required = true): 
   return value;
 }
 
+export function validateArray(value: any, fieldName: string, required?: true): any[];
+export function validateArray(value: any, fieldName: string, required: false): any[] | undefined;
 export function validateArray(value: any, fieldName: string, required = true): any[] | undefined {
   if (value === undefined || value === null) {
     if (required) throw new ValidationError(`Field '${fieldName}' is required.`);

@@ -72,7 +72,6 @@ generateRoutes.post('/generate-code', async (c) => {
         const currentFiles = body.currentFiles || [];
         
         const { apiKey, provider } = getProviderConfig(c);
-        const ai = getClient(c);
         let finalPrompt = prompt;
 
         if (currentFiles.length > 0) {
@@ -206,7 +205,6 @@ generateRoutes.post('/generate-image', async (c) => {
         const body = await c.req.json();
         const prompt = validateString(body.prompt, 'prompt');
         const size = body.size;
-        const { apiKey, provider } = getProviderConfig(c);
         const ai = getClient(c);
         
         const response = await ai.models.generateImages({
@@ -236,7 +234,7 @@ generateRoutes.post('/generate-image', async (c) => {
 generateRoutes.post('/plan-images', async (c) => {
     try {
         const body = await c.req.json();
-        const assets = validateArray(body.assets, 'assets');
+        const assets = validateArray(body.assets, 'assets') || [];
         const userInstruction = validateString(body.userInstruction, 'userInstruction');
         const ai = getClient(c);
 
@@ -312,7 +310,7 @@ generateRoutes.post('/', async (c) => {
     try {
         const body = await c.req.json();
         const script = validateString(body.script, 'script');
-        const targets = validateArray(body.targets, 'targets');
+        const targets = validateArray(body.targets, 'targets') || [];
         const ai = getClient(c);
 
         const prompt = `

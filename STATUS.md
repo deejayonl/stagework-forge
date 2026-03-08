@@ -221,3 +221,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure the frontend remains a strict thin client and does not contain heavy business logic that should be in the BFF. Confirmed AI inference requests are offloaded to `sgfbackend.deejay.onl`.
 - [x] **Task 19.2: Resolve any remaining UI/UX issues**
   - Checked for visual bugs, layout shifts, or missing states across the Script, Studio, and Stage views. Fixed the Stage transition missing `workspaces` state bug.
+
+## Phase 20: BFF Server TypeScript Strict Mode Fixes
+*Status: Complete*
+
+- [x] **Task 20.1: Fix missing types and unused variables in BFF**
+  - Resolve TS errors in `server/src/routes/autofix.ts`, `generate.ts`, `mutate.ts`, and `rewrite.ts`.

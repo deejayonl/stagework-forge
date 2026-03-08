@@ -35,7 +35,7 @@ autofixRoutes.post('/', async (c) => {
             }
         });
 
-        const fixedHtml = response.text || html;
+        const fixedHtml = (response.text || html) as string;
         // Strip markdown if AI included it
         const cleanHtml = fixedHtml.replace(/```html\n?/, '').replace(/```\n?$/, '').trim();
 
