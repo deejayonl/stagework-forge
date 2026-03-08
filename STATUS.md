@@ -640,3 +640,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 52.3: Tab Index & SEO Alt Tags**
   - Add an input for `tabindex` to manage keyboard navigation flow.
   - Enhance `alt` attribute editing for `<img>` tags directly in the inspector.
+
+## Phase 53: Media & Embed Controls
+*Status: Complete*
+
+- [x] **Task 53.1: Video Controls**
+  - Add toggles for `autoplay`, `loop`, `muted`, and `controls` when a `<video>` element is selected.
+- [x] **Task 53.2: Image Source - [ ] **Task 53.2: Image Source & Loading** Loading**
+  - Add an input for `loading` attribute (`lazy` vs `eager`) on `<img>` tags.
+- [x] **Task 53.3: iFrame Embeds**
+  - Allow users to insert custom `<iframe>` tags and set `src`, `allowfullscreen`, and `loading` attributes directly in the Property Inspector.

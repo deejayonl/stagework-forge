@@ -1481,32 +1481,103 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
 
           {(tagName.toLowerCase() === 'img' || tagName.toLowerCase() === 'video' || tagName.toLowerCase() === 'iframe') && (
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <div className="space-y-1">
-                <label className="text-[10px] text-hall-500">Object Fit</label>
-                <select
-                  value={styles.objectFit || 'fill'}
-                  onChange={(e) => handleStyleChange('objectFit', e.target.value)}
-                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
-                >
-                  <option value="fill">fill</option>
-                  <option value="contain">contain</option>
-                  <option value="cover">cover</option>
-                  <option value="none">none</option>
-                  <option value="scale-down">scale-down</option>
-                </select>
+            <>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <div className="space-y-1">
+                  <label className="text-[10px] text-hall-500">Object Fit</label>
+                  <select
+                    value={styles.objectFit || 'fill'}
+                    onChange={(e) => handleStyleChange('objectFit', e.target.value)}
+                    className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  >
+                    <option value="fill">fill</option>
+                    <option value="contain">contain</option>
+                    <option value="cover">cover</option>
+                    <option value="none">none</option>
+                    <option value="scale-down">scale-down</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] text-hall-500">Object Position</label>
+                  <input 
+                    type="text" 
+                    value={styles.objectPosition || ''} 
+                    onChange={(e) => handleStyleChange('objectPosition', e.target.value)}
+                    className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                    placeholder="e.g. center"
+                  />
+                </div>
               </div>
-              <div className="space-y-1">
-                <label className="text-[10px] text-hall-500">Object Position</label>
-                <input 
-                  type="text" 
-                  value={styles.objectPosition || ''} 
-                  onChange={(e) => handleStyleChange('objectPosition', e.target.value)}
-                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
-                  placeholder="e.g. center"
-                />
-              </div>
-            </div>
+
+              {tagName.toLowerCase() === 'video' && (
+                <div className="space-y-2 mt-2 border-t border-hall-200 dark:border-hall-800 pt-2">
+                  <label className="text-[10px] text-hall-500 font-bold">Video Settings</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                      <input type="checkbox" checked={selectedElement.dataset?.autoplay === 'true' || selectedElement.autoplay} onChange={(e) => onUpdateAttribute?.('autoplay', e.target.checked ? 'true' : '')} /> Autoplay
+                    </label>
+                    <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                      <input type="checkbox" checked={selectedElement.dataset?.loop === 'true' || selectedElement.loop} onChange={(e) => onUpdateAttribute?.('loop', e.target.checked ? 'true' : '')} /> Loop
+                    </label>
+                    <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                      <input type="checkbox" checked={selectedElement.dataset?.muted === 'true' || selectedElement.muted} onChange={(e) => onUpdateAttribute?.('muted', e.target.checked ? 'true' : '')} /> Muted
+                    </label>
+                    <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                      <input type="checkbox" checked={selectedElement.dataset?.controls === 'true' || selectedElement.controls} onChange={(e) => onUpdateAttribute?.('controls', e.target.checked ? 'true' : '')} /> Controls
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {tagName.toLowerCase() === 'img' && (
+                <div className="space-y-2 mt-2 border-t border-hall-200 dark:border-hall-800 pt-2">
+                  <label className="text-[10px] text-hall-500 font-bold">Image Settings</label>
+                  <div className="flex items-center gap-2">
+                    <label className="text-[10px] text-hall-900 dark:text-ink">Loading</label>
+                    <select 
+                      className="flex-1 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      value={selectedElement.dataset?.loading || selectedElement.loading || 'eager'}
+                      onChange={(e) => onUpdateAttribute?.('loading', e.target.value)}
+                    >
+                      <option value="eager">eager</option>
+                      <option value="lazy">lazy</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {tagName.toLowerCase() === 'iframe' && (
+                <div className="space-y-2 mt-2 border-t border-hall-200 dark:border-hall-800 pt-2">
+                  <label className="text-[10px] text-hall-500 font-bold">iFrame Settings</label>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-hall-500">Source (src)</label>
+                    <input 
+                      type="text" 
+                      value={selectedElement.dataset?.src || selectedElement.src || ''} 
+                      onChange={(e) => onUpdateAttribute?.('src', e.target.value)}
+                      className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 mt-1">
+                    <label className="flex items-center gap-1 text-[10px] text-hall-900 dark:text-ink">
+                      <input type="checkbox" checked={selectedElement.dataset?.allowfullscreen === 'true' || selectedElement.allowFullscreen} onChange={(e) => onUpdateAttribute?.('allowfullscreen', e.target.checked ? 'true' : '')} /> Allow Fullscreen
+                    </label>
+                    <div className="flex items-center gap-1">
+                      <label className="text-[10px] text-hall-900 dark:text-ink">Loading</label>
+                      <select 
+                        className="flex-1 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                        value={selectedElement.dataset?.loading || selectedElement.loading || 'eager'}
+                        onChange={(e) => onUpdateAttribute?.('loading', e.target.value)}
+                      >
+                        <option value="eager">eager</option>
+                        <option value="lazy">lazy</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
 
