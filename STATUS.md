@@ -700,3 +700,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a visual indicator in the DOM Tree and on the canvas to clearly distinguish Slot zones from standard containers.
 - [x] **Task 58.3: Component Props Binding**
   - Expand the Variables panel to allow mapping Component Props to nested text or attribute values within a component instance.
+
+## Phase 59: DOM Tree Drag & Drop Sorting
+*Status: Complete*
+
+- [x] **Task 59.1: Drag Event Handlers**
+  - Implement `onDragStart`, `onDragOver`, and `onDrop` events within the `DOMTreeExplorer` component.
+- [x] **Task 59.2: Visual Drop Indicators**
+  - Add visual cues (lines or highlights) in the DOM Tree to indicate where an element will be placed when dropped.
+- [x] **Task 59.3: Tree Mutation Logic**
+  - Wire up the drop event to update the underlying `files` state, moving the dragged node to the new position in the HTML tree.
