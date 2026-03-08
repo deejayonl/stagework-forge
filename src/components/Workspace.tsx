@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GeneratedFile } from '../types';
 import { flattenFilesForPreview, createZipDownload } from '../utils/fileUtils';
-import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2 } from 'lucide-react';
+import { Code, Play, Download, FileJson, FileCode, Monitor, Tablet, Smartphone, Maximize2, Minimize2, ExternalLink, Loader2, Rocket } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 
 import { PropertyInspector } from './PropertyInspector';
@@ -12,6 +12,7 @@ import { ThemeEditor } from './ThemeEditor';
 import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
+import { DeployPanel } from './DeployPanel';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
 import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network } from 'lucide-react';
 
@@ -67,6 +68,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDeployOpen, setIsDeployOpen] = useState(false);
   
   // Local state for files allows editing within the workspace session
   const [localFiles, setLocalFiles] = useState<GeneratedFile[]>(files);
@@ -747,6 +749,17 @@ useEffect(() => {
                Global Theme
              </div>
            </button>
+
+           <button
+             onClick={() => setIsDeployOpen(!isDeployOpen)}
+             className={`group relative p-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-purple-500 ${isDeployOpen ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="Deploy"
+           >
+             <Rocket className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               Deploy Project
+             </div>
+           </button>
            
            <button
              onClick={() => setIsTreeOpen(!isTreeOpen)}
@@ -916,6 +929,14 @@ useEffect(() => {
               }
             }}
             onClose={() => setIsThemeOpen(false)} 
+          />
+        </div>
+
+        {/* Deploy Panel */}
+        <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isDeployOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
+          <DeployPanel 
+            projectId={projectId}
+            onClose={() => setIsDeployOpen(false)} 
           />
         </div>
 
