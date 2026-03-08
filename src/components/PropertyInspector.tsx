@@ -1732,34 +1732,62 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
 
 
         {/* Link Navigation */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Navigation</h4>
-          <div className="space-y-2">
-            <label className="text-xs font-medium text-hall-600 dark:text-hall-400">Link to Page / URL</label>
-            <div className="flex gap-2">
-              <select
-                className="flex-1 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-xs text-hall-900 dark:text-ink outline-none"
-                value={selectedElement.attributes?.href || ''}
-                onChange={(e) => onUpdateAttribute?.('href', e.target.value)}
-              >
-                <option value="">None</option>
-                {pages?.map(page => (
-                  <option key={page} value={`./${page}`}>{page}</option>
-                ))}
-              </select>
+        {tagName.toLowerCase() === 'a' && (
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Navigation</h4>
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-hall-600 dark:text-hall-400">Link to Page / URL</label>
+              <div className="flex gap-2">
+                <select
+                  className="flex-1 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-xs text-hall-900 dark:text-ink outline-none"
+                  value={selectedElement.attributes?.href || ''}
+                  onChange={(e) => onUpdateAttribute?.('href', e.target.value)}
+                >
+                  <option value="">None</option>
+                  {pages?.map(page => (
+                    <option key={page} value={`./${page}`}>{page}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Or custom URL (https://...) or #anchor"
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-xs text-hall-900 dark:text-ink focus:ring-1 focus:ring-amber-500 outline-none"
+                  value={selectedElement.attributes?.href || ''}
+                  onChange={(e) => onUpdateAttribute?.('href', e.target.value)}
+                />
+              </div>
             </div>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Or custom URL (https://...)"
-                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-xs text-hall-900 dark:text-ink focus:ring-1 focus:ring-amber-500 outline-none"
-                value={selectedElement.attributes?.href || ''}
-                onChange={(e) => onUpdateAttribute?.('href', e.target.value)}
-              />
+
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500 font-bold">Target</label>
+                <select
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink"
+                  value={selectedElement.dataset?.target || selectedElement.target || '_self'}
+                  onChange={(e) => onUpdateAttribute?.('target', e.target.value)}
+                >
+                  <option value="_self">_self (Same window)</option>
+                  <option value="_blank">_blank (New tab)</option>
+                  <option value="_parent">_parent</option>
+                  <option value="_top">_top</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-hall-500 font-bold">Rel (SEO/Security)</label>
+                <input
+                  type="text"
+                  className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1.5 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="noopener noreferrer"
+                  value={selectedElement.dataset?.rel || selectedElement.rel || ''}
+                  onChange={(e) => onUpdateAttribute?.('rel', e.target.value)}
+                />
+              </div>
             </div>
-            <p className="text-[10px] text-hall-500">Sets the `href` attribute for navigation.</p>
           </div>
-        </div>
+        )}
 
         {/* Events */}
         <div className="space-y-3">

@@ -650,3 +650,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add an input for `loading` attribute (`lazy` vs `eager`) on `<img>` tags.
 - [x] **Task 53.3: iFrame Embeds**
   - Allow users to insert custom `<iframe>` tags and set `src`, `allowfullscreen`, and `loading` attributes directly in the Property Inspector.
+
+## Phase 54: Advanced Navigation & Links
+*Status: Complete*
+
+- [x] **Task 54.1: Target Attribute Selection**
+  - Add a dropdown to select `target` (`_blank`, `_self`, `_parent`, `_top`) for `<a>` tags.
+- [x] **Task 54.2: Rel Attribute Control**
+  - Add inputs for `rel` attribute (`noopener`, `noreferrer`, `nofollow`) to enhance security and SEO for external links.
+- [x] **Task 54.3: Smooth Scrolling Anchors**
+  - Allow users to link an `<a>` tag to an internal element's ID for smooth scrolling navigation.
