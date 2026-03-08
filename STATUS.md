@@ -284,3 +284,14 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Update the `localFiles` or `workspaces` state to reflect the new DOM structure.
 - [x] **Task 27.3: Visual Drop Indicators**
   - Show a blue line or highlight indicating where the element will be placed when dropped.
+
+
+## Phase 28: Global Project Settings & Metadata
+*Status: In Progress*
+
+- [ ] **Task 28.1: Global Settings Modal UI**
+  - Create a `SettingsModal.tsx` accessible from the global header.
+  - Add inputs for Project Title, Description, Favicon URL, and Meta Tags.
+- [ ] **Task 28.2: Metadata State Management**
+  - Update the `workspaces` state to include global metadata.
+  - Inject metadata into the exported HTML `<head>`.
