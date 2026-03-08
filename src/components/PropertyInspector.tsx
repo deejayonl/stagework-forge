@@ -612,6 +612,67 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
                 <option value="900">900 - Black</option>
               </select>
             </div>
+
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Line Height</label>
+              <input 
+                type="text" 
+                value={styles.lineHeight || ''} 
+                onChange={(e) => handleStyleChange('lineHeight', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
+                placeholder="normal"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Letter Spacing</label>
+              <input 
+                type="text" 
+                value={styles.letterSpacing || ''} 
+                onChange={(e) => handleStyleChange('letterSpacing', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
+                placeholder="normal"
+              />
+            </div>
+            
+            <div className="space-y-1 col-span-2">
+              <label className="text-[10px] text-hall-500">Text Shadow</label>
+              <input 
+                type="text" 
+                value={styles.textShadow || ''} 
+                onChange={(e) => handleStyleChange('textShadow', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
+                placeholder="e.g. 1px 1px 2px black"
+              />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Transform</label>
+              <select 
+                value={styles.textTransform || ''} 
+                onChange={(e) => handleStyleChange('textTransform', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">none</option>
+                <option value="uppercase">uppercase</option>
+                <option value="lowercase">lowercase</option>
+                <option value="capitalize">capitalize</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Decoration</label>
+              <select 
+                value={styles.textDecoration || ''} 
+                onChange={(e) => handleStyleChange('textDecoration', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+              >
+                <option value="">none</option>
+                <option value="underline">underline</option>
+                <option value="line-through">line-through</option>
+                <option value="overline">overline</option>
+              </select>
+            </div>
           </div>
         </div>
         

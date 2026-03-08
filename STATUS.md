@@ -524,3 +524,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a slider for `backdrop-filter: blur()` to create glassmorphism effects.
 - [x] **Task 41.3: Box Shadow Builder**
   - Enhance the existing box-shadow dropdown with custom inputs for X, Y, Blur, Spread, and Color.
+
+## Phase 42: Text Shadow & Typography Enhancements
+*Status: Complete*
+
+- [x] **Task 42.1: Text Shadow Controls**
+  - Add inputs for `text-shadow` in the PropertyInspector (X, Y, Blur, Color).
+- [x] **Task 42.2: Line Height & Letter Spacing**
+  - Add sliders/inputs for `line-height` and `letter-spacing` to improve typography control.
+- [x] **Task 42.3: Text Transform & Decoration**
+  - Add toggles for `text-transform` (uppercase, lowercase, capitalize) and `text-decoration` (underline, line-through).
