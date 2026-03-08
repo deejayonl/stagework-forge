@@ -64,6 +64,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     updateProjectTheme,
     updateProjectSEO,
     updateProjectCollections,
+    updateProjectApis,
     updateProjectCollections,
     updateProjectSEO,
     addVersionToProject,
@@ -538,11 +539,13 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
                  theme={currentProject?.theme || {}}
                  seo={currentProject?.seo || {}}
                  collections={currentProject?.collections || {}}
+                 apis={currentProject?.apis || {}}
                  onUpdateVariables={updateProjectVariables}
                  onUpdateComponents={updateProjectComponents}
                  onUpdateTheme={updateProjectTheme}
           onUpdateSEO={updateProjectSEO}
                  onUpdateCollections={updateProjectCollections}
+                 onUpdateApis={updateProjectApis}
           onUpdateCollections={updateProjectCollections}
                  onUpdateSEO={updateProjectSEO}
                  onFileChange={handleWorkspaceFileChange}

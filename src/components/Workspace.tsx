@@ -11,8 +11,9 @@ import { VariablesPanel } from './VariablesPanel';
 import { ThemeEditor } from './ThemeEditor';
 import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
+import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
-import { Settings2, AlignLeft, Library, Database, Palette, Settings, List } from 'lucide-react';
+import { Settings2, AlignLeft, Library, Database, Palette, Settings, List, Network } from 'lucide-react';
 
 
 interface WorkspaceProps {
@@ -22,11 +23,13 @@ interface WorkspaceProps {
   theme?: Record<string, string>;
   seo?: Record<string, string>;
   collections?: Record<string, any>;
+  apis?: Record<string, any>;
   onUpdateVariables?: (variables: Record<string, string>) => void;
   onUpdateComponents?: (components: Record<string, string>) => void;
   onUpdateTheme?: (theme: Record<string, string>) => void;
   onUpdateSEO?: (seo: Record<string, string>) => void;
   onUpdateCollections?: (collections: Record<string, any>) => void;
+  onUpdateApis?: (apis: Record<string, any>) => void;
   onFileChange?: (files: GeneratedFile[], commitDescription?: string) => void;
   onOpenImageTool?: (onPick: (url: string) => void) => void;
 }
@@ -38,11 +41,13 @@ const Workspace: React.FC<WorkspaceProps> = ({
   theme = {},
   seo = {},
   collections = {},
+  apis = {},
   onUpdateVariables, 
   onUpdateComponents,
   onUpdateTheme,
   onUpdateSEO,
   onUpdateCollections,
+  onUpdateApis,
   onFileChange, 
   onOpenImageTool 
 }) => {
@@ -56,6 +61,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [breakpoint, setBreakpoint] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [isVariablesOpen, setIsVariablesOpen] = useState(false);
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
+  const [isApisOpen, setIsApisOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

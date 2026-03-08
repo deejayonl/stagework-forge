@@ -320,3 +320,23 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 21.3: Data Binding to UI Components**
   - Update the Property Inspector to allow binding a component (like a List or Grid) to a specific Collection.
   - Map UI element fields (e.g., Image `src`, Text `content`) to the Collection's fields.
+
+## Phase 22: External API Integration
+*Status: In Progress*
+
+- [x] **Task 22.1: API Integrations Sidebar Panel**
+  - Create a new "APIs" tab in the left sidebar.
+  - Allow users to define external REST endpoints (URL, Method, Headers, Body).
+- [ ] **Task 22.2: BFF Proxy Endpoints**
+  - Create a secure proxy in the BFF (`/api/proxy/:projectId`) to forward requests and avoid CORS issues for the generated app.
+- [ ] **Task 22.3: API Data Binding**
+  - Update the Property Inspector and Data Binding UI to allow mapping API responses to UI elements (Lists, Text, Images).
+
+## Phase 23: Application Deployment
+*Status: Pending*
+
+- [ ] **Task 23.1: Deployment Provider Integration**
+  - Add a "Deploy" tab in the left sidebar.
+  - Allow users to configure deployment settings (e.g., Vercel or Netlify tokens).
+- [ ] **Task 23.2: 1-Click Deploy**
+  - Implement a BFF endpoint that bundles the project (like the Export ZIP) and pushes it to the configured deployment provider.

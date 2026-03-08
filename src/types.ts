@@ -19,6 +19,15 @@ export interface GeneratedFile {
   type: 'html' | 'css' | 'js' | 'json' | 'image' | 'other';
 }
 
+export interface ApiEndpoint {
+  id: string;
+  name: string;
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  headers: Record<string, string>;
+  body?: string;
+}
+
 export interface ProjectVersion {
   id: string;
   files: GeneratedFile[];
@@ -37,6 +46,7 @@ export interface Project {
   theme?: Record<string, string>;
   seo?: Record<string, string>;
   collections?: Record<string, Collection>;
+  apis?: Record<string, ApiEndpoint>;
   
   // Cloud Sync State
   cloudFolderId?: number; // ID of the folder in cloud storage
