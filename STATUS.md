@@ -619,3 +619,8 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Added inputs for `outline-width`, `outline-style`, `outline-color`, and `outline-offset` to handle focus and accessibility states.
 - [x] **Task 50.3: List Styling**
   - Added conditional rendering for list elements (`<ul>`, `<ol>`, `<li>`) to control `list-style-type` and `list-style-position`.
+
+## BLOCKED
+*Status: Active*
+- [ ] **Git Push Failure**
+  - Git push is failing due to expired token/invalid credentials. Waiting for operator to manually push the commits to trigger the deploy cycle.
