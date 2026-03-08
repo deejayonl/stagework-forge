@@ -15,7 +15,8 @@ import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
-import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2 } from 'lucide-react';
+import { ContextMenu, ContextMenuAction } from './ContextMenu';
+import { Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component } from 'lucide-react';
 import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 
 
@@ -1666,67 +1667,24 @@ useEffect(() => {
       </div>
     
         {contextMenu && (
-          <div
-            className="absolute z-[9999] bg-white border border-gray-200 rounded-md shadow-lg py-1 w-48"
-            style={{ top: contextMenu.y, left: contextMenu.x }}
-          >
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handleDuplicateElement}
-            >
-              Duplicate
-            </button>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-              onClick={handleDeleteElement}
-            >
-              Delete
-            </button>
-            <div className="border-t border-gray-100 my-1"></div>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handleWrapInContainer}
-            >
-              Wrap in Container
-            </button>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handleCopyHtml}
-            >
-              Copy HTML
-            </button>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handlePasteHtml}
-            >
-              Paste HTML
-            </button>
-            <div className="border-t border-gray-100 my-1"></div>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handleCopyStyles}
-            >
-              Copy Styles
-            </button>
-            <button
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              onClick={handlePasteStyles}
-            >
-              Paste Styles
-            </button>
-            {onUpdateComponents && (
-              <>
-                <div className="border-t border-gray-100 my-1"></div>
-                <button
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={handleSaveAsComponent}
-                >
-                  Save as Component
-                </button>
-              </>
-            )}
-          </div>
-        )}
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+          actions={[
+            { label: 'Duplicate', icon: <Copy className="w-4 h-4" />, onClick: handleDuplicateElement, shortcut: '⌘D' },
+            { label: 'Delete', icon: <Trash2 className="w-4 h-4 text-red-500" />, onClick: handleDeleteElement, shortcut: '⌫', divider: true },
+            { label: 'Wrap in Container', icon: <Box className="w-4 h-4" />, onClick: handleWrapInContainer },
+            { label: 'Copy HTML', icon: <Copy className="w-4 h-4" />, onClick: handleCopyHtml, shortcut: '⌘C' },
+            { label: 'Paste HTML', icon: <ClipboardPaste className="w-4 h-4" />, onClick: handlePasteHtml, shortcut: '⌘V', divider: true },
+            { label: 'Copy Styles', icon: <PaletteIcon className="w-4 h-4" />, onClick: handleCopyStyles },
+            { label: 'Paste Styles', icon: <PaletteIcon className="w-4 h-4" />, onClick: handlePasteStyles },
+            ...(onUpdateComponents ? [
+              { label: 'Save as Component', icon: <Component className="w-4 h-4" />, onClick: handleSaveAsComponent, divider: true }
+            ] : [])
+          ]}
+        />
+      )}
 </div>
   );
 };

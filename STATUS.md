@@ -431,3 +431,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - When an `<input>`, `<textarea>`, or `<select>` is selected, allow configuring `name`, `type` (text, email, password, etc.), `placeholder`, and `required` attributes.
 - [x] **Task 42.3: Form Action Binding**
   - When a `<form>` element is selected, allow configuring its `action` URL and `method` (GET/POST) in the Property Inspector.
+
+## Phase 43: Advanced Canvas Context Menu
+*Status: Complete*
+
+- [x] **Task 43.1: Context Menu Component**
+  - Create `src/components/ContextMenu.tsx` to render a floating menu at specific `(x, y)` coordinates.
+  - Include actions: Edit Text, Duplicate, Copy HTML, Paste HTML, Wrap in Div, and Delete.
+- [x] **Task 43.2: Iframe Event Bridge**
+  - Update `injectEditorScript` in `src/utils/fileUtils.ts` to listen for `contextmenu` events inside the iframe, `e.preventDefault()`, and post a message to the parent window with the selected element's details and mouse coordinates.
+- [x] **Task 43.3: Workspace Integration**
+  - Integrate `ContextMenu` into `Workspace.tsx`.
+  - Handle the `FORGE_CONTEXT_MENU` message to position and show the menu.
+  - Wire the menu actions to the existing mutation dispatchers (delete, duplicate, copy, paste).
