@@ -185,3 +185,10 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 15.1: Fix missing versions array reference**
   - Fix undefined `versions` and missing variables in `Workspace.tsx` around line 1312 and 1315.
+
+## Phase 16: TypeScript Strict Mode Fixes
+*Status: Complete*
+
+- [x] **Task 16.1: Fix missing type parameters**
+  - Add missing type parameters in `Workspace.tsx` around line 1312 and 1315.
+  - Fix missing `currentVersionIndex` in `Workspace.tsx`.

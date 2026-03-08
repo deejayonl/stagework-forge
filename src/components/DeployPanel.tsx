@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Rocket, X, Save, AlertCircle, ExternalLink } from 'lucide-react';
 
 interface DeployPanelProps {
-  projectId: string | null;
+  projectId?: string;
   onClose: () => void;
 }
 
