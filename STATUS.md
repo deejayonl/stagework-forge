@@ -582,7 +582,17 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a dropdown for `cursor` (auto, pointer, not-allowed, grab, etc.).
 - [x] **Task 47.3: Pointer Events**
   - Add a toggle for `pointer-events` (auto, none) to control interaction flow.
-## BLOCKED
-*Status: Blocked*
-- [ ] **Git Push Failure**
+## UNBLOCKED
+*Status: Resolved*
+- [x] **Git Push Failure**
   - Git push is failing due to expired token/invalid credentials. Waiting for operator to manually push the commits to trigger the deploy cycle.
+
+## Phase 48: Advanced Spacing & Sizing Controls
+*Status: Complete*
+
+- [x] **Task 48.1: Individual Margin Controls**
+  - Add inputs for `margin-top`, `margin-right`, `margin-bottom`, and `margin-left` alongside the shorthand `margin`.
+- [x] **Task 48.2: Individual Padding Controls**
+  - Add inputs for `padding-top`, `padding-right`, `padding-bottom`, and `padding-left` alongside the shorthand `padding`.
+- [x] **Task 48.3: Min/Max Sizing**
+  - Add inputs for `min-width`, `max-width`, `min-height`, and `max-height` in the Sizing section.

@@ -708,30 +708,113 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
           </div>
         </div>
 
+        
+        {/* Sizing */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Sizing</h4>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Width</label>
+              <input 
+                type="text" 
+                value={styles.width || ''} 
+                onChange={(e) => handleStyleChange('width', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="auto"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Height</label>
+              <input 
+                type="text" 
+                value={styles.height || ''} 
+                onChange={(e) => handleStyleChange('height', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="auto"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Min W / Max W</label>
+              <div className="flex gap-1">
+                <input 
+                  type="text" 
+                  value={styles.minWidth || ''} 
+                  onChange={(e) => handleStyleChange('minWidth', e.target.value)}
+                  className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="min"
+                />
+                <input 
+                  type="text" 
+                  value={styles.maxWidth || ''} 
+                  onChange={(e) => handleStyleChange('maxWidth', e.target.value)}
+                  className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="max"
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] text-hall-500">Min H / Max H</label>
+              <div className="flex gap-1">
+                <input 
+                  type="text" 
+                  value={styles.minHeight || ''} 
+                  onChange={(e) => handleStyleChange('minHeight', e.target.value)}
+                  className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="min"
+                />
+                <input 
+                  type="text" 
+                  value={styles.maxHeight || ''} 
+                  onChange={(e) => handleStyleChange('maxHeight', e.target.value)}
+                  className="w-1/2 bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                  placeholder="max"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Spacing */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Spacing</h4>
           
-          <div className="grid grid-cols-2 gap-2">
-            <div className="space-y-1">
-              <label className="text-[10px] text-hall-500">Padding</label>
+          <div className="space-y-1">
+            <label className="text-[10px] text-hall-500 font-bold">Padding</label>
+            <div className="flex gap-1 mb-1">
               <input 
                 type="text" 
                 value={styles.padding || ''} 
                 onChange={(e) => handleStyleChange('padding', e.target.value)}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
-                placeholder="0px"
+                placeholder="All (e.g. 10px)"
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-[10px] text-hall-500">Margin</label>
+            <div className="grid grid-cols-4 gap-1">
+              <input type="text" value={styles.paddingTop || ''} onChange={(e) => handleStyleChange('paddingTop', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Top" />
+              <input type="text" value={styles.paddingRight || ''} onChange={(e) => handleStyleChange('paddingRight', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Right" />
+              <input type="text" value={styles.paddingBottom || ''} onChange={(e) => handleStyleChange('paddingBottom', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Bottom" />
+              <input type="text" value={styles.paddingLeft || ''} onChange={(e) => handleStyleChange('paddingLeft', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Left" />
+            </div>
+          </div>
+          
+          <div className="space-y-1 mt-3">
+            <label className="text-[10px] text-hall-500 font-bold">Margin</label>
+            <div className="flex gap-1 mb-1">
               <input 
                 type="text" 
                 value={styles.margin || ''} 
                 onChange={(e) => handleStyleChange('margin', e.target.value)}
                 className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-xs text-hall-900 dark:text-ink"
-                placeholder="0px"
+                placeholder="All (e.g. 10px auto)"
               />
+            </div>
+            <div className="grid grid-cols-4 gap-1">
+              <input type="text" value={styles.marginTop || ''} onChange={(e) => handleStyleChange('marginTop', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Top" />
+              <input type="text" value={styles.marginRight || ''} onChange={(e) => handleStyleChange('marginRight', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Right" />
+              <input type="text" value={styles.marginBottom || ''} onChange={(e) => handleStyleChange('marginBottom', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Bottom" />
+              <input type="text" value={styles.marginLeft || ''} onChange={(e) => handleStyleChange('marginLeft', e.target.value)} className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-center text-hall-900 dark:text-ink" placeholder="Left" />
             </div>
           </div>
         </div>
