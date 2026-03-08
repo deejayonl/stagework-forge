@@ -46,9 +46,16 @@ Directives:
 
 const getProviderConfig = (c: any) => {
   const authHeader = c.req.header('Authorization');
-  const apiKey = authHeader ? authHeader.replace('Bearer ', '') : '';
+  let apiKey = authHeader ? authHeader.replace('Bearer ', '') : '';
   const provider = c.req.header('X-AI-Provider') || 'gemini';
-  if (!apiKey) throw new Error(`${provider.toUpperCase()} API Key is missing.`);
+  
+  if (!apiKey) {
+    if (provider === 'gemini') apiKey = process.env.GEMINI_API_KEY || '';
+    if (provider === 'anthropic') apiKey = process.env.ANTHROPIC_API_KEY || '';
+    if (provider === 'openai') apiKey = process.env.OPENAI_API_KEY || '';
+  }
+  
+  if (!apiKey) throw new Error(`${provider.toUpperCase()} API Key is missing. Configure it in the server environment.`);
   return { apiKey, provider };
 };
 

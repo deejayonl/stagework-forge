@@ -47,16 +47,13 @@ export const generateCode = async (
 ): Promise<GeneratedFile[]> => {
   try {
     const { provider, apiKey } = getAiConfig();
-    if (!apiKey) {
-        throw new Error(`${provider.toUpperCase()} API Key is missing. Please add it to your settings.`);
-    }
 
     const MUTATE_URL = 'https://sgfbackend.deejay.onl/api/mutate';
     const response = await fetch(MUTATE_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {}),
             'X-AI-Provider': provider
         },
         body: JSON.stringify({
@@ -144,15 +141,13 @@ export const generateImage = async (
 ): Promise<string> => {
   try {
     const { provider, apiKey } = getAiConfig();
-    if (!apiKey) {
-        throw new Error(`${provider.toUpperCase()} API Key is missing. Please add it to your settings.`);
-    }
 
     const response = await fetch(`${API_BASE}/generate-image`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {}),
+            'X-AI-Provider': provider
         },
         body: JSON.stringify({ prompt, size })
     });
@@ -180,16 +175,14 @@ export const planImageReplacements = async (
   userInstruction: string
 ): Promise<Array<{ assetId: string; prompt: string; suggestedName: string }>> => {
   try {
-    const { apiKey } = getAiConfig();
-    if (!apiKey) {
-        throw new Error("Gemini API Key is missing. Please add it to your settings.");
-    }
+    const { apiKey, provider } = getAiConfig();
 
     const response = await fetch(`${API_BASE}/plan-images`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {}),
+            'X-AI-Provider': provider
         },
         body: JSON.stringify({ assets, userInstruction })
     });
@@ -214,17 +207,15 @@ export const planImageReplacements = async (
 
 export const fixHtmlNode = async (html: string): Promise<string> => {
   try {
-    const { apiKey } = getAiConfig();
-    if (!apiKey) {
-        throw new Error("Gemini API Key is missing.");
-    }
+    const { apiKey, provider } = getAiConfig();
 
     const AUTOFIX_URL = 'https://sgfbackend.deejay.onl/api/autofix';
     const response = await fetch(AUTOFIX_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {}),
+            'X-AI-Provider': provider
         },
         body: JSON.stringify({ html })
     });
@@ -244,17 +235,15 @@ export const fixHtmlNode = async (html: string): Promise<string> => {
 
 export const rewriteText = async (text: string, tone: string): Promise<string> => {
   try {
-    const { apiKey } = getAiConfig();
-    if (!apiKey) {
-        throw new Error("Gemini API Key is missing.");
-    }
+    const { apiKey, provider } = getAiConfig();
 
     const REWRITE_URL = 'https://sgfbackend.deejay.onl/api/rewrite';
     const response = await fetch(REWRITE_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {}),
+            'X-AI-Provider': provider
         },
         body: JSON.stringify({ text, tone })
     });

@@ -314,9 +314,18 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Implement broadcasting of binary Yjs messages to all connected clients for a specific project.
 
 ## Phase 31: Host Intervention Required
-*Status: Blocked*
+*Status: Complete*
 
 - [x] **Task 31.1: Verify Git Credentials**
   - Git push is still failing due to an invalid GitHub token. 
-  - I am formally blocked from pushing to the remote repository. 
-  - Committing this status update to trigger the local deployment loop as per the system directive.
+  - The host provided a workaround: bypass `git push` and rely solely on local `git add` and `git commit` to trigger the `deploy-sgf.sh` loop.
+
+## Phase 32: Complete BFF Logic Migration (Task 1.2 Revision)
+*Status: Complete*
+
+- [x] **Task 32.1: Server-Side AI Provider Authentication**
+  - Refactored `getProviderConfig` in all BFF routes (`generate.ts`, `mutate.ts`, `autofix.ts`, `rewrite.ts`) to securely fall back to `process.env` (e.g., `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`) if no authorization header is provided by the client.
+  - This ensures true BFF architecture where the frontend client is not required to handle API keys.
+- [x] **Task 32.2: Frontend Inference Migration Cleanup**
+  - Removed all `throw new Error` blocks in `src/services/geminiService.ts` that strictly enforced API key presence on the client side.
+  - The frontend now conditionally appends the `Authorization` header only if the user has provided a custom key, otherwise delegating authentication to the BFF backend.
