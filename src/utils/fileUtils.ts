@@ -127,7 +127,7 @@ export const createZipDownload = async (
  * Flattens multiple files into a single HTML string for previewing in an iframe.
  * Handles CSS/JS injection and local asset (image) replacement.
  */
-export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: string = 'index.html'): string => {
+export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: string = 'index.html', seo?: Record<string, string>): string => {
   const indexFile = files.find(f => f.name === targetPage) || files.find(f => f.name.endsWith('.html') || f.name === 'index.html');
   
   if (!indexFile) return '<h1>Error: No index.html found</h1>';
@@ -172,7 +172,52 @@ export const flattenFilesForPreview = (files: GeneratedFile[], targetPage: strin
     }
   });
 
+  // Inject SEO and Custom Code
+  if (seo) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    let needsUpdate = false;
+
+    if (seo.title) {
+      doc.title = seo.title;
+      needsUpdate = true;
+    }
+    if (seo.description) {
+      let metaDesc = doc.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = doc.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        doc.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', seo.description);
+      needsUpdate = true;
+    }
+    if (seo.ogImage) {
+      let metaOgImage = doc.querySelector('meta[property="og:image"]');
+      if (!metaOgImage) {
+        metaOgImage = doc.createElement('meta');
+        metaOgImage.setAttribute('property', 'og:image');
+        doc.head.appendChild(metaOgImage);
+      }
+      metaOgImage.setAttribute('content', seo.ogImage);
+      needsUpdate = true;
+    }
+    if (seo.customHead) {
+      doc.head.insertAdjacentHTML('beforeend', seo.customHead);
+      needsUpdate = true;
+    }
+    if (seo.customBody) {
+      doc.body.insertAdjacentHTML('beforeend', seo.customBody);
+      needsUpdate = true;
+    }
+
+    if (needsUpdate) {
+      htmlContent = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+    }
+  }
+
   return injectEditorScript(htmlContent);
+
 };
 
 /**
