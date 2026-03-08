@@ -446,16 +446,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Wire the menu actions to the existing mutation dispatchers (delete, duplicate, copy, paste).
 
 ## Phase 44: AI-Powered Image Generation & Placeholder Replacement
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 44.1: Image Generation BFF Route**
+- [x] **Task 44.1: Image Generation BFF Route**
   - Create `/api/generate-image` endpoint in the Node.js BFF.
   - Integrate with Gemini or DALL-E to generate an image based on a prompt.
   - Save the generated image to the project's `public/assets` and return the local URL.
-- [ ] **Task 44.2: Image Prompt UI**
+- [x] **Task 44.2: Image Prompt UI**
   - Add a "Generate with AI" button in the `PropertyInspector.tsx` when an `<img>` element is selected.
   - Show a small modal or popover with a text input for the image prompt.
-- [ ] **Task 44.3: Canvas Integration**
+- [x] **Task 44.3: Canvas Integration**
   - Upon successful generation, automatically update the selected `<img>` element's `src` attribute with the new asset URL.
 
 ## Phase 45: Advanced Layout Controls (Flexbox/Grid GUI)

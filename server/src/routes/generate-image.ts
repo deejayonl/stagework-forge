@@ -57,9 +57,13 @@ generateImageRoutes.post('/', async (c) => {
     
     await fs.writeFile(filePath, buffer);
 
+    const host = c.req.header('host');
+    const protocol = c.req.header('x-forwarded-proto') || 'http';
+    const baseUrl = host?.includes('localhost') ? `${protocol}://${host}` : 'https://sgfbackend.deejay.onl';
+
     return c.json({ 
       success: true,
-      url: `/uploads/${filename}`
+      url: `${baseUrl}/uploads/${filename}`
     });
   } catch (error: any) {
     console.error('Image generation error:', error);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Library, Database } from 'lucide-react';
-import { fixHtmlNode, rewriteText } from '../services/geminiService';
+import { fixHtmlNode, rewriteText, generateImage } from '../services/geminiService';
+import { ImageSize } from '../types';
 
 interface PropertyInspectorProps {
   selectedElement: any;
@@ -34,6 +35,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   variables = {},
   collections = {},
   apis = {},
+  customFonts = [],
   onBindVariable,
   onUpdateStyle, 
   onToggleClass,
@@ -51,11 +53,13 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
   onAddTableRow,
   onAddTableColumn,
   pages = [],
-  activeBreakpoint = 'desktop',
-  theme = {}
+  activeBreakpoint = 'desktop'
 }) => {
   const [isFixing, setIsFixing] = useState(false);
   const [isRewriting, setIsRewriting] = useState(false);
+  const [isImagePromptOpen, setIsImagePromptOpen] = useState(false);
+  const [imagePrompt, setImagePrompt] = useState('');
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [activeState, setActiveState] = useState<string>('none');
   const hasBindings = Object.keys(variables).length > 0 || Object.keys(collections).length > 0 || Object.keys(apis).length > 0;
 
@@ -88,6 +92,24 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
       console.error(e);
     } finally {
       setIsFixing(false);
+    }
+  };
+
+  const handleGenerateImage = async () => {
+    if (!imagePrompt || !onUpdateAttribute) return;
+    setIsGeneratingImage(true);
+    try {
+      // Generate the image using the BFF endpoint
+      const url = await generateImage(imagePrompt, ImageSize.Size1K);
+      // Automatically update the selected <img> element's src attribute
+      onUpdateAttribute('src', url);
+      setIsImagePromptOpen(false);
+      setImagePrompt('');
+    } catch (e) {
+      console.error("Failed to generate image:", e);
+      alert("Failed to generate image. Please check your API key and try again.");
+    } finally {
+      setIsGeneratingImage(false);
     }
   };
 
@@ -227,28 +249,79 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
         )}
 
         {/* Image Assets */}
-        {tagName === 'IMG' && onOpenImageTool && (
+        {tagName === 'IMG' && (
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-hall-700 dark:text-hall-300">Image Source</label>
-              
             </div>
-            <button
-              onClick={onOpenImageTool}
-              disabled={!!selectedElement.dataset?.bindSrc}
-              className={`w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedElement.dataset?.bindSrc ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-              Swap Asset
-            </button>
-            <button
-              onClick={onOpenMediaManager}
-              disabled={!!selectedElement.dataset?.bindSrc}
-              className={`w-full bg-hall-200 hover:bg-hall-300 dark:bg-hall-800 dark:hover:bg-hall-700 text-hall-900 dark:text-ink text-sm font-medium py-2 mt-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedElement.dataset?.bindSrc ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-              Choose from Media Manager
-            </button>
+            
+            <div className="space-y-2">
+              <label className="text-[10px] text-hall-500">Source (src)</label>
+              <input 
+                type="text" 
+                value={selectedElement.dataset?.src || selectedElement.src || ''} 
+                onChange={(e) => onUpdateAttribute?.('src', e.target.value)}
+                className="w-full bg-white dark:bg-black border border-hall-200 dark:border-hall-800 rounded p-1 text-[10px] text-hall-900 dark:text-ink"
+                placeholder="https://..."
+                disabled={!!selectedElement.dataset?.bindSrc}
+              />
+            </div>
+
+            {onOpenImageTool && (
+              <div className="space-y-2">
+                <button
+                  onClick={() => setIsImagePromptOpen(!isImagePromptOpen)}
+                  disabled={!!selectedElement.dataset?.bindSrc || isGeneratingImage}
+                  className={`w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedElement.dataset?.bindSrc || isGeneratingImage ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {isGeneratingImage ? (
+                    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                  ) : (
+                    <Sparkles className="w-4 h-4" />
+                  )}
+                  {isGeneratingImage ? 'Generating...' : 'Generate with AI'}
+                </button>
+                
+                {isImagePromptOpen && (
+                  <div className="bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800/30 animate-in fade-in slide-in-from-top-2">
+                    <label className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 mb-1 block">Image Prompt</label>
+                    <textarea 
+                      autoFocus
+                      value={imagePrompt}
+                      onChange={(e) => setImagePrompt(e.target.value)}
+                      placeholder="Describe the image you want..."
+                      className="w-full bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-2 text-xs text-hall-900 dark:text-ink focus:ring-1 focus:ring-indigo-500 outline-none resize-none h-16 mb-2"
+                    />
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => setIsImagePromptOpen(false)}
+                        className="flex-1 bg-hall-200 hover:bg-hall-300 dark:bg-hall-800 dark:hover:bg-hall-700 text-hall-700 dark:text-hall-300 text-[10px] font-bold py-1.5 rounded transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button 
+                        onClick={handleGenerateImage}
+                        disabled={!imagePrompt || isGeneratingImage}
+                        className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold py-1.5 rounded transition-colors disabled:opacity-50"
+                      >
+                        Generate
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {onOpenMediaManager && (
+              <button
+                onClick={onOpenMediaManager}
+                disabled={!!selectedElement.dataset?.bindSrc}
+                className={`w-full bg-hall-200 hover:bg-hall-300 dark:bg-hall-800 dark:hover:bg-hall-700 text-hall-900 dark:text-ink text-sm font-medium py-2 mt-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedElement.dataset?.bindSrc ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                Choose from Media Manager
+              </button>
+            )}
           </div>
         )}
 
