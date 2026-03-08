@@ -83,7 +83,7 @@ export const useProjects = (storageToken: string | null) => {
     // Sync project state to Yjs map
     const yProjectMap = ydoc.getMap('projectState');
     
-    yProjectMap.observe((event) => {
+    yProjectMap.observe((_event) => {
       // In a real implementation, we would apply Yjs updates to the React state here.
       // For the preparation phase, we just observe changes.
     });

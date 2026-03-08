@@ -76,8 +76,6 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
     undo,
     redo,
     jumpToVersion,
-    isSyncing,
-    syncError,
     activeUsers
   } = useProjects(cloudToken);
   
@@ -90,7 +88,7 @@ const ForgeView: React.FC<ForgeViewProps> = ({ onGeneratingChange, initialWorksp
   useEffect(() => {
     if (initialWorkspaces && initialWorkspaces.length > 0 && projects.length === 0 && !isBootstrapping) {
       const activeWorkspace = initialWorkspaces[0];
-      const blueprintNodes = activeWorkspace.nodes.filter(n => n.id.startsWith('blueprint-'));
+      const blueprintNodes = activeWorkspace.nodes.filter((n: any) => n.id.startsWith('blueprint-'));
       
       if (blueprintNodes.length > 0) {
         bootstrapBlueprints(blueprintNodes);
@@ -179,7 +177,7 @@ const [isDark, setIsDark] = useState(true);
 
   const handleExportOpen = () => setIsExportModalOpen(true);
   
-  const handleDeployConfirm = async (framework: string, provider: string) => {
+  const handleDeployConfirm = async (framework: string, _provider: string) => {
     if (!currentProject) return;
     const API_BASE = 'https://sgfbackend.deejay.onl/api/deploy';
     setIsExportModalOpen(false);
@@ -445,7 +443,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
 
   return (
     <div className="h-full flex flex-col bg-transparent text-hall-50 overflow-hidden font-sans selection:bg-hall-950 selection:text-hall-50 relative">
-      <LiveCursors roomName={currentProjectId || 'global'} />
+      <LiveCursors roomName={currentProject?.id || 'global'} />
       {/* Soft gradient to make text readable but keep canvas visible */}
       
       {/* Re-add gradient overlay but lighter */}
@@ -478,7 +476,7 @@ Analyze the current HTML/CSS and inject this asset in the most relevant location
 
       <ProjectSidebar 
         projects={projects}
-        currentProjectId={currentProject?.id || null}
+        currentProject?.id={currentProject?.id || null}
         onSelect={selectProject}
         onDelete={deleteProject}
         onNew={startNewProject}

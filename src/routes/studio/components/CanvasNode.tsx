@@ -97,7 +97,7 @@ const getPortsForType = (type: string) => {
     }
 };
 
-const CanvasNode: React.FC<CanvasNodeProps> = memo(({ node, isSelected, scale, onMove, onSelect, onDelete, onUpdate, onConnectStart, onConnectEnd, snapToGrid, isConnecting, onContextMenu, selectedNodeIds }) => {
+const CanvasNode: React.FC<CanvasNodeProps> = memo(({ node, isSelected, scale, onMove, onSelect, onDelete, onUpdate, onConnectStart, onConnectEnd, snapToGrid, isConnecting, onContextMenu }) => {
     const [viewMode, setViewMode] = useState<'code' | 'preview'>('preview');
     const [isEditing, setIsEditing] = useState(false);
     const [localContent, setLocalContent] = useState(node.content);

@@ -1,8 +1,8 @@
 // React hooks for chat state management — streaming + live activity
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import type { ChatMessage, HistoryEntry, OrchInfo, TaskStatus } from './types.ts';
-import { sendTask, subscribeToTask, cancelTask, getHistory, getOrchInfo } from './client.ts';
+import type { ChatMessage, HistoryEntry, TaskStatus } from './types.ts';
+import { sendTask, subscribeToTask, cancelTask, getHistory } from './client.ts';
 
 export interface ChatContext {
   messages: ChatMessage[];

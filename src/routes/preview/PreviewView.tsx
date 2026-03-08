@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { flattenFilesForPreview } from '../../utils/fileUtils';
-import { GeneratedFile } from '../../types';
 
 export default function PreviewView() {
   const { projectId } = useParams();
@@ -23,7 +21,7 @@ export default function PreviewView() {
         if (data && data.project && data.project.mutations && data.project.mutations.length > 0) {
           const latestMutation = data.project.mutations[data.project.mutations.length - 1];
           if (latestMutation.files) {
-            const { html: flattenedHtml } = flattenFilesForPreview(latestMutation.files);
+            const flattenedHtml = flattenFilesForPreview(latestMutation.files);
             setHtml(flattenedHtml);
           }
         }
@@ -50,7 +48,7 @@ export default function PreviewView() {
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'SYNC_FILES' && data.files) {
-          const { html: newHtml } = flattenFilesForPreview(data.files);
+          const newHtml = flattenFilesForPreview(data.files);
           setHtml(newHtml);
         }
       } catch (err) {

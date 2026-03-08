@@ -736,6 +736,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
           y: minY - padding,
           width: (maxX - minX) + padding * 2,
           height: (maxY - minY) + padding * 2,
+          zIndex: 0,
       };
 
       const newNodes = [
@@ -1739,6 +1740,8 @@ This is your **Infinite Canvas** for intelligent collaboration.
                     onToggleGrid={() => setSnapToGrid(!snapToGrid)}
                     showChat={showChat}
                     onToggleChat={() => setShowChat(!showChat)}
+                    useStepRouting={useStepRouting}
+                    onToggleStepRouting={() => setUseStepRouting(!useStepRouting)}
                     onSave={handleSaveProject}
                     onLoad={() => fileInputRef.current?.click()}
                     canUndo={historyIndex > 0}
@@ -1767,8 +1770,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
                     nodes={nodes}
                     edges={edges}
                     onNodeMove={handleNodeMove}
-                    onNodeSelect={handleNodeSelect}
-                selectedNodeIds={selectedNodeIds}
+                    onNodeSelect={(id) => handleNodeSelect(id)}
                     onNodeDelete={handleNodeDelete}
                     onNodeUpdate={handleNodeUpdate}
                     onEdgeDelete={handleEdgeDelete}
@@ -1801,8 +1803,7 @@ This is your **Infinite Canvas** for intelligent collaboration.
                 messages={messages}
                 isOpen={showChat}
                 onToggle={() => setShowChat(!showChat)}
-                onNodeSelect={handleNodeSelect}
-                selectedNodeIds={selectedNodeIds}
+                onNodeSelect={(id) => handleNodeSelect(id)}
                 nodes={nodes}
                 onClear={handleClearChat}
                 onRetry={handleRetry}

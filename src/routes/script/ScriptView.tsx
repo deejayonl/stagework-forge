@@ -1,4 +1,3 @@
-import React, { useState, useRef, useEffect } from 'react';
 import { Smartphone, Tablet, Monitor, Globe, LayoutDashboard, Terminal, Sparkles, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fetchFromBFF } from '../../shared/api/api-client';
