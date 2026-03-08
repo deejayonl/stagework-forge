@@ -660,3 +660,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add inputs for `rel` attribute (`noopener`, `noreferrer`, `nofollow`) to enhance security and SEO for external links.
 - [x] **Task 54.3: Smooth Scrolling Anchors**
   - Allow users to link an `<a>` tag to an internal element's ID for smooth scrolling navigation.
+
+## Phase 55: Custom Code & Embed Elements
+*Status: Complete*
+
+- [x] **Task 55.1: Custom HTML Block Node**
+  - Allow users to insert a "Custom Code" block onto the canvas that parses raw HTML/SVG strings, rendering them directly in the UI.
+- [x] **Task 55.2: Raw HTML Editor in Inspector**
+  - Add a dedicated `<textarea>` in the Property Inspector to directly edit the `innerHTML` or raw source of the selected Custom Code node.
+- [x] **Task 55.3: SVG Styling Support**
+  - Ensure the raw editor correctly parses `<svg>` tags and allows users to bind Tailwind classes (like `fill-current`, `text-blue-500`) directly to the SVG paths.

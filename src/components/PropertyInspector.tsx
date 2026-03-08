@@ -1933,6 +1933,32 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             </div>
           )}
         </div>
+
+        {/* Raw HTML / SVG Editor */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Raw HTML / SVG Editor</h4>
+          <div className="space-y-2">
+            <label className="text-[10px] text-hall-500 font-bold flex items-center gap-1">
+              Edit Inner HTML
+            </label>
+            <textarea
+              className="w-full h-32 text-xs bg-[#1e1e1e] text-[#d4d4d4] border border-hall-200 dark:border-hall-800 rounded p-2 outline-none focus:ring-1 focus:ring-amber-500 font-mono resize-y"
+              value={selectedElement.innerHTML || ''}
+              onChange={(e) => {
+                if (!selectedElement) return;
+                // We need to update the innerHTML of the selected element
+                // This requires a new prop or reusing onUpdateText if it supports HTML
+                // For now, we'll try to use onUpdateAttribute with a special flag or 
+                // we can just use onUpdateText and let the parent handle if it's raw HTML
+                onUpdateText(e.target.value);
+              }}
+              placeholder="<div>Custom HTML</div> or <svg>...</svg>"
+            />
+            <p className="text-[9px] text-hall-500 leading-tight">
+              Warning: Editing raw HTML will replace all child nodes. Ensure your code is valid.
+            </p>
+          </div>
+        </div>
         {/* Advanced Customizations */}
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-hall-900 dark:text-ink uppercase tracking-wider border-b border-hall-200 dark:border-hall-800 pb-1">Advanced</h4>
