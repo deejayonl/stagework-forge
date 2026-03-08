@@ -731,3 +731,13 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Allow users to define custom CSS keyframes (from/to or percentages) and bind them to the selected element via `animation-name`.
 - [x] **Task 61.3: Easing Curves (Cubic Bezier)**
   - Add a dropdown for standard easing curves and an input for custom `cubic-bezier` values for `animation-timing-function`.
+
+## Phase 62: Advanced Transformations & Masking
+*Status: Complete*
+
+- [x] **Task 62.1: Transform Origin**
+  - Add a dropdown for `transform-origin` to control the pivot point of rotations and scaling.
+- [x] **Task 62.2: Clip Path Shapes**
+  - Add a dropdown to select basic `clip-path` shapes (circle, ellipse) and an input for custom polygon coordinates.
+- [x] **Task 62.3: Perspective & 3D Transforms**
+  - Add inputs for `perspective`, `rotateX`, and `rotateY` to enable 3D card flipping effects.
