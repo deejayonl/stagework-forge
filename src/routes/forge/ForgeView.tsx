@@ -179,14 +179,13 @@ const [isDark, setIsDark] = useState(true);
 
   const handleExportOpen = () => setIsExportModalOpen(true);
   
-  const handleDeployConfirm = async (framework: string, _provider: string) => {
+  const handleDeployConfirm = async (framework: string, provider: string) => {
     if (!currentProject) return;
     const API_BASE = 'https://sgfbackend.deejay.onl/api/deploy';
     setIsExportModalOpen(false);
     
     try {
-      // In a real implementation this would poll for status or open a new window with the deployment logs
-      window.open(`${API_BASE}/${currentProject.id}?framework=${framework}`, '_blank');
+      window.open(`${API_BASE}/${provider}/${currentProject.id}?framework=${framework}`, '_blank');
     } catch (err) {
       console.error('Deploy failed:', err);
       alert('Deployment failed. Please try again later.');
