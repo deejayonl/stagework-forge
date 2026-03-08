@@ -358,9 +358,17 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Ensure the Stage preview updates to reflect the currently selected HTML file.
 
 ## Phase 36: Cloud Integrations & Deployments
-*Status: Pending*
+*Status: Complete*
 
 - [x] **Task 36.1: Vercel Integration BFF Route**
   - Implement `/api/deploy/vercel/:projectId` in the Node.js BFF to receive the Vercel Personal Access Token, package the project files into a Vercel-compatible format, and deploy using the Vercel REST API.
 - [x] **Task 36.2: Netlify Integration BFF Route**
   - Implement `/api/deploy/netlify/:projectId` in the Node.js BFF to receive the Netlify PAT, package the project files as a static site, and deploy using the Netlify REST API.
+
+
+## Phase 37: Cloud Integrations & Deployments (GitHub)
+*Status: Pending*
+
+- [ ] **Task 37.1: GitHub Integration BFF Route**
+  - Implement `/api/deploy/github/:projectId` in the Node.js BFF to receive a GitHub Personal Access Token, create a new repository using the GitHub REST API (`/user/repos`), and push the packaged project files.
+  - Update `ExportModal.tsx` and `ForgeView.tsx` to handle the GitHub deployment flow correctly.

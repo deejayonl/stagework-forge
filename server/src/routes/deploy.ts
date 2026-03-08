@@ -317,63 +317,89 @@ deployRoutes.post('/vercel/:id', async (c) => {
 
 
 deployRoutes.get('/github/:id', async (c) => {
-  try {
-    const id = c.req.param('id');
-    const framework = c.req.query('framework') || 'html';
-    const project = await projectStore.get(id);
-    
-    if (!project) {
-      return c.json({ error: 'Project not found' }, 404);
-    }
-
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pushing to GitHub...</title>
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-          .loader { border: 4px solid #333; border-top: 4px solid #fff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 20px; }
-          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-          h1 { font-size: 24px; font-weight: 500; margin-bottom: 8px; }
-          p { color: #888; font-size: 14px; }
-          .success { display: none; flex-direction: column; align-items: center; }
-          .success svg { width: 48px; height: 48px; color: #fff; margin-bottom: 16px; }
-          .success a { color: #fff; text-decoration: none; margin-top: 16px; border: 1px solid #333; padding: 8px 16px; border-radius: 4px; transition: all 0.2s; }
-          .success a:hover { background: #111; border-color: #fff; }
-        </style>
-      </head>
-      <body>
-        <div class="deploying" id="deploying">
-          <div class="loader"></div>
-          <h1>Pushing to GitHub</h1>
-          <p>Creating repository and committing ${framework} files...</p>
-        </div>
-        <div class="success" id="success">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          <h1>Repository Created</h1>
-          <p>Your project has been successfully pushed to GitHub.</p>
-          <a href="#" onclick="alert('This is a simulated deployment environment. In production, this would open your new GitHub repository.')">View Repository</a>
-        </div>
-        
-        <script>
-          setTimeout(() => {
-            document.getElementById('deploying').style.display = 'none';
-            document.getElementById('success').style.display = 'flex';
-          }, 3000);
-        </script>
-      </body>
-      </html>
-    `;
-    
-    return c.html(html);
-
-  } catch (error) {
-    console.error('GitHub push error:', error);
-    return c.json({ error: 'Failed to push to GitHub' }, 500);
-  }
+  const id = c.req.param('id');
+  const framework = c.req.query('framework') || 'html';
+  
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Push to GitHub</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .container { background: #111; padding: 40px; border-radius: 12px; border: 1px solid #333; width: 100%; max-width: 400px; text-align: center; }
+        h1 { font-size: 24px; font-weight: 500; margin-bottom: 8px; }
+        p { color: #888; font-size: 14px; margin-bottom: 24px; }
+        input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #000; color: #fff; margin-bottom: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border-radius: 6px; border: none; background: #fff; color: #000; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        button:hover { background: #ccc; }
+        .loader { border: 3px solid #333; border-top: 3px solid #fff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .success { display: none; flex-direction: column; align-items: center; }
+        .success svg { width: 48px; height: 48px; color: #fff; margin-bottom: 16px; }
+        .success a { color: #fff; text-decoration: none; margin-top: 16px; border: 1px solid #333; padding: 8px 16px; border-radius: 4px; transition: all 0.2s; }
+        .success a:hover { background: #111; border-color: #fff; }
+        .error { color: #ff4444; font-size: 14px; margin-top: 16px; display: none; }
+      </style>
+    </head>
+    <body>
+      <div class="container" id="form-container">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 48px; height: 48px; margin-bottom: 16px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <h1>Push to GitHub</h1>
+        <p>Enter your GitHub Personal Access Token (classic with repo scope or fine-grained).</p>
+        <input type="password" id="token" placeholder="GitHub Token (e.g., ghp_...)" />
+        <button id="deploy-btn" onclick="deploy()">Push Project</button>
+        <div class="loader" id="loader"></div>
+        <div class="error" id="error"></div>
+      </div>
+      
+      <div class="container success" id="success-container">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <h1>Repository Created</h1>
+        <p>Your project has been successfully pushed to GitHub.</p>
+        <a id="deployment-url" href="#" target="_blank">View Repository</a>
+      </div>
+      
+      <script>
+        async function deploy() {
+          const token = document.getElementById('token').value;
+          if (!token) return alert('Token is required');
+          
+          document.getElementById('deploy-btn').style.display = 'none';
+          document.getElementById('loader').style.display = 'block';
+          document.getElementById('error').style.display = 'none';
+          
+          try {
+            const res = await fetch(\`/api/deploy/github/\${id}?framework=\${framework}\`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token })
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+              document.getElementById('form-container').style.display = 'none';
+              document.getElementById('success-container').style.display = 'flex';
+              document.getElementById('deployment-url').href = data.url;
+            } else {
+              throw new Error(data.error || 'Push failed');
+            }
+          } catch (err) {
+            document.getElementById('deploy-btn').style.display = 'block';
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('error').textContent = err.message;
+            document.getElementById('error').style.display = 'block';
+          }
+        }
+      </script>
+    </body>
+    </html>
+  `;
+  
+  return c.html(html);
 });
 
 deployRoutes.post('/domain/:id', async (c) => {
@@ -615,5 +641,169 @@ deployRoutes.post('/netlify/:id', async (c) => {
   } catch (error) {
     console.error('Deploy error:', error);
     return c.json({ error: 'Failed to deploy project to Netlify' }, 500);
+  }
+});
+
+deployRoutes.post('/github/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const framework = c.req.query('framework') || 'html';
+    const { token } = await c.req.json();
+    
+    if (!token) {
+      return c.json({ error: 'GitHub token is required' }, 400);
+    }
+
+    const project = await projectStore.get(id);
+    if (!project) {
+      return c.json({ error: 'Project not found' }, 404);
+    }
+
+    let filesToExport = [];
+    if (project.mutations && project.mutations.length > 0) {
+      const latestMutation = project.mutations[project.mutations.length - 1];
+      if (latestMutation.files) {
+        filesToExport = latestMutation.files;
+      }
+    }
+
+    if (filesToExport.length === 0) {
+      return c.json({ error: 'No files generated for this project yet' }, 400);
+    }
+
+    const files = generateVercelFiles(project, framework, filesToExport);
+    
+    // 1. Get user info
+    const userRes = await fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Stagework-Forge-App'
+      }
+    });
+
+    if (!userRes.ok) {
+      return c.json({ error: 'Invalid GitHub token or insufficient permissions' }, 401);
+    }
+    const userData = await userRes.json();
+    const username = userData.login;
+
+    // 2. Create Repository
+    const repoName = project.name.replace(/[^a-z0-9]/gi, '-').toLowerCase() + '-' + Math.random().toString(36).substring(7);
+    const createRepoRes = await fetch('https://api.github.com/user/repos', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Stagework-Forge-App'
+      },
+      body: JSON.stringify({
+        name: repoName,
+        description: project.seo?.description || 'Generated by Stagework Forge',
+        private: false,
+        auto_init: true
+      })
+    });
+
+    if (!createRepoRes.ok) {
+      const errorData = await createRepoRes.json();
+      return c.json({ error: errorData.message || 'Failed to create repository' }, createRepoRes.status as any);
+    }
+
+    const repoData = await createRepoRes.json();
+
+    // 3. Commit files using the Tree API for multi-file commit
+    // a. Get current branch ref
+    const refRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/git/refs/heads/main`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Stagework-Forge-App'
+      }
+    });
+    
+    if (!refRes.ok) {
+      return c.json({ error: 'Failed to fetch repository reference' }, 500);
+    }
+    const refData = await refRes.json();
+    const commitSha = refData.object.sha;
+
+    // b. Get the commit to get the tree sha
+    const commitRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/git/commits/${commitSha}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Stagework-Forge-App'
+      }
+    });
+    const commitData = await commitRes.json();
+    const baseTreeSha = commitData.tree.sha;
+
+    // c. Create a new tree
+    const treePayload = {
+      base_tree: baseTreeSha,
+      tree: files.map(f => ({
+        path: f.file,
+        mode: '100644',
+        type: 'blob',
+        content: f.data
+      }))
+    };
+
+    const createTreeRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/git/trees`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Stagework-Forge-App'
+      },
+      body: JSON.stringify(treePayload)
+    });
+    const treeData = await createTreeRes.json();
+    const newTreeSha = treeData.sha;
+
+    // d. Create a new commit
+    const createCommitRes = await fetch(`https://api.github.com/repos/${username}/${repoName}/git/commits`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Stagework-Forge-App'
+      },
+      body: JSON.stringify({
+        message: 'Initial commit from Stagework Forge',
+        tree: newTreeSha,
+        parents: [commitSha]
+      })
+    });
+    const newCommitData = await createCommitRes.json();
+    const newCommitSha = newCommitData.sha;
+
+    // e. Update the ref
+    await fetch(`https://api.github.com/repos/${username}/${repoName}/git/refs/heads/main`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Stagework-Forge-App'
+      },
+      body: JSON.stringify({
+        sha: newCommitSha,
+        force: true
+      })
+    });
+
+    return c.json({ 
+      success: true, 
+      url: repoData.html_url
+    });
+
+  } catch (error) {
+    console.error('GitHub deploy error:', error);
+    return c.json({ error: 'Failed to push project to GitHub' }, 500);
   }
 });
