@@ -368,3 +368,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 
 - [x] **Task 26.1: Trigger Final Deploy**
   - Update STATUS.md to indicate all phases are complete and trigger the final deployment script.
+
+## Phase 27: Post-Deploy Verification
+*Status: Complete*
+
+- [x] **Task 27.1: Live Sanity Check**
+  - Verify the deployed Thin Shell UI and BFF are communicating correctly in production.
