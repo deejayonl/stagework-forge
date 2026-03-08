@@ -192,3 +192,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 16.1: Fix missing type parameters**
   - Add missing type parameters in `Workspace.tsx` around line 1312 and 1315.
   - Fix missing `currentVersionIndex` in `Workspace.tsx`.
+
+## Phase 17: Host Intervention Required
+*Status: Active*
+
+- [ ] **Task 17.1: Await Git Credential Resolution**
+  - The development loop is currently stalled. Awaiting host to resolve the invalid GitHub Personal Access Token (PAT) so the agent can push changes to `origin main` and trigger the deployment pipeline.
