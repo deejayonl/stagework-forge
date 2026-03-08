@@ -1496,7 +1496,7 @@ useEffect(() => {
         {/* Audit Panel */}
         <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isAuditOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
           <AuditPanel 
-            currentHtml={localFiles[activePage]?.content || ''}
+            currentHtml={localFiles[activeFile]?.content || ''}
             onApplyFix={(fixedHtml) => {
               handleCodeChange(fixedHtml);
             }}

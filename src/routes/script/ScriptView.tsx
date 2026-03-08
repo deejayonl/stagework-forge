@@ -113,9 +113,20 @@ export default function ScriptView() {
 
       {/* Floating Action Bar */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-hall-900/80 backdrop-blur-xl border border-hall-800 p-2 rounded-2xl shadow-2xl z-20">
-        <div className="text-hall-500 text-sm font-medium px-4">
-          {scriptText.length} characters
+        
+        <div className="flex gap-2 px-2">
+          <button onClick={() => setScriptText("I want a sleek dark-mode SaaS dashboard for managing fitness clients. It needs a sidebar, a main metrics area with charts, and a recent activity feed.")} className="px-3 py-1.5 rounded-lg bg-hall-800 hover:bg-hall-700 text-hall-300 text-xs font-medium transition-colors">
+            SaaS Template
+          </button>
+          <button onClick={() => setScriptText("A minimalist portfolio for a photographer. Full-screen masonry grid, subtle fade-in animations, and a sleek contact modal.")} className="px-3 py-1.5 rounded-lg bg-hall-800 hover:bg-hall-700 text-hall-300 text-xs font-medium transition-colors hidden sm:block">
+            Portfolio Template
+          </button>
         </div>
+        <div className="w-px h-6 bg-hall-800 mx-2"></div>
+        <div className="text-hall-500 text-sm font-medium px-2 min-w-[100px] text-right">
+          {scriptText.length} chars
+        </div>
+  
         <button
           onClick={handleSubmit}
           disabled={!scriptText.trim() || isGenerating}
