@@ -142,6 +142,32 @@ const CloudConfig: React.FC<CloudConfigProps> = ({
 
           <div className="space-y-8 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
             
+            {/* AI Models Section */}
+            <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-semibold text-hall-900 dark:text-hall-100">
+                    <Settings className="w-4 h-4 text-purple-500" />
+                    AI Provider
+                </div>
+                <div className="text-xs text-hall-500">
+                    Select the model you want to use for generation.
+                </div>
+                <div className="flex gap-2">
+                    <select 
+                        value={localStorage.getItem("forge_ai_provider") || "gemini"}
+                        onChange={(e) => {
+                           localStorage.setItem("forge_ai_provider", e.target.value);
+                           // Force re-render to show correct key input
+                           setGeminiStatus("idle");
+                        }}
+                        className="flex-1 bg-hall-50 dark:bg-hall-950 border border-hall-200 dark:border-hall-800 rounded-2xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500"
+                    >
+                        <option value="gemini">Google Gemini (Default)</option>
+                        <option value="anthropic">Anthropic Claude</option>
+                        <option value="openai">OpenAI</option>
+                    </select>
+                </div>
+            </div>
+
             {/* Gemini API Key Section */}
             <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-hall-900 text-hall-100">

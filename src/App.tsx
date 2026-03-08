@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Routes, Route, Navigate, NavLink } from 'react-router-dom'
+import { Routes, Route, Navigate, NavLink, useLocation } from 'react-router-dom'
 import { Theater, Palette, Settings, Loader2, Sun, Moon, Edit3 } from 'lucide-react'
 import { ErrorBoundary } from './components/ErrorBoundary'
 
@@ -44,6 +44,7 @@ const ScriptView = React.lazy(() => lazyRetry(() => import('./routes/script/Scri
 const StudioView = React.lazy(() => lazyRetry(() => import('./routes/studio/StudioView')) as Promise<any>);
 const StageView = React.lazy(() => lazyRetry(() => import('./routes/stage/StageView')) as Promise<any>);
 const AdminView = React.lazy(() => lazyRetry(() => import('./routes/admin/AdminView')) as Promise<any>);
+const PreviewView = React.lazy(() => lazyRetry(() => import('./routes/preview/PreviewView')) as Promise<any>);
 
 const NAV_ITEMS = [
   { to: '/script', icon: Edit3, label: 'Script' },
@@ -63,6 +64,8 @@ const PageLoader = () => (
 );
 
 export default function App() {
+  const location = useLocation();
+  const isPreview = location.pathname.startsWith('/preview');
   const [theme, setTheme] = React.useState<'dark' | 'light'>(() => {
     return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
   });
@@ -99,6 +102,7 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-transparent text-ink relative">
+      {!isPreview && (
       {/* Sidebar wrapper to prevent layout shift */}
       <div className="w-[68px] shrink-0 z-50 relative h-full hidden md:block">
         <aside className="absolute top-0 left-0 h-full w-[68px] hover:w-[180px] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] bg-hall-950 border-r border-hall-700/50 flex flex-col items-center hover:items-start py-5 gap-1.5 z-50 group/sidebar overflow-hidden shadow-[4px_0_24px_-8px_rgba(0,0,0,0.5)] hover:shadow-[12px_0_32px_-12px_rgba(0,0,0,0.6)]">
@@ -157,8 +161,10 @@ export default function App() {
           </div>
         </aside>
       </div>
+      )}
 
       
+      {!isPreview && (
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hall-950 border-t border-hall-800 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
         {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
@@ -180,6 +186,7 @@ export default function App() {
           </NavLink>
         ))}
       </div>
+      )}
 
       {/* Main content */}
       <main className="flex-1 overflow-auto min-w-0 relative pb-16 md:pb-0">
@@ -192,6 +199,7 @@ export default function App() {
               <Route path="/studio/*" element={<StudioView />} />
               <Route path="/stage/*" element={<StageView />} />
               <Route path="/admin/*" element={<AdminView />} />
+              <Route path="/preview/:projectId" element={<PreviewView />} />
             </Routes>
           </Suspense>
         </ErrorBoundary>

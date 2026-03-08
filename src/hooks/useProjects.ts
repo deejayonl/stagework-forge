@@ -18,6 +18,7 @@ export const useProjects = (storageToken: string | null) => {
   // Yjs State
   const ydocRef = useRef<Y.Doc | null>(null);
   const providerRef = useRef<WebsocketProvider | null>(null);
+  const liveSyncWsRef = useRef<WebSocket | null>(null);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -45,6 +46,10 @@ export const useProjects = (storageToken: string | null) => {
       if (ydocRef.current) {
         ydocRef.current.destroy();
         ydocRef.current = null;
+      }
+      if (liveSyncWsRef.current) {
+        liveSyncWsRef.current.close();
+        liveSyncWsRef.current = null;
       }
       setActiveUsers([]);
       return;
@@ -84,9 +89,25 @@ export const useProjects = (storageToken: string | null) => {
       // For the preparation phase, we just observe changes.
     });
 
+    // Setup Live Sync WebSocket
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = import.meta.env.DEV 
+      ? `ws://localhost:3001/sync?projectId=${currentProjectId}`
+      : `${protocol}//${window.location.host}/sync?projectId=${currentProjectId}`;
+    
+    const ws = new WebSocket(wsUrl);
+    liveSyncWsRef.current = ws;
+
+    ws.onopen = () => console.log('[LiveSync] Connected to project', currentProjectId);
+    ws.onerror = (e) => console.error('[LiveSync] Error', e);
+
     return () => {
       provider.disconnect();
       ydoc.destroy();
+      if (liveSyncWsRef.current) {
+        liveSyncWsRef.current.close();
+        liveSyncWsRef.current = null;
+      }
     };
   }, [currentProjectId]);
 
@@ -195,6 +216,17 @@ export const useProjects = (storageToken: string | null) => {
     ? currentProject.versions[currentProject.currentVersionIndex].files
     : [];
 
+  // Broadcast files when they change
+  useEffect(() => {
+    if (liveSyncWsRef.current && liveSyncWsRef.current.readyState === WebSocket.OPEN && currentFiles.length > 0) {
+      liveSyncWsRef.current.send(JSON.stringify({
+        type: 'SYNC_FILES',
+        files: currentFiles
+      }));
+    }
+  }, [currentFiles]);
+
+  
   const createProject = useCallback(async (files: GeneratedFile[], prompt: string) => {
 
     const newVersion: ProjectVersion = {
