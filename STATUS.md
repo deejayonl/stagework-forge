@@ -480,3 +480,12 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Implement a WebSocket connection in the BFF to push live DOM/style mutations from the main editor directly to any connected mobile preview clients.
 - [x] **Task 36.3: Mobile Device Frame Wrap**
   - In the Stage view, when the "Mobile" breakpoint is selected, wrap the iframe in a visually distinct, realistic mobile device frame (e.g., an iPhone bezel) for better presentation.
+
+## Phase 37: External AI Models Config
+*Status: In Progress*
+
+- [ ] **Task 37.1: Anthropic & OpenAI Integration**
+  - Add Claude 3.5 Sonnet and GPT-4o configurations to `CloudConfig` component.
+  - Plumb selected model through to the `generateCode` service.
+- [ ] **Task 37.2: Custom API Key Storage**
+  - Save external API keys to `localStorage` securely.
