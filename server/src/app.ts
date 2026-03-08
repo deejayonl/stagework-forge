@@ -4,6 +4,7 @@
 
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { serveStatic } from '@hono/node-server/serve-static';
 import { chatRoutes } from './routes/chat.js';
 import { historyRoutes } from './routes/history.js';
 import { generateRoutes } from './routes/generate.js';
@@ -15,6 +16,7 @@ import { deployRoutes } from './routes/deploy.js';
 import { proxyRoutes } from './routes/proxy.js';
 import { rewriteRoutes } from './routes/rewrite.js';
 import { rateLimiter } from './middleware/rate-limit.js';
+import { assetsRoutes } from './routes/assets.js';
 
 export const app = new Hono();
 
@@ -33,6 +35,9 @@ app.use('/api/generate/*', rateLimiter({ limit: 5, windowMs: 60000 }));
 app.use('/api/mutate/*', rateLimiter({ limit: 20, windowMs: 60000 }));
 app.use('/api/autofix/*', rateLimiter({ limit: 10, windowMs: 60000 }));
 
+// Static file serving for uploads
+app.use('/uploads/*', serveStatic({ root: './public' }));
+
 // Routes
 app.route('/api/chat', chatRoutes);
 app.route('/api/history', historyRoutes);
@@ -44,6 +49,7 @@ app.route('/api/autofix', autofixRoutes);
 app.route('/api/deploy', deployRoutes);
 app.route('/api/proxy', proxyRoutes);
 app.route('/api/rewrite', rewriteRoutes);
+app.route('/api/assets', assetsRoutes);
 
 // Health check
 app.get('/api/health', (c) => {

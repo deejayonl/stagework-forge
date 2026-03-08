@@ -1455,13 +1455,49 @@ useEffect(() => {
             setMediaPickCallback(null);
           }}
           assets={Object.entries(assets).map(([id, url]) => ({ id, url, name: id, type: "image", size: 0 }))}
-          onUpload={(files) => {
+          onUpload={async (files) => {
+            // Use local URL temporarily for immediate UI feedback
             const newAssets = { ...assets };
-            Array.from(files).forEach(file => {
-              const url = URL.createObjectURL(file);
-              newAssets[file.name] = url;
+            const filesArray = Array.from(files);
+            
+            // Temporary local URLs
+            filesArray.forEach(file => {
+              newAssets[file.name] = URL.createObjectURL(file);
             });
             if (onUpdateAssets) onUpdateAssets(newAssets);
+
+            try {
+              const formData = new FormData();
+              filesArray.forEach(file => {
+                formData.append(file.name, file);
+              });
+
+              const currentProjectId = projectId || 'local';
+              const response = await fetch(`https://sgfbackend.deejay.onl/api/assets/upload/${currentProjectId}`, {
+                method: 'POST',
+                body: formData,
+              });
+
+              if (!response.ok) {
+                throw new Error('Upload failed');
+              }
+
+              const data = await response.json();
+              if (data.success && data.urls) {
+                // Update with permanent URLs from the server
+                const finalAssets = { ...assets };
+                data.urls.forEach((url: string, index: number) => {
+                  const originalName = filesArray[index].name;
+                  // Prepend BFF URL to the returned path
+                  const fullUrl = `https://sgfbackend.deejay.onl${url}`;
+                  finalAssets[originalName] = fullUrl;
+                });
+                if (onUpdateAssets) onUpdateAssets(finalAssets);
+              }
+            } catch (err) {
+              console.error('Failed to upload assets to server:', err);
+              // Revert on error or show notification
+            }
           }}
           onDelete={(id) => {
             const newAssets = { ...assets };

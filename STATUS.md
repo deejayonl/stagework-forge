@@ -372,3 +372,17 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 - [x] **Task 37.1: GitHub Integration BFF Route**
   - Implement `/api/deploy/github/:projectId` in the Node.js BFF to receive a GitHub Personal Access Token, create a new repository using the GitHub REST API (`/user/repos`), and push the packaged project files.
   - Update `ExportModal.tsx` and `ForgeView.tsx` to handle the GitHub deployment flow correctly.
+
+## Phase 38: Asset Manager & Media Library
+*Status: Complete*
+
+- [x] **Task 38.1: Media Manager UI Panel**
+  - `MediaManager.tsx` is already implemented and integrated into `Workspace.tsx`.
+- [x] **Task 38.2: BFF Asset Upload Route**
+  - Implement `/api/assets/upload/:projectId` in the Node.js BFF to receive multipart form data.
+  - Save uploaded files to the project's `public/assets` directory.
+  - Return the URL of the uploaded asset.
+- [x] **Task 38.3: Frontend Upload Integration**
+  - Update `Workspace.tsx`'s `MediaManager` `onUpload` handler to post files to the new BFF route instead of using `URL.createObjectURL`.
+- [x] **Task 38.4: Image Property Integration**
+  - `PropertyInspector.tsx` is already integrated with `Workspace.tsx` to allow selecting an image from the Media Manager.
