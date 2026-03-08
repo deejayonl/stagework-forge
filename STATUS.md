@@ -387,3 +387,16 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Add a "Generate Image" tab to the `ImageTool.tsx` panel.
 - [x] **Task 28.3: Asset Library Persistence**
   - Automatically save generated and uploaded images to the BFF project store.
+
+## Phase 29: Dynamic Data Binding & Logic
+*Status: Complete*
+
+- [x] **Task 29.1: Variable Data Binding**
+  - Allow text content and image URLs to be bound to project variables (e.g., `{{ myVar }}`).
+  - Add a variable picker in the Property Inspector next to text/image inputs.
+- [x] **Task 29.2: Conditional Rendering (Show/Hide)**
+  - Add a "Visibility" section to the Property Inspector.
+  - Allow binding visibility to a boolean variable or condition (e.g., `myVar === true`).
+- [x] **Task 29.3: List Rendering (Repeater)**
+  - Add a "Repeater" toggle to container nodes.
+  - Allow binding the container to a collection/array, repeating its children for each item.

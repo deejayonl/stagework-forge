@@ -825,7 +825,7 @@ export const PropertyInspector: React.FC<PropertyInspectorProps> = ({
             <p className="text-[10px] text-indigo-600/70 dark:text-indigo-400/70 leading-tight">Show this element only if a variable evaluates to true.</p>
             <select 
               className="w-full text-xs bg-white dark:bg-black border border-indigo-200 dark:border-indigo-800 rounded p-1.5 text-hall-900 dark:text-ink outline-none focus:ring-1 focus:ring-indigo-500"
-              value={selectedElement.dataset?.if || ''}
+              value={selectedElement.dataset?.if || selectedElement.dataset?.['data-if'] || ''}
               onChange={(e) => onUpdateAttribute?.('data-if', e.target.value)}
             >
               <option value="">Always Visible</option>
