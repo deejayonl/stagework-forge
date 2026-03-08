@@ -1,0 +1,47 @@
+{
+  "name": "stagework-forge",
+  "version": "0.1.0",
+  "description": "Unified thin UI shell — Studio, Canvas, Admin interfaces",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n server,web -c cyan,green \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "cd server && npx tsx watch src/index.ts",
+    "dev:web": "vite",
+    "dev:tauri": "npx tauri dev",
+    "build": "vite build",
+    "build:all": "cd server && npx tsc && cd .. && vite build",
+    "build:tauri": "npx tauri build",
+    "preview": "vite preview",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "clean": "rm -rf server/dist dist src-tauri/target"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.572.0",
+    "partial-json": "^0.1.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "y-webrtc": "^10.3.0",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.29"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "@tauri-apps/cli": "^2",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.1.18",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

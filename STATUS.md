@@ -1,0 +1,308 @@
+# ⚡️ Stagework Forge: 8-Hour Production Architecture Blueprint
+
+**Goal:** Transform the app into a production-ready, End-to-End NoCode Editor with a Thin UI Shell and a Robust BFF (Backend-for-Frontend) Architecture. 
+The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and state-of-the-art.
+
+**Rules of Engagement:**
+- **Every 5 Commits:** The live deployment script will auto-trigger.
+- **Architectural Purity:** The frontend is strictly a Thin UI Shell. ALL AI inference, generation loops, and state compilation MUST live inside the Node BFF API endpoints.
+- **Sequential Execution:** Implement strictly one task at a time. Commit your changes, mark the task as `[x]`, and proceed. Do not jump ahead.
+- **Mobile-First Responsiveness:** All UI shells, tabs, sidebars, and interactive elements must gracefully scale to support seamless mobile browsing.
+
+---
+
+## Phase 1: Thin Client & BFF Foundation
+*Status: Complete*
+
+- [x] **Task 1.1: BFF Scaffold & Routing** 
+  - Construct the Express/Hono Node.js server in `server/src`.
+  - Establish API routes: `/api/generate` (for blueprints), `/api/mutate` (for stage updates), and `/api/chat` (for studio tuning).
+- [x] **Task 1.2: Inference Migration**
+  - Migrate all Gemini AI logic (`geminiService.ts`, etc.) completely out of the React frontend into the BFF controllers. 
+  - Ensure the frontend only dispatches `POST` requests and reads streaming JSON responses.
+- [x] **Task 1.3: Global App Header UI**
+  - Strip old titles ("Let's build something amazing").
+  - Center the page header. Insert the text: `Working Directory: <path>` (Placeholder for now, representing where implementation is saved).
+- [x] **Task 1.4: Global Input & Project Carousel UI**
+  - Position the main input prompt directly below the global header.
+  - Immediately above the input prompt, implement a sliding carousel of "Example Projects" (e.g., *SaaS Dashboard, Mobile Social App, E-Commerce Store*).
+- [x] **Task 1.5: API Endpoint Migration**
+  - Completely PURGE all references to `orch.onl` and `orchestrator` across the codebase.
+  - Point all frontend API calls (e.g., `api-client.ts`) to `https://sgfbackend.deejay.onl`.
+
+---
+
+## Phase 2: The "Script" Tab (Ideation & Input)
+*Status: Complete*
+*Location: 1st tab in the Sidebar.*
+
+- [x] **Task 2.1: Route & Shell Creation**
+  - Create `ScriptView.tsx` and map it as the primary landing page (1st tab).
+- [x] **Task 2.2: Typography & Slogan**
+  - Add the central slogan: *"All great outputs start with intentional input."* (Make it visually striking, clean typography).
+  - Add subtext instruction: *"Take 5 minutes to write your ideas out. We need to compact user ideas into executable plans."*
+- [x] **Task 2.3: Device Target Sliding Window**
+  - Implement a sliding window/carousel allowing users to select multiple deployment targets simultaneously.
+  - **Targets to include:** Mobile App (Phone), Mobile App (Tablet), Web Portfolio, Business Landing Page, Internal SaaS Dashboard, MacOS Desktop App, Windows Desktop App.
+- [x] **Task 2.4: Immersive Scripting Textarea**
+  - Build a large, auto-expanding, deeply immersive text area below the sliders for the user to write their vision.
+- [x] **Task 2.5: Submit & Compact Logic**
+  - On "Submit", send the user's script and selected targets to the BFF endpoint (`/api/generate`) to compile the executable plan.
+- [x] **Task 2.6: Theatrical Transition (Script -> Studio)**
+  - Do not instantly route. Show a terminal-style loading screen.
+  - Include creative dialect log outputs: *"> Prepping microphone... > Tuning acoustics... > Drafting setlist... > Compacting ideas..."*
+  - Automatically route to the `Studio` tab upon BFF completion.
+
+---
+
+## Phase 3: The "Studio" Tab (Design & Blueprint)
+*Status: Complete*
+*Location: 2nd tab in the Sidebar. (Previously "Canvas")*
+
+- [x] **Task 3.1: Rename Architecture**
+  - Refactor existing `CanvasView.tsx` and routes to `StudioView.tsx`. Update the Sidebar icon/label to "Studio".
+- [x] **Task 3.2: Base Design Render Engine**
+  - The Studio must render the base UI designs compiled from the Script tab's chosen project types. 
+  - Display the wireframes/blueprints across the infinite canvas.
+- [x] **Task 3.3: Contextual Tuning Chat**
+  - Implement a floating chat interface that appears when a user selects a specific project design on the canvas.
+  - This chat hits the BFF (`/api/chat`) to refine and tune the selected draft/design.
+- [x] **Task 3.4: Theatrical Transition (Studio -> Stage)**
+  - On user confirmation of the design, trigger another terminal-style loading screen.
+  - Log outputs: *"> Dusting off drums... > Rigging stage lights... > Booting feedback loops..."*
+  - Automatically route to the `Stage` tab.
+
+---
+
+## Phase 4: The "Stage" Tab (Real-time Mutation)
+*Status: Complete*
+*Location: 3rd tab in the Sidebar. (Previously "Studio")*
+
+- [x] **Task 4.1: Rename Architecture**
+  - Refactor existing `StudioView.tsx` to `StageView.tsx`. Update Sidebar label to "Stage".
+- [x] **Task 4.2: Real-Time Mutation Engine** 
+  - The Stage displays the live, interactive final product.
+  - Hook it up to the Global Input Prompt (from Task 1.4). When the user types in the global prompt, hit the BFF (`/api/mutate`) and stream the live DOM updates to the Stage.
+- [x] **Task 4.3: Intelligent Targeting Logic**
+  - **Global Mode:** If no specific product/device is selected on the Stage, the global prompt mutation applies to ALL products generated from Phase 2.
+  - **Isolated Mode:** If the user clicks/selects a specific product on the Stage, the global input prompt mutates ONLY the selected product.
+
+---
+*Architect's Note to Coder: Stay highly disciplined. Do not merge Phase tasks. The Thin UI/BFF split is paramount for system stability.*
+
+## Phase 4.5: Mobile Responsiveness Sweep
+*Status: Complete*
+
+- [x] **Task 4.5.1: Global Mobile Navigation**
+  - Ensure the sidebar collapses into a hamburger menu or bottom tab bar on mobile screens.
+- [x] **Task 4.5.2: Responsive Script Tab**
+  - Ensure the device sliders and intentional input area scale gracefully on `sm:` and `md:` breakpoints.
+- [x] **Task 4.5.3: Responsive Studio & Stage**
+  - Ensure the Canvas (Studio) and Live Render (Stage) are usable on mobile devices, preventing horizontal overflow where unintended and scaling down UI overlays.
+
+## Phase 5: Post-Launch & Polishing
+*Status: Complete*
+
+- [x] **Task 5.1: Review and Refine**
+  - Verify all routing and transitions are smooth.
+  - Review the BFF endpoints for error handling and edge cases.
+
+
+## Phase 6: Project Persistence & Export
+*Status: Complete*
+
+- [x] **Task 6.1: BFF State Store**
+  - Create a robust file-based JSON store in the BFF (`server/src/services/project-store.ts`) to save project states (Script, Blueprints, Mutations).
+  - Add API routes: `GET /api/projects/:id` and `POST /api/projects` to load and save states.
+- [x] **Task 6.2: Frontend State Sync**
+  - Implement auto-saving in the frontend. When a user generates a script or mutates a stage, sync the project state to the BFF.
+  - Add a "Save Project" / "Load Project" UI mechanism in the `WorkspaceLayout` or a settings modal.
+- [x] **Task 6.3: Export to Code (ZIP)**
+  - Create a BFF endpoint `GET /api/export/:id` that compiles the current project state into a valid React codebase and returns it as a ZIP file download.
+  - Add an "Export Project" button to the Stage view.
+
+## Phase 7: Advanced Studio Interactions (Drag & Drop)
+*Status: Complete*
+
+- [x] **Task 7.1: Image Asset Upload Support**
+  - Allow users to drag-and-drop images onto the Studio Canvas.
+  - Implement a visual dropzone indicator when dragging files over the canvas.
+  - Base64 encode the dropped image and insert it as an "Image Node" into the canvas state.
+- [x] **Task 7.2: Code Snippet Injection**
+  - Allow users to paste or drop code files (.tsx, .css, .json) directly onto the canvas.
+  - Render pasted code inside a syntax-highlighted "Code Node".
+- [x] **Task 7.3: Node Grouping & Organization**
+  - Implement a marquee selection tool (shift + drag) to select multiple nodes.
+  - Add a "Group" button to combine selected nodes into a single movable block.
+
+## Phase 8: NoCode Visual Editor Engine
+*Status: Complete*
+
+- [x] **Task 8.1: Component Property Inspector (Right Sidebar)**
+  - Build a dynamic property panel that reads the selected node's schema.
+  - Generate input fields for basic styling (text content, color, padding, margin).
+- [x] **Task 8.2: Visual DOM Tree Explorer (Left Sidebar)**
+  - Implement a hierarchical tree view of the generated components on the Stage.
+  - Allow selection of elements from the tree to highlight them on the Stage.
+- [x] **Task 8.3: Inline Text Editing**
+  - Allow double-clicking any text element on the Stage to make it `contentEditable`.
+  - Sync the mutated text back to the BFF state store.
+- [x] **Task 8.4: Layout Controls (Flex/Grid)**
+  - Add visual toggle buttons in the property inspector to switch between Flex and Grid layouts.
+  - Include slider controls for gap, align-items, and justify-content.
+
+## Phase 9: Advanced Editor Tools & Polish
+*Status: Complete*
+
+- [x] **Task 9.1: Component Duplication & Deletion**
+  - Add keyboard shortcuts (Delete/Backspace to remove, Cmd+D to duplicate) for the selected element in the iframe.
+  - Sync DOM structure mutations back to the BFF state store.
+- [x] **Task 9.2: Asset Manager Integration**
+  - Connect the ImageTool (Assets) panel directly to the Inspector. 
+  - Allow users to select an image node and pick an uploaded asset to swap its `src`.
+- [x] **Task 9.3: Undo/Redo Integration for Editor Mutations**
+  - Ensure every style, text, and DOM change from the NoCode Editor pushes a new state to the `useProjects` history stack so `Cmd+Z` works seamlessly.
+- [x] **Task 9.4: Responsive Breakpoint Toggles**
+  - Add Desktop/Tablet/Mobile toggle buttons to the Stage toolbar to resize the iframe preview.
+  - Apply media-query specific style updates when editing in different breakpoint views.
+
+## Phase 10: Launch & Polish
+*Status: Complete*
+
+- [x] **Task 10.1: Empty State & Onboarding Polish**
+  - Add a beautiful zero-state for new projects with starter templates (Landing Page, Dashboard, Portfolio).
+  - Add tooltips to the NoCode Editor interface for new users.
+- [x] **Task 10.2: Advanced Component Properties**
+  - Add box-shadow, border-radius, and typography controls (font-family, font-weight) to the PropertyInspector.
+  - Support background gradients and opacity sliders.
+- [x] **Task 10.3: Live Collaboration Preparation**
+  - Refactor the state layer to support CRDTs (Yjs) or WebSocket syncing for multiplayer editing.
+  - Show live cursors of other users on the canvas.
+
+## Phase 11: Component Library & Advanced AI Features
+*Status: Complete*
+
+- [x] **Task 11.1: Component Library Panel**
+  - Add a "Components" tab to the left sidebar (alongside DOM Tree Explorer).
+  - Populate with pre-built Tailwind UI components (Buttons, Cards, Navbars, Footers).
+  - Enable drag-and-drop from the Component Library onto the Stage iframe.
+- [x] **Task 11.2: AI Auto-Fix & Accessibility**
+  - Add an "AI Magic Fix" button to the Property Inspector.
+  - When clicked, send the selected node's HTML to the BFF to automatically fix contrast, padding, and layout issues, returning the optimized HTML.
+- [x] **Task 11.3: Advanced Code Export**
+  - Expand the BFF export endpoint to support Next.js (App Router) and Vite (React) templates.
+  - Add an export configuration modal in the UI to select the target framework.
+
+---
+
+## Phase 12: Deployment & Hosting Integrations
+*Status: Complete*
+
+- [x] **Task 12.1: Vercel Integration**
+  - Add a "Deploy to Vercel" button in the Export modal.
+  - Create a BFF endpoint `/api/deploy/vercel` to package the project and use the Vercel API to deploy it.
+- [x] **Task 12.2: GitHub Integration**
+  - Add a "Push to GitHub" button in the Export modal.
+  - Create a BFF endpoint `/api/deploy/github` to create a new repo and push the project code to it.
+- [x] **Task 12.3: Custom Domains**
+  - Add a "Custom Domain" section to the project settings.
+  - Create a BFF endpoint to manage custom domains for deployed projects.
+
+## Phase 13: Security & Performance Enhancements
+*Status: Complete*
+
+- [x] **Task 13.1: API Rate Limiting**
+  - Implement a basic rate limiting middleware in the BFF to protect the `/api/generate` and `/api/mutate` endpoints from abuse.
+- [x] **Task 13.2: Request Validation Schema**
+  - Add request validation structure to ensure payload integrity on POST endpoints.
+- [x] **Task 13.3: Global Error Boundary**
+  - Implement a React Error Boundary in the frontend to gracefully catch unhandled exceptions and display a fallback UI instead of crashing the app.
+
+## Phase 14: Animation & Interaction Engine
+*Status: Completed*
+
+- [x] **Task 14.1: CSS Animation Classes**
+  - Add simple toggle classes in the Property Inspector for standard animations (fade-in, slide-up, pulse, bounce).
+  - Apply these classes to the active node on the Stage.
+- [x] **Task 14.2: Hover States**
+  - Add a "Hover State" toggle in the Property Inspector.
+  - When active, styling changes (colors, transforms) apply only to the `:hover` pseudo-class of the selected node.
+- [x] **Task 14.3: Scroll Triggers (Intersection Observer)**
+  - Allow users to mark a component as "Animate on Scroll".
+  - Inject an Intersection Observer script into the exported code/BFF state to trigger animations when the element enters the viewport.
+
+## Phase 15: Data Binding & Variables
+*Status: Complete*
+
+- [x] **Task 15.1: Global Variables Store**
+  - Create a Variables panel in the left sidebar (alongside DOM Tree Explorer and Components).
+  - Allow users to define key-value pairs (e.g., `theme.primaryColor`, `user.name`, `app.title`).
+  - Store these variables in the project state store.
+- [x] **Task 15.2: Variable Binding UI**
+  - In the Property Inspector, allow text and attributes (like image `src`) to be bound to a variable instead of static text.
+- [x] **Task 15.3: Dynamic List Rendering**
+  - Allow a component to be marked as a "List" and bound to an array variable, repeating its children.
+
+## Phase 16: Logic & Event Handlers
+*Status: Complete*
+
+- [x] **Task 16.1: Event Listener UI**
+  - Add an "Events" tab or section to the Property Inspector.
+  - Allow users to attach standard DOM events (`onClick`, `onChange`, `onSubmit`) to the selected element.
+- [x] **Task 16.2: Action Builder**
+  - For a selected event, allow the user to define an action (e.g., "Set Variable", "Toggle Class", "Alert").
+  - Save these event-action definitions in the element's dataset (e.g., `data-on-click="setVariable:modalOpen:true"`).
+- [x] **Task 16.3: Runtime Event Engine**
+  - Update `injectEditorScript.ts` to attach live event listeners based on the `data-on-*` attributes.
+  - Execute the defined actions (e.g., mutating the global variables store and triggering a re-render) when events occur.
+
+## Phase 17: Conditional Rendering
+*Status: Complete*
+
+- [x] **Task 17.1: Conditional Visibility UI**
+  - Add a "Visibility" section to the Property Inspector.
+  - Allow users to bind an element's visibility to a boolean variable using a `data-if` attribute.
+- [x] **Task 17.2: Runtime Condition Engine**
+  - Update `injectEditorScript.ts` to evaluate `data-if` attributes.
+  - Show or hide elements dynamically when the bound variable changes (e.g., `data-if="modalOpen"`).
+
+## Phase 18: Custom Components & Reusability
+*Status: Complete*
+
+- [x] **Task 18.1: Save as Component**
+  - Add a "Save as Component" button in the Property Inspector.
+  - When clicked, extract the selected node's HTML, prompt for a name, and save it to a `components` object in the BFF state store.
+- [x] **Task 18.2: Components Library Sidebar**
+  - Create a new left sidebar tab/panel called "Components".
+  - Display the list of saved custom components.
+- [x] **Task 18.3: Drag & Drop Instances**
+  - Allow users to drag a saved component from the sidebar onto the Stage.
+  - Insert it as an instance (e.g., `<div data-component="Card">...</div>`).
+
+## Phase 19: Global Settings & Theme Management
+*Status: Complete*
+
+- [x] **Task 19.1: Global Theme Editor**
+  - Add a "Theme" tab to the left sidebar.
+  - Allow users to define global primary, secondary, and accent colors.
+  - Automatically update the Tailwind configuration in the `useProjects` state to reflect these colors across the generated app.
+- [x] **Task 19.2: Custom Font Integration**
+  - Allow users to select Google Fonts in the Theme Editor.
+  - Inject the selected font links into the generated HTML `<head>` and update the global CSS font-family.
+- [x] **Task 19.3: SEO & Meta Settings**
+  - Add an SEO section to the project settings modal.
+  - Allow users to configure the page title, meta description, and Open Graph image.
+
+## Phase 20: Multi-Page Application (Routing) Support
+*Status: Complete*
+
+- [x] **Task 20.1: Pages Manager Sidebar Panel**
+  - Create a new "Pages" tab in the left sidebar.
+  - Display a list of pages for the current project (defaulting to "Home").
+  - Allow users to add, rename, and delete pages.
+- [x] **Task 20.2: Page State Management**
+  - Update `useProjects.ts` to support multiple pages within a single project state.
+  - Ensure the Stage iframe updates to reflect the currently selected page.
+- [x] **Task 20.3: Internal Link Binding**
+  - Add a "Link" property to the Property Inspector for button and text nodes.
+  - Allow users to select an internal page from a dropdown to set up routing navigation.
