@@ -69,6 +69,7 @@ const Workspace: React.FC<WorkspaceProps> = ({
   const [isComponentsOpen, setIsComponentsOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{x: number, y: number, element: any} | null>(null);
   
   // Local state for files allows editing within the workspace session
   const [localFiles, setLocalFiles] = useState<GeneratedFile[]>(files);
@@ -271,6 +272,13 @@ useEffect(() => {
              }
              return newFiles;
          });
+      } else if (e.data.type === 'FORGE_CONTEXT_MENU') {
+         setSelectedElement(e.data.element);
+         setContextMenu({
+           x: e.data.x,
+           y: e.data.y,
+           element: e.data.element
+         });
       } else if (e.data.type === 'FORGE_EXECUTE_ACTION') {
          if (onUpdateVariables) {
             const { action, key, value } = e.data;
@@ -300,6 +308,41 @@ useEffect(() => {
     setSelectedElement(null);
   };
 
+  const handleCopyHtml = () => {
+    if (!selectedElement) return;
+    navigator.clipboard.writeText(selectedElement.outerHTML || '').then(() => {
+      setContextMenu(null);
+    });
+  };
+
+  const handlePasteHtml = async () => {
+    if (!selectedElement) return;
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        updateLocalHtml(selectedElement.path, (el) => {
+          el.insertAdjacentHTML('afterend', text);
+        }, false, 'Paste HTML');
+      }
+    } catch (e) {
+      console.error('Failed to read clipboard');
+    }
+    setContextMenu(null);
+  };
+
+  const handleSaveAsComponent = () => {
+    if (!selectedElement || !onUpdateComponents) return;
+    const name = prompt('Enter a name for this component:');
+    if (name) {
+      const html = selectedElement.outerHTML || '';
+      onUpdateComponents({
+        ...components,
+        [name]: html
+      });
+    }
+    setContextMenu(null);
+  };
+
   const handleDuplicateElement = () => {
     if (!selectedElement) return;
     updateLocalHtml(selectedElement.path, (el) => {
@@ -311,6 +354,7 @@ useEffect(() => {
       }
       el.parentNode?.insertBefore(clone, el.nextSibling);
     }, false, 'Duplicate Element');
+    setContextMenu(null);
   };
 
   const handleInsertComponent = (html: string) => {
@@ -1085,7 +1129,51 @@ useEffect(() => {
           </div>
         </div>
       </div>
-    </div>
+    
+        {contextMenu && (
+          <div
+            className="absolute z-[9999] bg-white border border-gray-200 rounded-md shadow-lg py-1 w-48"
+            style={{ top: contextMenu.y, left: contextMenu.x }}
+          >
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handleDuplicateElement}
+            >
+              Duplicate
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+              onClick={handleDeleteElement}
+            >
+              Delete
+            </button>
+            <div className="border-t border-gray-100 my-1"></div>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handleCopyHtml}
+            >
+              Copy HTML
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={handlePasteHtml}
+            >
+              Paste HTML
+            </button>
+            {onUpdateComponents && (
+              <>
+                <div className="border-t border-gray-100 my-1"></div>
+                <button
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={handleSaveAsComponent}
+                >
+                  Save as Component
+                </button>
+              </>
+            )}
+          </div>
+        )}
+</div>
   );
 };
 
