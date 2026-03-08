@@ -433,7 +433,8 @@ export const injectEditorScript = (htmlContent: string): string => {
                       accent: '\${theme.accent || '#8b5cf6'}'
                     },
                     fontFamily: {
-                      sans: ['"\${theme.fontFamily || 'Inter'}"', 'sans-serif']
+                      sans: ['"\${theme.fontFamily || 'Inter'}"', 'sans-serif'],
+                      heading: ['"\${theme.headingFontFamily || theme.fontFamily || 'Inter'}"', 'sans-serif']
                     }
                   }
                 }

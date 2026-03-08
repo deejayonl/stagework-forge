@@ -147,9 +147,9 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
 ---
 
 ## Phase 10: Theme & Styling Enhancements
-*Status: Pending*
+*Status: Complete*
 
-- [ ] **Task 10.1: Color Palette Generator**
+- [x] **Task 10.1: Color Palette Generator**
   - Add a feature in `ThemeEditor.tsx` to automatically generate complementary color palettes based on a single primary color input.
-- [ ] **Task 10.2: Typography Presets**
+- [x] **Task 10.2: Typography Presets**
   - Add font pairing presets (e.g., Inter + Merriweather, Roboto + Open Sans) to the Theme Editor for quick brand styling.
