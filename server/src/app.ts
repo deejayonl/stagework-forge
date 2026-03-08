@@ -18,6 +18,7 @@ import { rewriteRoutes } from './routes/rewrite.js';
 import { rateLimiter } from './middleware/rate-limit.js';
 import { assetsRoutes } from './routes/assets.js';
 import { generateImageRoutes } from './routes/generate-image.js';
+import { auditRoutes } from './routes/audit.js';
 
 export const app = new Hono();
 
@@ -52,6 +53,7 @@ app.route('/api/proxy', proxyRoutes);
 app.route('/api/rewrite', rewriteRoutes);
 app.route('/api/assets', assetsRoutes);
 app.route('/api/generate-image', generateImageRoutes);
+app.route('/api/audit', auditRoutes);
 
 // Health check
 app.get('/api/health', (c) => {

@@ -50,7 +50,7 @@ const NAV_ITEMS = [
   { to: '/script', icon: Edit3, label: 'Script' },
   { to: '/studio', icon: Palette, label: 'Studio' },
   { to: '/stage', icon: Theater, label: 'Stage' },
-  { to: '/admin', icon: Settings, label: 'Admin' },
+  { to: '/admin', icon: Settings, label: 'Settings' },
 ] as const
 
 // Loading fallback for Suspense

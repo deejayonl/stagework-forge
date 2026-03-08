@@ -10,13 +10,14 @@ import { MediaManager } from "./MediaManager";
 import { DOMTreeExplorer } from './DOMTreeExplorer';
 import { ComponentLibrary } from './ComponentLibrary';
 import { VariablesPanel } from './VariablesPanel';
+import { AuditPanel } from './AuditPanel';
 import { ThemeEditor } from './ThemeEditor';
 import { PagesManager } from './PagesManager';
 import { CollectionsPanel } from './CollectionsPanel';
 import { ApiIntegrationsPanel } from './ApiIntegrationsPanel';
 import { DeployPanel } from './DeployPanel';
 import { ContextMenu, ContextMenuAction } from './ContextMenu';
-import { Moon, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component } from 'lucide-react';
+import { Moon, Settings2, AlignLeft, Library, Database, Palette, List, Network, Undo2, Redo2, Copy, Trash2, Box, ClipboardPaste, Palette as PaletteIcon, Component, ShieldCheck } from 'lucide-react';
 import { useWorkspaceContext, WorkspaceProvider } from "../context/WorkspaceContext";
 
 
@@ -238,6 +239,7 @@ const WorkspaceInner: React.FC<WorkspaceProps> = ({
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
   const [isTreeOpen, setIsTreeOpen] = useState(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+  const [isAuditOpen, setIsAuditOpen] = useState(false);
 
 useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
@@ -1197,6 +1199,17 @@ useEffect(() => {
            </button>
 
            <button
+             onClick={() => setIsAuditOpen(!isAuditOpen)}
+             className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-amber-500 ${isAuditOpen ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
+             aria-label="A11y & SEO Audit"
+           >
+             <ShieldCheck className="w-4 h-4" />
+             <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-hall-900 dark:bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-lg">
+               A11y & SEO Audit
+             </div>
+           </button>
+
+           <button
              onClick={() => setIsDeployOpen(!isDeployOpen)}
              className={`group relative p-2.5 sm:p-2 min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-110 active:scale-90 focus:outline-none focus:ring-2 focus:ring-purple-500 ${isDeployOpen ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400' : 'text-hall-500 dark:text-hall-400 hover:text-hall-900 dark:hover:text-ink hover:bg-hall-200 dark:hover:bg-hall-800'}`}
              aria-label="Deploy"
@@ -1477,6 +1490,17 @@ useEffect(() => {
               }
             }}
             onClose={() => setIsThemeOpen(false)} 
+          />
+        </div>
+
+        {/* Audit Panel */}
+        <div className={`absolute top-0 bottom-0 left-0 z-30 transition-transform duration-300 ${isAuditOpen && activeTab === 'preview' ? 'translate-x-0' : '-translate-x-full'}`}>
+          <AuditPanel 
+            currentHtml={localFiles[activePage]?.content || ''}
+            onApplyFix={(fixedHtml) => {
+              handleCodeChange(fixedHtml);
+            }}
+            onClose={() => setIsAuditOpen(false)}
           />
         </div>
 

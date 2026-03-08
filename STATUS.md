@@ -552,3 +552,18 @@ The entire journey (Script -> Studio -> Stage) must feel magical, fluid, and sta
   - Move or mirror the platform/device target selection logic into the Studio tab, allowing users to dynamically add/remove targets (e.g., watchOS, macOS, iOS) directly from the visual blueprint before final generation.
 - [x] **Task 51.4: Masterpiece Stage Generation**
   - Ensure that the final transition from Studio to Stage consumes this organized blueprint and generates the complete, polished "masterpiece" application.
+## Phase 52: Accessibility & SEO Auto-Optimization Engine
+*Status: Completed*
+
+- [x] **Task 52.1: Audit BFF Routes**
+  - Create `/api/audit/a11y` and `/api/audit/seo` endpoints in the Node.js BFF.
+  - These endpoints will receive HTML, parse it (using Cheerio or similar), and return a list of warnings/errors and a score (0-100).
+- [x] **Task 52.2: Studio/Stage Audit UI Panel**
+  - Create an `AuditPanel.tsx` in the Stage sidebar.
+  - Display the A11y and SEO scores with visual progress rings or meters.
+  - List the specific warnings (e.g., "Missing alt text on Image", "Multiple H1 tags found").
+- [x] **Task 52.3: 1-Click AI Auto-Fix**
+  - Add an "Auto-Fix with AI" button in the Audit Panel.
+  - Create an `/api/audit/fix` endpoint that takes the HTML and the list of warnings, and uses the LLM to patch the HTML, returning the resolved code.
+- [x] **Task 52.4: State Integration**
+  - Ensure the Auto-Fix correctly updates the `workspaces` state and pushes to the Undo/Redo history stack.

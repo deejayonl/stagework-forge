@@ -308,7 +308,7 @@ import App from './App.vue'
 
 createApp(App).mount('#app')`, { name: 'src/main.js' });
 
-      let mainHtml = filesToExport.find((f) => f.name === 'index.html' || f.name.endsWith('.html'));
+      let mainHtml = filesToExport.find((f: any) => f.name === 'index.html' || f.name.endsWith('.html'));
       if (mainHtml) {
         const bodyMatch = mainHtml.content.match(/<body[^>]*>([\s\S]*)<\/body>/i);
         let content = bodyMatch ? bodyMatch[1] : mainHtml.content;
