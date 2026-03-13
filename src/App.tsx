@@ -2,7 +2,6 @@ import React, { Suspense } from 'react'
 import { Routes, Route, Navigate, NavLink, useLocation } from 'react-router-dom'
 import { Theater, Palette, Settings, Loader2, Sun, Moon, Edit3 } from 'lucide-react'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { CommandPalette } from './components/CommandPalette'
 
 
 // Lazy load route components with retry logic for chunk loading errors (Connection lost / Load failed)
@@ -104,7 +103,6 @@ export default function App() {
 
   return (
     <div className="flex h-[100dvh] bg-transparent text-ink relative">
-      {!isPreview && <CommandPalette />}
       {!isPreview && (
         <>
           {/* Sidebar wrapper to prevent layout shift */}

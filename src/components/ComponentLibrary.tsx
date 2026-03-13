@@ -145,7 +145,7 @@ const COMPONENTS = [
       }
     ]
   }
-];
+,
 
 
   {
@@ -175,7 +175,8 @@ const COMPONENTS = [
         html: `<section class="py-24 bg-indigo-600 dark:bg-indigo-900 overflow-hidden"><div class="relative max-w-7xl mx-auto px-6"><div class="relative"><img class="mx-auto h-8" src="https://tailwindui.com/img/logos/workcation-logo-white.svg" alt="Workcation"><blockquote class="mt-10"><div class="max-w-3xl mx-auto text-center text-2xl leading-9 font-medium text-white"><p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.&rdquo;</p></div><footer class="mt-8"><div class="md:flex md:items-center md:justify-center"><div class="md:flex-shrink-0"><img class="mx-auto h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""></div><div class="mt-3 text-center md:mt-0 md:ml-4 md:flex md:items-center"><div class="text-base font-medium text-white">Judith Black</div><svg class="hidden md:block mx-1 h-5 w-5 text-indigo-300" fill="currentColor" viewBox="0 0 20 20"><path d="M11 0h3L9 20H6l5-20z" /></svg><div class="text-base font-medium text-indigo-200">CEO, Workcation</div></div></div></footer></blockquote></div></div></section>`
       }
     ]
-  },
+  }
+];
 
 export const ComponentLibrary: React.FC<ComponentLibraryProps> = ({ onInsertComponent, savedComponents = {}, onClose, onDeleteComponent }) => {
   const customItems = Object.entries(savedComponents).map(([name, html]) => ({ name, html }));
